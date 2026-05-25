@@ -11,7 +11,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  background: var(--bg);
+  background: url('fondo.jpg') center/cover fixed;
   color: var(--text);
   font-family: 'IBM Plex Sans', sans-serif;
   min-height: 100vh;
@@ -356,6 +356,13 @@ nav ul a:hover, nav ul a.active {
   color: var(--accent);
   position: relative;
   overflow: hidden;
+  border-radius: 50%;
+}
+
+.perfil-avatar img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .perfil-avatar::after {
