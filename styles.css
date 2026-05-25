@@ -421,11 +421,24 @@ nav ul a:hover, nav ul a.active {
 }
 
 /* DOWNLOAD BTN */
+.prog-card{
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 2rem;
+  position: relative;
+  transition: border-color 0.25s, background 0.25s;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+}
+
 .btn-download {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  margin-top: 1.2rem;
+  margin-top: auto;
+  align-self: flex-start;
   padding: 0.6rem 1.2rem;
   background: transparent;
   border: 1px solid var(--accent);
@@ -437,6 +450,7 @@ nav ul a:hover, nav ul a.active {
   text-transform: uppercase;
   transition: all 0.2s;
   cursor: pointer;
+  border-radius: 10px;
 }
 .btn-download:hover {
   background: var(--accent);
