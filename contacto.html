@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MM Ingeniería — Contacto</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .contact-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: border-color 0.25s;
+    }
+    .contact-item:hover { border-color: rgba(200,245,66,0.3); }
+
+    .contact-item-icon {
+      font-size: 1.8rem;
+      line-height: 1;
+    }
+
+    .contact-item-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+
+    .contact-item-value {
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+
+    /* WhatsApp card */
+    .wa-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 3rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wa-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(37,211,102,0.06), transparent 70%);
+      pointer-events: none;
+    }
+
+    .wa-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .wa-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      color: var(--text);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+    }
+
+    .wa-desc {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      max-width: 320px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .btn-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 2rem;
+      background: #25d366;
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 700;
+      transition: background 0.2s, transform 0.2s;
+      border: none;
+    }
+    .btn-wa:hover {
+      background: #1ebe5d;
+      transform: translateY(-2px);
+    }
+
+    .btn-wa-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.8rem 1.5rem;
+      background: transparent;
+      color: #25d366;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid #25d366;
+      margin-top: 1rem;
+      transition: all 0.2s;
+    }
+    .btn-wa-outline:hover {
+      background: rgba(37,211,102,0.1);
+    }
+
+    .wa-note {
+      margin-top: 1.5rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    @media (max-width: 700px) {
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="nav-logo" href="index.html">MM<span>.</span>Ingeniería</a>
+    <ul>
+      <li><a href="index.html">Blog</a></li>
+      <li><a href="perfil.html">Perfil</a></li>
+      <li><a href="proyectos.html">Proyectos</a></li>
+      <li><a href="programas.html">Programas</a></li>
+      <li><a href="contacto.html" class="active">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <p class="hero-label">// Hablemos</p>
+    <h1>CONTÁCTAME<br><em>AHORA</em></h1>
+    <div class="hero-line"></div>
+    <p class="hero-sub">¿Tienes un proyecto BIM, consulta técnica o quieres colaborar? Escríbeme directamente por WhatsApp.</p>
+  </section>
+
+  <div class="section">
+    <div class="contact-grid">
+
+      <!-- Info de contacto -->
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-item-icon">📱</div>
+          <div>
+            <div class="contact-item-label">WhatsApp / Teléfono</div>
+            <div class="contact-item-value">+51 957 860 293</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📍</div>
+          <div>
+            <div class="contact-item-label">Ubicación</div>
+            <div class="contact-item-value">Perú</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">🏗️</div>
+          <div>
+            <div class="contact-item-label">Especialidad</div>
+            <div class="contact-item-value">BIM · Instalaciones · Construcción</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">⏰</div>
+          <div>
+            <div class="contact-item-label">Disponibilidad</div>
+            <div class="contact-item-value">Lun – Vie · 8:00 am – 6:00 pm</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WhatsApp card -->
+      <div class="wa-card">
+        <span class="wa-icon">💬</span>
+        <div class="wa-title">Escríbeme por WhatsApp</div>
+        <p class="wa-desc">La forma más rápida de contactarme. Respondo consultas sobre proyectos BIM, instalaciones sanitarias y modelado Revit.</p>
+
+        <a class="btn-wa"
+           href="https://wa.me/51957860293?text=Hola%20Marco%2C%20vi%20tu%20página%20y%20quiero%20consultarte%20algo."
+           target="_blank">
+          💬 Abrir WhatsApp
+        </a>
+
+        <br/>
+
+        <a class="btn-wa-outline"
+           href="https://wa.me/51957860293"
+           target="_blank">
+          📞 Solo número
+        </a>
+
+        <p class="wa-note">// Se abrirá WhatsApp Web o la app en tu dispositivo</p>
+      </div>
+
+    </div>
+  </div>
+
+  <footer><p>© 2026 <span>MM INGENIERIA</span> · Blog BIM & Construcción · Perú</p></footer>
+</body>
+</html>
