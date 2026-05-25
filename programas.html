@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MM Ingeniería — Programas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    .prog-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      position: relative;
+      transition: border-color 0.25s, background 0.25s;
+      overflow: hidden;
+    }
+    .prog-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 0;
+      background: var(--accent2);
+      transition: height 0.3s;
+    }
+    .prog-card:hover::before { height: 100%; }
+    .prog-card:hover {
+      border-color: rgba(66,245,200,0.3);
+      background: #161a16;
+    }
+    .prog-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .prog-icon {
+      font-size: 2.5rem;
+      line-height: 1;
+    }
+    .prog-badge {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      padding: 0.3rem 0.6rem;
+      border: 1px solid var(--accent2);
+      color: var(--accent2);
+      text-transform: uppercase;
+    }
+    .prog-title {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .prog-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 0.5rem;
+    }
+    .prog-info {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      margin-top: 0.5rem;
+    }
+    .aviso {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 3rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      line-height: 1.7;
+      letter-spacing: 0.05em;
+    }
+    .aviso strong { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="nav-logo" href="index.html">MM<span>.</span>Ingeniería</a>
+    <ul>
+      <li><a href="index.html">Blog</a></li>
+      <li><a href="perfil.html">Perfil</a></li>
+      <li><a href="proyectos.html">Proyectos</a></li>
+      <li><a href="programas.html" class="active">Programas</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <p class="hero-label">// Recursos descargables</p>
+    <h1>PROGRAMAS<br><em>Y RECURSOS</em></h1>
+    <div class="hero-line"></div>
+    <p class="hero-sub">Herramientas, plantillas y recursos para proyectos BIM, instalaciones y construcción. Descarga directa en formato comprimido.</p>
+  </section>
+
+  <div class="section">
+
+    <div class="aviso">
+      <strong>// NOTA:</strong> Para agregar tus propios programas, sube los archivos .rar a la carpeta <strong>programas/</strong> de tu repositorio y actualiza el enlace <strong>href</strong> de cada botón de descarga.
+    </div>
+
+    <div class="cards-grid">
+
+      <div class="prog-card">
+        <div class="prog-header">
+          <div class="prog-icon">📦</div>
+          <span class="prog-badge">.rar</span>
+        </div>
+        <div class="prog-title">Programa para Armaduras</div>
+        <div class="prog-desc">Programa para Armaduras</div>
+        <div class="prog-info">Archivo rar</div>
+        <a class="btn-download" href="programas/Armaduras V2.hpappdir.rar" download>⬇ Descargar</a>
+      </div>
+
+      <div class="prog-card">
+        <div class="prog-header">
+          <div class="prog-icon">📦</div>
+          <span class="prog-badge">.rar</span>
+        </div>
+        <div class="prog-title">Programa para metodos numericos 1</div>
+        <div class="prog-desc">Programa para metodos numericos 1</div>
+        <div class="prog-info">Archivo rar</div>
+        <a class="btn-download" href="programas/MÉTODOS 1°P.hpappdir.rar" download>⬇ Descargar</a>
+      </div>
+
+      <div class="prog-card">
+        <div class="prog-header">
+          <div class="prog-icon">📦</div>
+          <span class="prog-badge">.rar</span>
+        </div>
+        <div class="prog-title">Programa para metodos numericos 2</div>
+        <div class="prog-desc">Programa para metodos numericos 2</div>
+        <div class="prog-info">Archivo rar</div>
+        <a class="btn-download" href="programas/MÉTODOS 2°P.hpappdir.rar" download>⬇ Descargar</a>
+      </div>
+
+    </div>
+  </div>
+
+  <footer><p>© 2026 <span>MM INGENIERIA</span> · Blog BIM & Construcción · Perú</p></footer>
+</body>
+</html>

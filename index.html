@@ -1,297 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>MM Ingeniería — Blog BIM</title>
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet"/>
-  <style>
-    :root {
-      --bg: #0d0f0e;
-      --surface: #141716;
-      --border: #2a2e2b;
-      --accent: #c8f542;
-      --accent2: #42f5c8;
-      --text: #e8ede9;
-      --muted: #7a8a7c;
-      --tag-bg: #1c221c;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'IBM Plex Sans', sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* Grid background */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(200,245,66,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(200,245,66,0.03) 1px, transparent 1px);
-      background-size: 40px 40px;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* NAV */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(13,15,14,0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 60px;
-    }
-
-    .nav-logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.6rem;
-      letter-spacing: 0.12em;
-      color: var(--accent);
-    }
-    .nav-logo span { color: var(--text); }
-
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 2rem;
-    }
-    nav ul a {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--muted);
-      text-decoration: none;
-      letter-spacing: 0.1em;
-      transition: color 0.2s;
-    }
-    nav ul a:hover { color: var(--accent); }
-
-    /* HERO */
-    .hero {
-      position: relative;
-      z-index: 1;
-      padding: 6rem 2rem 4rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .hero-label {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--accent);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-
-    .hero h1 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(3.5rem, 8vw, 7rem);
-      line-height: 0.95;
-      letter-spacing: 0.04em;
-      color: var(--text);
-    }
-    .hero h1 em {
-      font-style: normal;
-      color: var(--accent);
-    }
-
-    .hero-sub {
-      margin-top: 1.5rem;
-      font-size: 1rem;
-      color: var(--muted);
-      max-width: 480px;
-      line-height: 1.7;
-      font-weight: 300;
-    }
-
-    .hero-line {
-      width: 60px;
-      height: 2px;
-      background: var(--accent);
-      margin: 2rem 0;
-    }
-
-    /* TAGS FILTER */
-    .tags-bar {
-      position: relative;
-      z-index: 1;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 2rem 2.5rem;
-      display: flex;
-      gap: 0.6rem;
-      flex-wrap: wrap;
-    }
-
-    .tag-btn {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-      padding: 0.4rem 0.9rem;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--muted);
-      cursor: pointer;
-      transition: all 0.2s;
-      text-transform: uppercase;
-    }
-    .tag-btn:hover, .tag-btn.active {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: rgba(200,245,66,0.06);
-    }
-
-    /* POSTS GRID */
-    .posts {
-      position: relative;
-      z-index: 1;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 2rem 6rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1.5px;
-    }
-
-    .post-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 2rem;
-      position: relative;
-      cursor: pointer;
-      transition: border-color 0.25s, background 0.25s;
-      overflow: hidden;
-    }
-
-    .post-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 3px;
-      height: 0;
-      background: var(--accent);
-      transition: height 0.3s ease;
-    }
-    .post-card:hover::before { height: 100%; }
-    .post-card:hover {
-      border-color: rgba(200,245,66,0.3);
-      background: #161a16;
-    }
-
-    .post-card.featured {
-      grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      align-items: center;
-    }
-    .post-card.featured .post-number {
-      font-size: 6rem;
-    }
-
-    .post-number {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 3.5rem;
-      color: rgba(200,245,66,0.12);
-      line-height: 1;
-      margin-bottom: 0.5rem;
-      transition: color 0.3s;
-    }
-    .post-card:hover .post-number { color: rgba(200,245,66,0.25); }
-
-    .post-tag {
-      display: inline-block;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.15em;
-      color: var(--accent2);
-      text-transform: uppercase;
-      margin-bottom: 0.75rem;
-    }
-
-    .post-title {
-      font-family: 'IBM Plex Sans', sans-serif;
-      font-size: 1.15rem;
-      font-weight: 600;
-      line-height: 1.4;
-      color: var(--text);
-      margin-bottom: 0.75rem;
-    }
-
-    .post-excerpt {
-      font-size: 0.875rem;
-      color: var(--muted);
-      line-height: 1.7;
-      font-weight: 300;
-    }
-
-    .post-meta {
-      margin-top: 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.62rem;
-      color: var(--muted);
-      letter-spacing: 0.08em;
-    }
-
-    .post-meta .read-more {
-      color: var(--accent);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      transition: gap 0.2s;
-    }
-    .post-card:hover .read-more { gap: 0.7rem; }
-
-    /* FOOTER */
-    footer {
-      position: relative;
-      z-index: 1;
-      border-top: 1px solid var(--border);
-      padding: 2rem;
-      text-align: center;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--muted);
-      letter-spacing: 0.1em;
-    }
-    footer span { color: var(--accent); }
-
-    /* ANIMATIONS */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .hero { animation: fadeUp 0.7s ease both; }
-    .tags-bar { animation: fadeUp 0.7s 0.15s ease both; }
-    .posts { animation: fadeUp 0.7s 0.25s ease both; }
-  </style>
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
-
   <nav>
-    <div class="nav-logo">MM<span>.</span>Ingeniería</div>
+    <a class="nav-logo" href="index.html">MM<span>.</span>Ingeniería</a>
     <ul>
-      <li><a href="#">Inicio</a></li>
-      <li><a href="#">Artículos</a></li>
-      <li><a href="#">Proyectos</a></li>
-      <li><a href="#">Contacto</a></li>
+      <li><a href="index.html" class="active">Blog</a></li>
+      <li><a href="perfil.html">Perfil</a></li>
+      <li><a href="proyectos.html">Proyectos</a></li>
+      <li><a href="programas.html">Programas</a></li>
     </ul>
   </nav>
 
@@ -299,7 +22,7 @@
     <p class="hero-label">// Blog técnico · BIM & Construcción</p>
     <h1>INGENIERÍA<br><em>DIGITAL</em></h1>
     <div class="hero-line"></div>
-    <p class="hero-sub">Artículos sobre modelado BIM, normativa peruana de construcción, instalaciones sanitarias, y flujos de trabajo colaborativos.</p>
+    <p class="hero-sub">Artículos sobre modelado BIM, normativa peruana de construcción, instalaciones sanitarias y flujos de trabajo colaborativos.</p>
   </section>
 
   <div class="tags-bar">
@@ -312,96 +35,62 @@
   </div>
 
   <div class="posts" id="postsGrid">
-
     <div class="post-card featured" data-tag="bim">
-      <div>
-        <div class="post-number">01</div>
-      </div>
+      <div><div class="post-number">01</div></div>
       <div>
         <span class="post-tag">BIM · Destacado</span>
         <h2 class="post-title">Clash Detection en proyectos de instalaciones: cómo evitar errores en obra antes de construir</h2>
-        <p class="post-excerpt">El proceso de detección de interferencias entre disciplinas es uno de los mayores aportes del BIM. En este artículo exploramos cómo aplicarlo en proyectos reales con Revit y Navisworks.</p>
-        <div class="post-meta">
-          <span>Mayo 2025 · 8 min</span>
-          <a class="read-more" href="#">Leer → </a>
-        </div>
+        <p class="post-excerpt">El proceso de detección de interferencias entre disciplinas es uno de los mayores aportes del BIM. Exploramos cómo aplicarlo con Revit y Navisworks.</p>
+        <div class="post-meta"><span>Mayo 2026 · 8 min</span><a class="read-more" href="#">Leer →</a></div>
       </div>
     </div>
-
     <div class="post-card" data-tag="sanitarias">
       <div class="post-number">02</div>
       <span class="post-tag">Sanitarias</span>
       <h2 class="post-title">IS.010: criterios de diseño para redes de desagüe colgadas bajo losa</h2>
       <p class="post-excerpt">Análisis de la norma peruana IS.010 aplicada al modelado de tuberías de drenaje suspendidas, pendientes mínimas y materiales permitidos.</p>
-      <div class="post-meta">
-        <span>Abr 2025 · 6 min</span>
-        <a class="read-more" href="#">Leer →</a>
-      </div>
+      <div class="post-meta"><span>Abr 2026 · 6 min</span><a class="read-more" href="#">Leer →</a></div>
     </div>
-
     <div class="post-card" data-tag="revit">
       <div class="post-number">03</div>
       <span class="post-tag">Revit</span>
       <h2 class="post-title">Familias de tuberías en Revit: configuración de sistemas MEP desde cero</h2>
-      <p class="post-excerpt">Guía paso a paso para configurar sistemas de plomería en Revit MEP, incluyendo tipos de tuberías, conectores y materiales según norma.</p>
-      <div class="post-meta">
-        <span>Mar 2025 · 10 min</span>
-        <a class="read-more" href="#">Leer →</a>
-      </div>
+      <p class="post-excerpt">Guía paso a paso para configurar sistemas de plomería en Revit MEP, tipos de tuberías, conectores y materiales según norma.</p>
+      <div class="post-meta"><span>Mar 2026 · 10 min</span><a class="read-more" href="#">Leer →</a></div>
     </div>
-
     <div class="post-card" data-tag="normativa">
       <div class="post-number">04</div>
       <span class="post-tag">Normativa</span>
       <h2 class="post-title">RNE E.060 y BIM: cómo documentar el cumplimiento normativo en el modelo</h2>
-      <p class="post-excerpt">Estrategias para vincular los parámetros del modelo Revit con los requisitos del Reglamento Nacional de Edificaciones, facilitando la revisión por parte de supervisores.</p>
-      <div class="post-meta">
-        <span>Feb 2025 · 7 min</span>
-        <a class="read-more" href="#">Leer →</a>
-      </div>
+      <p class="post-excerpt">Estrategias para vincular parámetros del modelo Revit con los requisitos del Reglamento Nacional de Edificaciones.</p>
+      <div class="post-meta"><span>Feb 2026 · 7 min</span><a class="read-more" href="#">Leer →</a></div>
     </div>
-
     <div class="post-card" data-tag="bim">
       <div class="post-number">05</div>
       <span class="post-tag">BIM</span>
       <h2 class="post-title">BIM Level 2: coordinación entre disciplinas en proyectos multidisciplinarios</h2>
-      <p class="post-excerpt">Qué significa trabajar en BIM nivel 2, cómo se organiza la información entre arquitectura, estructura e instalaciones, y qué herramientas de coordinación usar.</p>
-      <div class="post-meta">
-        <span>Ene 2025 · 9 min</span>
-        <a class="read-more" href="#">Leer →</a>
-      </div>
+      <p class="post-excerpt">Qué significa trabajar en BIM nivel 2 y cómo se organiza la información entre arquitectura, estructura e instalaciones.</p>
+      <div class="post-meta"><span>Ene 2026 · 9 min</span><a class="read-more" href="#">Leer →</a></div>
     </div>
-
     <div class="post-card" data-tag="estructuras">
       <div class="post-number">06</div>
       <span class="post-tag">Estructuras</span>
       <h2 class="post-title">Coordinación entre estructura e instalaciones: losas, vigas y pases de tuberías</h2>
-      <p class="post-excerpt">Cómo gestionar los pases de tuberías a través de elementos estructurales sin comprometer la integridad del diseño, usando openings en Revit.</p>
-      <div class="post-meta">
-        <span>Dic 2024 · 5 min</span>
-        <a class="read-more" href="#">Leer →</a>
-      </div>
+      <p class="post-excerpt">Cómo gestionar pases de tuberías a través de elementos estructurales sin comprometer el diseño, usando openings en Revit.</p>
+      <div class="post-meta"><span>Dic 2025 · 5 min</span><a class="read-more" href="#">Leer →</a></div>
     </div>
-
   </div>
 
-  <footer>
-    <p>© 2026 <span>MM INGENIERIA</span> · Blog BIM & Construcción · Lima, Perú</p>
-  </footer>
+  <footer><p>© 2026 <span>MM INGENIERIA</span> · Blog BIM & Construcción · Perú</p></footer>
 
   <script>
     function filterTag(btn, tag) {
       document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       document.querySelectorAll('.post-card').forEach(card => {
-        if (tag === 'todos' || card.dataset.tag === tag) {
-          card.style.display = '';
-        } else {
-          card.style.display = 'none';
-        }
+        card.style.display = (tag === 'todos' || card.dataset.tag === tag) ? '' : 'none';
       });
     }
   </script>
-
 </body>
 </html>
