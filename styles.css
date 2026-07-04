@@ -196,6 +196,7 @@ nav ul a:hover, nav ul a.active {
   cursor: pointer;
   transition: border-color 0.25s, background 0.25s;
   overflow: hidden;
+  border-radius: 10px;
 }
 
 .post-card::before {
@@ -293,6 +294,7 @@ nav ul a:hover, nav ul a.active {
   position: relative;
   transition: border-color 0.25s, background 0.25s;
   overflow: hidden;
+  border-radius: 10px;
 }
 .card::before {
   content: '';
@@ -431,6 +433,7 @@ nav ul a:hover, nav ul a.active {
 
   display: flex;
   flex-direction: column;
+  border-radius: 10px;
 }
 
 .btn-download {
