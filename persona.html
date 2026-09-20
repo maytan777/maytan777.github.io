@@ -300,6 +300,93 @@
     }
     .api-error.visible { display: block; }
 
+    /* === LAYOUT PERSONA (menú lateral) === */
+    .persona-layout {
+      display: grid;
+      grid-template-columns: 230px 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+    .side-menu {
+      position: sticky;
+      top: 80px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.75rem;
+    }
+    .side-menu-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.5rem 0.75rem 0.75rem;
+    }
+    .menu-toggle {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 1rem;
+      width: 34px;
+      height: 34px;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: border-color 0.2s;
+    }
+    .menu-toggle:hover { border-color: var(--accent); }
+    .side-menu-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.8rem 0.9rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      transition: all 0.2s;
+      margin-bottom: 0.3rem;
+      white-space: nowrap;
+    }
+    .menu-item:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.05);
+    }
+    .menu-item.active {
+      color: var(--bg);
+      background: var(--accent);
+      font-weight: 700;
+    }
+    .menu-item svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      stroke: currentColor;
+    }
+    .side-menu.collapsed .side-menu-title,
+    .side-menu.collapsed .menu-label { display: none; }
+    .side-menu.collapsed .menu-item { justify-content: center; padding: 0.8rem 0; }
+    .panel { display: none; min-width: 0; }
+    .panel.active { display: block; animation: fadeUp 0.4s ease both; }
+
+    @media (max-width: 900px) {
+      .persona-layout { grid-template-columns: 1fr; }
+      .side-menu { position: static; display: flex; align-items: center; gap: 0.5rem; overflow-x: auto; padding: 0.6rem; }
+      .side-menu-header { padding: 0; }
+      .side-menu-title { display: none; }
+      .menu-toggle { display: none; }
+      .menu-item { margin-bottom: 0; flex-shrink: 0; }
+    }
+
     @media (max-width: 760px) {
       .task-grid { grid-template-columns: 1fr; }
       .task-form { position: static; }
@@ -332,7 +419,42 @@
       <span id="api-error-text"><strong>// ERROR DE CONEXIÓN:</strong> No se pudo conectar con la base de datos (Supabase). Verifica tu conexión a internet y que las claves SUPABASE_URL y SUPABASE_ANON_KEY estén configuradas en este archivo.</span>
     </div>
 
-    <!-- ===== HORARIO ===== -->
+    <div class="persona-layout">
+
+      <!-- ===== MENÚ LATERAL ===== -->
+      <aside class="side-menu" id="side-menu">
+        <div class="side-menu-header">
+          <button class="menu-toggle" id="menu-toggle" title="Plegar / desplegar">☰</button>
+          <span class="side-menu-title">// Mi menú</span>
+        </div>
+        <div class="menu-item active" data-panel="panel-horario">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 7v5l3 2"/>
+          </svg>
+          <span class="menu-label">Horario</span>
+        </div>
+        <div class="menu-item" data-panel="panel-tareas">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="16" height="16" x="4" y="4" rx="2"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+          <span class="menu-label">Tareas y notas</span>
+        </div>
+        <div class="menu-item" data-panel="panel-proximas">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/>
+            <path d="M13.7 21a2 2 0 0 1-3.4 0"/>
+          </svg>
+          <span class="menu-label">Próximas</span>
+        </div>
+      </aside>
+
+      <!-- ===== CONTENIDO ===== -->
+      <div class="persona-content">
+
+        <!-- ===== HORARIO ===== -->
+        <div class="panel active" id="panel-horario">
     <p class="section-label">// Organización</p>
     <h2 class="section-title">Mi horario de estudio</h2>
     <div class="color-bar" id="color-bar">
@@ -349,8 +471,10 @@
     </div>
     <p class="schedule-hint">// Clic y arrastra para seleccionar un rango (como Excel) · Shift+arrastre extiende la selección · Ctrl+arrastre suma/quita casillas · Ctrl+C y Ctrl+V copian y pegan · Supr borra la selección. El color se aplica a todas las casillas seleccionadas. Todo se guarda automáticamente.</p>
 
+    </div><!-- /panel-horario -->
+
     <!-- ===== TAREAS ===== -->
-    <div style="margin-top: 4rem;">
+    <div class="panel" id="panel-tareas">
       <p class="section-label">// Organización</p>
       <h2 class="section-title">Mis tareas y notas</h2>
 
@@ -381,11 +505,20 @@
         <div class="task-list" id="task-list"></div>
       </div>
 
+    </div><!-- /panel-tareas -->
+
+    <!-- ===== PRÓXIMAS ===== -->
+    <div class="panel" id="panel-proximas">
+      <p class="section-label">// Organización</p>
+      <h2 class="section-title">Próximas actividades</h2>
+
       <div class="upcoming" id="upcoming">
-        <div class="upcoming-title">// Próximas actividades</div>
         <div id="upcoming-list"></div>
       </div>
     </div>
+
+    </div><!-- /persona-content -->
+  </div><!-- /persona-layout -->
   </div>
 
   <footer><p>© 2026 <span>MM INGENIERIA</span> · Blog BIM & Construcción · Perú</p></footer>
@@ -980,11 +1113,36 @@
       }
     }
 
+    // ===================== MENÚ LATERAL =====================
+    const PANEL_KEY = 'persona_panel';
+
+    function showPanel(id) {
+      document.querySelectorAll('.side-menu .menu-item').forEach(m => {
+        m.classList.toggle('active', m.dataset.panel === id);
+      });
+      document.querySelectorAll('.persona-content .panel').forEach(p => {
+        p.classList.toggle('active', p.id === id);
+      });
+      try { localStorage.setItem(PANEL_KEY, id); } catch (e) { }
+    }
+
+    document.querySelectorAll('.side-menu .menu-item').forEach(m => {
+      m.addEventListener('click', () => showPanel(m.dataset.panel));
+    });
+
+    document.getElementById('menu-toggle').addEventListener('click', () => {
+      document.getElementById('side-menu').classList.toggle('collapsed');
+    });
+
     // ===================== INIT =====================
     buildColorBar();
     renderSchedule();
     refreshTasks();
     requestNotify();
+    try {
+      const saved = localStorage.getItem(PANEL_KEY);
+      if (saved && document.getElementById(saved)) showPanel(saved);
+    } catch (e) { }
     setInterval(checkReminders, 15000);
     setInterval(refreshTasks, 60000);
   </script>
