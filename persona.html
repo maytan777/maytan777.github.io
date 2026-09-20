@@ -130,7 +130,9 @@
       gap: 0.9rem;
       position: sticky;
       top: 80px;
+      transition: box-shadow 0.25s;
     }
+    .task-form:hover { box-shadow: 8px 8px 30px rgba(20,220,255,0.35); }
     .task-form label {
       font-family: 'Space Mono', monospace;
       font-size: 0.62rem;
@@ -196,7 +198,10 @@
       position: relative;
       transition: border-color 0.25s;
     }
-    .task-item:hover { border-color: rgba(79,195,247,0.35); }
+    .task-item:hover {
+      border-color: rgba(79,195,247,0.35);
+      box-shadow: 8px 8px 30px rgba(20,220,255,0.35);
+    }
     .task-item.done { opacity: 0.5; }
     .task-item.done .task-title { text-decoration: line-through; }
     .task-check {
