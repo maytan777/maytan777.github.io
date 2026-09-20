@@ -271,6 +271,14 @@
       text-overflow: ellipsis;
     }
     .task-plabel.overdue { color: #e05555; font-weight: 700; }
+    .task-fecha {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.64rem;
+      letter-spacing: 0.05em;
+      color: var(--accent2);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
     .task-del {
       background: none;
       border: 1px solid var(--border);
@@ -1116,11 +1124,11 @@
           title.title = t.titulo;
           const meta = document.createElement('div');
           meta.className = 'task-meta';
-          const metaText = (t.nota ? t.nota + ' · ' : '') + fmtWhenShort(t);
+          const metaText = t.nota ? t.nota : '';
           meta.textContent = metaText;
           meta.title = metaText;
           info.appendChild(title);
-          info.appendChild(meta);
+          if (metaText) info.appendChild(meta);
 
           const prog = document.createElement('div');
           prog.className = 'task-progress';
@@ -1152,6 +1160,11 @@
           prog.appendChild(bar);
           prog.appendChild(plabel);
 
+          const fecha = document.createElement('div');
+          fecha.className = 'task-fecha';
+          fecha.textContent = fmtWhenShort(t);
+          fecha.title = fmtWhen(t);
+
           const del = document.createElement('button');
           del.className = 'task-del';
           del.textContent = '✕';
@@ -1170,6 +1183,7 @@
           item.appendChild(done);
           item.appendChild(info);
           item.appendChild(prog);
+          item.appendChild(fecha);
           item.appendChild(del);
           list.appendChild(item);
         });
