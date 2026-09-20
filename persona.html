@@ -31,7 +31,7 @@
       font-size: 1.1rem;
       letter-spacing: 0.08em;
       color: var(--text);
-      background: #161a16;
+      background: #0b0d0c;
     }
     .schedule-table .col-time {
       font-family: 'Space Mono', monospace;
@@ -39,7 +39,7 @@
       color: var(--muted);
       letter-spacing: 0.08em;
       white-space: nowrap;
-      background: #161a16;
+      background: #0b0d0c;
     }
     .schedule-table td[contenteditable] {
       font-size: 0.78rem;
@@ -49,13 +49,13 @@
       cursor: text;
       transition: background 0.2s;
     }
-    .schedule-table td[contenteditable]:hover { background: rgba(200,245,66,0.05); }
+    .schedule-table td[contenteditable]:hover { background: #0a0c0b; }
     .schedule-table td[contenteditable]:focus {
-      outline: 1px solid var(--accent);
-      background: rgba(200,245,66,0.08);
+      outline: 1px solid var(--celeste);
+      background: #0e100f;
     }
     .schedule-table td.selected {
-      outline: 2px solid var(--accent);
+      outline: 2px solid var(--celeste);
       outline-offset: -2px;
     }
     .schedule-table td.filled { color: var(--accent); }
@@ -193,9 +193,10 @@
       display: flex;
       gap: 1rem;
       align-items: flex-start;
+      position: relative;
       transition: border-color 0.25s;
     }
-    .task-item:hover { border-color: rgba(200,245,66,0.3); }
+    .task-item:hover { border-color: rgba(79,195,247,0.35); }
     .task-item.done { opacity: 0.5; }
     .task-item.done .task-title { text-decoration: line-through; }
     .task-check {

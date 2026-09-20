@@ -1,9 +1,10 @@
 :root {
   --bg: #0d0f0e;
-  --surface: #141716;
+  --surface: #0f1110;
   --border: #2a2e2b;
   --accent: #12bd92;
   --accent2: #3583a7;
+  --celeste: #4fc3f7;
   --text: #e8ede9;
   --muted: #7a8a7c;
 }
@@ -174,7 +175,7 @@ nav ul a:hover, nav ul a.active {
 .tag-btn:hover, .tag-btn.active {
   border-color: var(--accent);
   color: var(--accent);
-  background: rgba(200,245,66,0.06);
+  background: rgba(255,255,255,0.04);
 }
 
 /* POSTS GRID */
@@ -206,13 +207,13 @@ nav ul a:hover, nav ul a.active {
   top: 0; left: 0;
   width: 3px;
   height: 0;
-  background: var(--accent);
+  background: var(--celeste);
   transition: height 0.3s ease;
 }
 .post-card:hover::before { height: 100%; }
 .post-card:hover {
-  border-color: rgba(200,245,66,0.3);
-  background: #161a16;
+  border-color: rgba(79,195,247,0.35);
+  background: #0a0c0b;
 }
 
 .post-card.featured {
@@ -302,13 +303,13 @@ nav ul a:hover, nav ul a.active {
   position: absolute;
   top: 0; left: 0;
   width: 3px; height: 0;
-  background: var(--accent);
+  background: var(--celeste);
   transition: height 0.3s;
 }
 .card:hover::before { height: 100%; }
 .card:hover {
-  border-color: rgba(200,245,66,0.3);
-  background: #161a16;
+  border-color: rgba(79,195,247,0.35);
+  background: #0a0c0b;
 }
 
 .card-icon {
@@ -319,8 +320,8 @@ nav ul a:hover, nav ul a.active {
   justify-content: center;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: rgba(200,245,66,0.04);
-  color: var(--accent);
+  background: rgba(255,255,255,0.03);
+  color: var(--celeste);
   margin-bottom: 1.25rem;
   transition: border-color 0.25s, color 0.25s, background 0.25s;
 }
@@ -330,8 +331,8 @@ nav ul a:hover, nav ul a.active {
   stroke: currentColor;
 }
 .card:hover .card-icon {
-  border-color: var(--accent);
-  background: rgba(200,245,66,0.08);
+  border-color: var(--celeste);
+  background: rgba(255,255,255,0.06);
 }
 
 .card-title {
@@ -524,4 +525,47 @@ footer span { color: var(--accent); }
 .wa-float:hover {
   transform: scale(1.1);
   box-shadow: 0 6px 28px rgba(37,211,102,0.6);
+}
+
+/* RAYO CELESTE que recorre el borde del card al pasar el mouse */
+.post-card::after,
+.card::after,
+.prog-card::after,
+.contact-item::after,
+.wa-card::after,
+.task-item::after,
+.task-form::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 285deg,
+    rgba(79,195,247,0.25) 305deg,
+    rgba(79,195,247,0.95) 345deg,
+    rgba(79,195,247,0.95) 360deg
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  pointer-events: none;
+}
+.post-card:hover::after,
+.card:hover::after,
+.prog-card:hover::after,
+.contact-item:hover::after,
+.wa-card:hover::after,
+.task-item:hover::after,
+.task-form:hover::after {
+  animation: sweepBorder 1.1s linear 1;
+}
+@keyframes sweepBorder {
+  0%   { transform: rotate(0deg); opacity: 1; }
+  85%  { opacity: 1; }
+  100% { transform: rotate(360deg); opacity: 0; }
 }
