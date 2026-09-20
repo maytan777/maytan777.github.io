@@ -74,11 +74,13 @@ nav ul a {
 nav ul a:hover {
   color: var(--text);
   background: rgba(255,255,255,0.05);
+  box-shadow: 4px 4px 18px rgba(20,220,255,0.25);
 }
 nav ul a.active {
   color: var(--bg);
   background: var(--accent);
   font-weight: 700;
+  box-shadow: 8px 8px 30px rgba(20,220,255,0.45);
 }
 
 /* HERO */
