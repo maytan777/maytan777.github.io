@@ -28,11 +28,15 @@
     .hero-video video {
       width: 100%;
       display: block;
-      border-radius: 18px;
-      border: 1px solid rgba(79,195,247,0.35);
-      box-shadow: 8px 8px 40px rgba(20,220,255,0.25);
-      -webkit-mask-image: radial-gradient(ellipse at center, black 62%, transparent 98%);
-      mask-image: radial-gradient(ellipse at center, black 62%, transparent 98%);
+      transform: scale(1.08);
+      -webkit-mask-image:
+        linear-gradient(to bottom, transparent, black 10%, black 90%, transparent),
+        linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+      -webkit-mask-composite: source-in;
+      mask-image:
+        linear-gradient(to bottom, transparent, black 10%, black 90%, transparent),
+        linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+      mask-composite: intersect;
     }
     @media (max-width: 900px) {
       .hero-split { grid-template-columns: 1fr; gap: 2rem; }
