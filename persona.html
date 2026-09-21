@@ -353,12 +353,40 @@
     }
     .mini-btn:hover { background: var(--accent); color: var(--bg); }
     .task-del.mini { width: 22px; height: 22px; font-size: 0.7rem; }
-    .curso-nombre, .grupo-nombre, .alumno-list li span { cursor: pointer; }
-    .curso-nombre:hover::after, .grupo-nombre:hover::after, .alumno-list li span:hover::after {
-      content: ' ✎';
-      color: var(--celeste);
-      font-size: 0.75em;
+    .icon-btn {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 6px;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
     }
+    .icon-btn:hover { border-color: var(--celeste); color: var(--celeste); }
+    .icon-btn svg { width: 15px; height: 15px; stroke: currentColor; }
+    .icon-btn.mini { width: 22px; height: 22px; }
+    .icon-btn.mini svg { width: 12px; height: 12px; }
+    .curso-form-wrap { margin-bottom: 0; }
+    .curso-form-wrap.form-open #btn-show-curso-form { display: none; }
+    #btn-show-curso-form { width: 100%; }
+    .mini-btn.icon-only { padding: 0.5rem 0.7rem; display: inline-flex; align-items: center; gap: 0.25rem; }
+    .mini-btn.icon-only .plus { font-weight: 700; font-size: 0.8rem; line-height: 1; }
+    .mini-btn.icon-only svg { width: 15px; height: 15px; stroke: currentColor; }
+    .grupo-actions, .alumno-actions { display: flex; gap: 0.4rem; align-items: center; flex-shrink: 0; }
+    .curso-form { display: none; }
+    .curso-form.open { display: grid; }
+    .form-head-row {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .form-head-row .side-menu-title { font-size: 0.62rem; }
     .edit-input {
       width: 100%;
       background: #0d0f0e;
@@ -839,7 +867,13 @@
       <p class="section-label">// Organización</p>
       <h2 class="section-title">Mis cursos y grupos</h2>
 
-      <form class="curso-form" id="curso-form">
+      <div class="curso-form-wrap">
+        <button class="btn-add" id="btn-show-curso-form" type="button">+ Agregar curso</button>
+        <form class="curso-form" id="curso-form">
+        <div class="form-head-row">
+          <span class="side-menu-title">// Nuevo curso</span>
+          <button class="icon-btn mini" id="btn-hide-curso-form" type="button" title="Minimizar">−</button>
+        </div>
         <div>
           <label for="curso-nombre">Curso</label>
           <input id="curso-nombre" type="text" placeholder="Ej: Geomática" required/>
@@ -854,6 +888,7 @@
         </div>
         <button class="btn-add" type="submit">+ Agregar curso</button>
       </form>
+      </div>
 
       <div class="curso-list" id="curso-list"></div>
     </div><!-- /panel-cursos -->
@@ -1493,6 +1528,28 @@
       input.addEventListener('mousedown', ev => ev.stopPropagation());
     }
 
+    const SVG_PENCIL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>';
+    const SVG_USER = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
+    const SVG_USERS = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>';
+
+    function pencilBtn(title) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'icon-btn mini';
+      b.title = title;
+      b.innerHTML = SVG_PENCIL;
+      return b;
+    }
+
+    function iconAddBtn(svg, title) {
+      const b = document.createElement('button');
+      b.className = 'mini-btn icon-only';
+      b.type = 'submit';
+      b.title = title;
+      b.innerHTML = '<span class="plus">+</span>' + svg;
+      return b;
+    }
+
     async function refreshCursos() {
       try {
         const c = await db.from('cursos').select('*').order('creada', { ascending: true });
@@ -1540,14 +1597,7 @@
         const nom = document.createElement('div');
         nom.className = 'curso-nombre';
         nom.textContent = curso.nombre;
-        nom.title = 'Clic para editar';
-        nom.addEventListener('click', ev => {
-          ev.stopPropagation();
-          editInline(nom, curso.nombre, async v => {
-            const { error } = await db.from('cursos').update({ nombre: v }).eq('id', curso.id);
-            if (error) throw error;
-          });
-        });
+        nom.title = curso.nombre;
         info.appendChild(nom);
         const metaTxt = [curso.docente, curso.nota].filter(Boolean).join(' · ');
         if (metaTxt) {
@@ -1584,6 +1634,15 @@
         });
         head.appendChild(info);
         head.appendChild(count);
+        const editCurso = pencilBtn('Editar curso');
+        editCurso.addEventListener('click', ev => {
+          ev.stopPropagation();
+          editInline(nom, curso.nombre, async v => {
+            const { error } = await db.from('cursos').update({ nombre: v }).eq('id', curso.id);
+            if (error) throw error;
+          });
+        });
+        head.appendChild(editCurso);
         head.appendChild(tog);
         head.appendChild(del);
         head.addEventListener('click', () => {
@@ -1603,10 +1662,7 @@
         gi.type = 'text';
         gi.placeholder = 'Nombre del grupo (Ej: Grupo 1)';
         gi.required = true;
-        const gb = document.createElement('button');
-        gb.className = 'mini-btn';
-        gb.type = 'submit';
-        gb.textContent = '+ Grupo';
+        const gb = iconAddBtn(SVG_USERS, 'Agregar grupo');
         gf.appendChild(gi);
         gf.appendChild(gb);
         gf.addEventListener('submit', async ev => {
@@ -1634,13 +1690,7 @@
       const nm = document.createElement('span');
       nm.className = 'grupo-nombre';
       nm.textContent = gr.nombre;
-      nm.title = 'Clic para editar';
-      nm.addEventListener('click', () => {
-        editInline(nm, gr.nombre, async v => {
-          const { error } = await db.from('grupos').update({ nombre: v }).eq('id', gr.id);
-          if (error) throw error;
-        });
-      });
+      nm.title = gr.nombre;
       const del = document.createElement('button');
       del.type = 'button';
       del.className = 'task-del mini';
@@ -1656,7 +1706,18 @@
         refreshCursos();
       });
       head.appendChild(nm);
-      head.appendChild(del);
+      const gActions = document.createElement('div');
+      gActions.className = 'grupo-actions';
+      const editGr = pencilBtn('Editar grupo');
+      editGr.addEventListener('click', () => {
+        editInline(nm, gr.nombre, async v => {
+          const { error } = await db.from('grupos').update({ nombre: v }).eq('id', gr.id);
+          if (error) throw error;
+        });
+      });
+      gActions.appendChild(editGr);
+      gActions.appendChild(del);
+      head.appendChild(gActions);
       box.appendChild(head);
 
       if (gr.alumnos.length) {
@@ -1666,13 +1727,7 @@
           const li = document.createElement('li');
           const sp = document.createElement('span');
           sp.textContent = al.nombre;
-          sp.title = 'Clic para editar';
-          sp.addEventListener('click', () => {
-            editInline(sp, al.nombre, async v => {
-              const { error } = await db.from('alumnos').update({ nombre: v }).eq('id', al.id);
-              if (error) throw error;
-            });
-          });
+          sp.title = al.nombre;
           const x = document.createElement('button');
           x.type = 'button';
           x.className = 'task-del mini';
@@ -1687,7 +1742,18 @@
             refreshCursos();
           });
           li.appendChild(sp);
-          li.appendChild(x);
+          const aActions = document.createElement('div');
+          aActions.className = 'alumno-actions';
+          const editAl = pencilBtn('Editar alumno');
+          editAl.addEventListener('click', () => {
+            editInline(sp, al.nombre, async v => {
+              const { error } = await db.from('alumnos').update({ nombre: v }).eq('id', al.id);
+              if (error) throw error;
+            });
+          });
+          aActions.appendChild(editAl);
+          aActions.appendChild(x);
+          li.appendChild(aActions);
           ul.appendChild(li);
         });
         box.appendChild(ul);
@@ -1704,10 +1770,7 @@
       ai.type = 'text';
       ai.placeholder = 'Nombre del alumno';
       ai.required = true;
-      const ab = document.createElement('button');
-      ab.className = 'mini-btn';
-      ab.type = 'submit';
-      ab.textContent = '+ Alumno';
+      const ab = iconAddBtn(SVG_USER, 'Agregar alumno');
       af.appendChild(ai);
       af.appendChild(ab);
       af.addEventListener('submit', async ev => {
@@ -1741,6 +1804,16 @@
       }
       this.reset();
       refreshCursos();
+    });
+
+    document.getElementById('btn-show-curso-form').addEventListener('click', () => {
+      document.getElementById('curso-form').classList.add('open');
+      document.querySelector('.curso-form-wrap').classList.add('form-open');
+      document.getElementById('curso-nombre').focus();
+    });
+    document.getElementById('btn-hide-curso-form').addEventListener('click', () => {
+      document.getElementById('curso-form').classList.remove('open');
+      document.querySelector('.curso-form-wrap').classList.remove('form-open');
     });
 
     // ===================== NOTIFICACIONES =====================
