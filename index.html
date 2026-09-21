@@ -8,40 +8,6 @@
   <meta name="description" content="MM Ingeniería - Blog técnico de Maytan777 sobre BIM, modelado Revit, normativa peruana de construcción e instalaciones sanitarias.">
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="styles.css"/>
-  <style>
-    .hero-split {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: center;
-    }
-    .hero-video { position: relative; }
-    .hero-video::before {
-      content: '';
-      position: absolute;
-      inset: -30px;
-      background: radial-gradient(ellipse at center, rgba(79,195,247,0.35), rgba(79,195,247,0) 70%);
-      filter: blur(40px);
-      z-index: -1;
-      pointer-events: none;
-    }
-    .hero-video video {
-      width: 100%;
-      display: block;
-      transform: scale(1.08);
-      -webkit-mask-image:
-        linear-gradient(to bottom, transparent, black 10%, black 90%, transparent),
-        linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-      -webkit-mask-composite: source-in;
-      mask-image:
-        linear-gradient(to bottom, transparent, black 10%, black 90%, transparent),
-        linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-      mask-composite: intersect;
-    }
-    @media (max-width: 900px) {
-      .hero-split { grid-template-columns: 1fr; gap: 2rem; }
-    }
-  </style>
 </head>
 <body>
   <nav>
@@ -57,7 +23,7 @@
   </nav>
 
   
-  <section class="hero hero-split">
+  <section class="hero">
     <div>
       <span class="hero-pill"><span class="dot"></span> Blog activo · Perú</span>
       <p class="hero-label">// Blog técnico · BIM & Construcción</p>
@@ -68,11 +34,6 @@
         <a class="btn-primary" href="#postsGrid">Ver artículos ↓</a>
         <a class="btn-ghost" href="perfil.html">Sobre mí</a>
       </div>
-    </div>
-    <div class="hero-video">
-      <video autoplay muted loop playsinline preload="auto">
-        <source src="VIDEO.mp4" type="video/mp4">
-      </video>
     </div>
   </section>
 
