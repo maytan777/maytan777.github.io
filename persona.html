@@ -353,6 +353,23 @@
     }
     .mini-btn:hover { background: var(--accent); color: var(--bg); }
     .task-del.mini { width: 22px; height: 22px; font-size: 0.7rem; }
+    .curso-nombre, .grupo-nombre, .alumno-list li span { cursor: pointer; }
+    .curso-nombre:hover::after, .grupo-nombre:hover::after, .alumno-list li span:hover::after {
+      content: ' ✎';
+      color: var(--celeste);
+      font-size: 0.75em;
+    }
+    .edit-input {
+      width: 100%;
+      background: #0d0f0e;
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      color: var(--text);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.85rem;
+      padding: 0.4rem 0.6rem;
+    }
+    .edit-input:focus { outline: none; }
 
     .task-list {
       display: flex;
@@ -1441,6 +1458,40 @@
 
     // ===================== CURSOS =====================
     let cursos = [];
+    const openCursos = new Set();
+
+    async function editInline(displayEl, value, saveFn) {
+      if (displayEl.dataset.editing === '1') return;
+      displayEl.dataset.editing = '1';
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.value = value;
+      input.className = 'edit-input';
+      input.setAttribute('aria-label', 'Editar nombre');
+      displayEl.replaceWith(input);
+      input.focus();
+      input.select();
+      let done = false;
+      const finish = async save => {
+        if (done) return;
+        done = true;
+        const v = input.value.trim();
+        if (save && v && v !== value) {
+          try {
+            await saveFn(v);
+            showApiError(false);
+          } catch (e) { showApiError(true); }
+        }
+        refreshCursos();
+      };
+      input.addEventListener('keydown', ev => {
+        if (ev.key === 'Enter') { ev.preventDefault(); finish(true); }
+        else if (ev.key === 'Escape') { finish(false); }
+      });
+      input.addEventListener('blur', () => finish(true));
+      input.addEventListener('click', ev => ev.stopPropagation());
+      input.addEventListener('mousedown', ev => ev.stopPropagation());
+    }
 
     async function refreshCursos() {
       try {
@@ -1480,6 +1531,7 @@
       cursos.forEach(curso => {
         const card = document.createElement('div');
         card.className = 'curso-card';
+        if (openCursos.has(curso.id)) card.classList.add('open');
 
         const head = document.createElement('div');
         head.className = 'curso-head';
@@ -1488,7 +1540,14 @@
         const nom = document.createElement('div');
         nom.className = 'curso-nombre';
         nom.textContent = curso.nombre;
-        nom.title = curso.nombre;
+        nom.title = 'Clic para editar';
+        nom.addEventListener('click', ev => {
+          ev.stopPropagation();
+          editInline(nom, curso.nombre, async v => {
+            const { error } = await db.from('cursos').update({ nombre: v }).eq('id', curso.id);
+            if (error) throw error;
+          });
+        });
         info.appendChild(nom);
         const metaTxt = [curso.docente, curso.nota].filter(Boolean).join(' · ');
         if (metaTxt) {
@@ -1515,6 +1574,7 @@
         del.addEventListener('click', async ev => {
           ev.stopPropagation();
           if (!confirm('¿Eliminar "' + curso.nombre + '" con sus grupos y alumnos?')) return;
+          openCursos.delete(curso.id);
           try {
             const { error } = await db.from('cursos').delete().eq('id', curso.id);
             if (error) throw error;
@@ -1526,7 +1586,11 @@
         head.appendChild(count);
         head.appendChild(tog);
         head.appendChild(del);
-        head.addEventListener('click', () => card.classList.toggle('open'));
+        head.addEventListener('click', () => {
+          const isOpen = card.classList.toggle('open');
+          if (isOpen) openCursos.add(curso.id);
+          else openCursos.delete(curso.id);
+        });
         card.appendChild(head);
 
         const body = document.createElement('div');
@@ -1570,6 +1634,13 @@
       const nm = document.createElement('span');
       nm.className = 'grupo-nombre';
       nm.textContent = gr.nombre;
+      nm.title = 'Clic para editar';
+      nm.addEventListener('click', () => {
+        editInline(nm, gr.nombre, async v => {
+          const { error } = await db.from('grupos').update({ nombre: v }).eq('id', gr.id);
+          if (error) throw error;
+        });
+      });
       const del = document.createElement('button');
       del.type = 'button';
       del.className = 'task-del mini';
@@ -1595,6 +1666,13 @@
           const li = document.createElement('li');
           const sp = document.createElement('span');
           sp.textContent = al.nombre;
+          sp.title = 'Clic para editar';
+          sp.addEventListener('click', () => {
+            editInline(sp, al.nombre, async v => {
+              const { error } = await db.from('alumnos').update({ nombre: v }).eq('id', al.id);
+              if (error) throw error;
+            });
+          });
           const x = document.createElement('button');
           x.type = 'button';
           x.className = 'task-del mini';
