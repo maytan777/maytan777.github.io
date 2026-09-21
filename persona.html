@@ -182,6 +182,178 @@
     }
     .btn-add:hover { background: #0fae86; }
 
+    /* === CURSOS === */
+    .curso-form {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.9rem;
+      transition: box-shadow 0.25s;
+    }
+    .curso-form:hover { box-shadow: 8px 8px 30px rgba(20,220,255,0.35); }
+    .curso-form label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 0.35rem;
+    }
+    .curso-form input {
+      width: 100%;
+      background: #0d0f0e;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.85rem;
+      padding: 0.6rem 0.75rem;
+    }
+    .curso-form input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .curso-form .btn-add { grid-column: 1 / -1; }
+    .curso-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      margin-top: 1.5rem;
+    }
+    .curso-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: border-color 0.25s;
+    }
+    .curso-card:hover { border-color: rgba(79,195,247,0.35); }
+    .curso-head {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 1rem 1.2rem;
+      cursor: pointer;
+    }
+    .curso-info { flex: 1; min-width: 0; }
+    .curso-nombre {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .curso-meta {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 0.15rem;
+    }
+    .curso-count {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--accent2);
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .curso-toggle {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 6px;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      line-height: 1;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+    .curso-toggle:hover { border-color: var(--celeste); color: var(--celeste); }
+    .curso-card.open .curso-toggle { transform: rotate(180deg); }
+    .curso-body {
+      display: none;
+      border-top: 1px solid var(--border);
+      padding: 1rem 1.2rem;
+    }
+    .curso-card.open .curso-body { display: block; }
+    .grupo-block {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.9rem 1rem;
+      margin-bottom: 0.8rem;
+    }
+    .grupo-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+      margin-bottom: 0.5rem;
+    }
+    .grupo-nombre { font-weight: 600; font-size: 0.9rem; color: var(--text); }
+    .alumno-list { list-style: none; margin: 0 0 0.5rem; padding: 0; }
+    .alumno-list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+      padding: 0.35rem 0;
+      border-bottom: 1px dashed var(--border);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .alumno-list li:last-child { border-bottom: none; }
+    .alumno-vacio {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    .mini-form { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+    .mini-form input {
+      flex: 1;
+      min-width: 0;
+      background: #0d0f0e;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.8rem;
+      padding: 0.5rem 0.65rem;
+    }
+    .mini-form input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .mini-btn {
+      flex-shrink: 0;
+      padding: 0.5rem 0.9rem;
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .mini-btn:hover { background: var(--accent); color: var(--bg); }
+    .task-del.mini { width: 22px; height: 22px; font-size: 0.7rem; }
+
     .task-list {
       display: flex;
       flex-direction: column;
@@ -552,6 +724,13 @@
           </svg>
           <span class="menu-label">Próximas</span>
         </div>
+        <div class="menu-item" data-panel="panel-cursos">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+          </svg>
+          <span class="menu-label">Cursos</span>
+        </div>
       </aside>
 
       <!-- ===== CONTENIDO ===== -->
@@ -570,7 +749,7 @@
             <p class="hero-label">// Mi espacio personal</p>
             <h1>ÁREA<br><em>PERSONAL</em></h1>
             <div class="hero-line"></div>
-            <p class="hero-sub">Tu horario de estudio, tus tareas y recordatorios. Los datos se guardan en Supabase (nube) y se sincronizan en todos tus dispositivos.</p>
+            <p class="hero-sub">Tu horario de estudio, tus tareas, tus cursos y recordatorios. Los datos se guardan en Supabase (nube) y se sincronizan en todos tus dispositivos.</p>
           </section>
         </div>
 
@@ -637,6 +816,30 @@
         <div id="upcoming-list"></div>
       </div>
     </div><!-- /panel-proximas -->
+
+    <!-- ===== CURSOS ===== -->
+    <div class="panel" id="panel-cursos">
+      <p class="section-label">// Organización</p>
+      <h2 class="section-title">Mis cursos y grupos</h2>
+
+      <form class="curso-form" id="curso-form">
+        <div>
+          <label for="curso-nombre">Curso</label>
+          <input id="curso-nombre" type="text" placeholder="Ej: Geomática" required/>
+        </div>
+        <div>
+          <label for="curso-docente">Docente (opcional)</label>
+          <input id="curso-docente" type="text" placeholder="Ej: Ing. Pérez"/>
+        </div>
+        <div>
+          <label for="curso-nota">Nota (opcional)</label>
+          <input id="curso-nota" type="text" placeholder="Ej: Llevar laptop los martes"/>
+        </div>
+        <button class="btn-add" type="submit">+ Agregar curso</button>
+      </form>
+
+      <div class="curso-list" id="curso-list"></div>
+    </div><!-- /panel-cursos -->
 
     </div><!-- /persona-content -->
     </div><!-- /section -->
@@ -1236,6 +1439,232 @@
       requestNotify();
     });
 
+    // ===================== CURSOS =====================
+    let cursos = [];
+
+    async function refreshCursos() {
+      try {
+        const c = await db.from('cursos').select('*').order('creada', { ascending: true });
+        if (c.error) throw c.error;
+        const g = await db.from('grupos').select('*').order('creada', { ascending: true });
+        if (g.error) throw g.error;
+        const a = await db.from('alumnos').select('*').order('creada', { ascending: true });
+        if (a.error) throw a.error;
+        const porCurso = {};
+        (c.data || []).forEach(x => { x.grupos = []; porCurso[x.id] = x; });
+        const porGrupo = {};
+        (g.data || []).forEach(x => {
+          x.alumnos = [];
+          porGrupo[x.id] = x;
+          if (porCurso[x.curso_id]) porCurso[x.curso_id].grupos.push(x);
+        });
+        (a.data || []).forEach(x => {
+          if (porGrupo[x.grupo_id]) porGrupo[x.grupo_id].alumnos.push(x);
+        });
+        cursos = c.data || [];
+        showApiError(false);
+      } catch (e) {
+        showApiError(true);
+        return;
+      }
+      renderCursos();
+    }
+
+    function renderCursos() {
+      const list = document.getElementById('curso-list');
+      if (!cursos.length) {
+        list.innerHTML = '<div class="empty-msg">// Aún no tienes cursos. Agrega uno con el formulario.</div>';
+        return;
+      }
+      list.innerHTML = '';
+      cursos.forEach(curso => {
+        const card = document.createElement('div');
+        card.className = 'curso-card';
+
+        const head = document.createElement('div');
+        head.className = 'curso-head';
+        const info = document.createElement('div');
+        info.className = 'curso-info';
+        const nom = document.createElement('div');
+        nom.className = 'curso-nombre';
+        nom.textContent = curso.nombre;
+        nom.title = curso.nombre;
+        info.appendChild(nom);
+        const metaTxt = [curso.docente, curso.nota].filter(Boolean).join(' · ');
+        if (metaTxt) {
+          const meta = document.createElement('div');
+          meta.className = 'curso-meta';
+          meta.textContent = metaTxt;
+          meta.title = metaTxt;
+          info.appendChild(meta);
+        }
+        const count = document.createElement('span');
+        count.className = 'curso-count';
+        const nAl = curso.grupos.reduce((s, gr) => s + gr.alumnos.length, 0);
+        count.textContent = curso.grupos.length + ' grupo(s) · ' + nAl + ' alumno(s)';
+        const tog = document.createElement('button');
+        tog.type = 'button';
+        tog.className = 'curso-toggle';
+        tog.textContent = '▾';
+        tog.title = 'Ver grupos';
+        const del = document.createElement('button');
+        del.type = 'button';
+        del.className = 'task-del';
+        del.textContent = '✕';
+        del.title = 'Eliminar curso';
+        del.addEventListener('click', async ev => {
+          ev.stopPropagation();
+          if (!confirm('¿Eliminar "' + curso.nombre + '" con sus grupos y alumnos?')) return;
+          try {
+            const { error } = await db.from('cursos').delete().eq('id', curso.id);
+            if (error) throw error;
+            showApiError(false);
+          } catch (e) { showApiError(true); }
+          refreshCursos();
+        });
+        head.appendChild(info);
+        head.appendChild(count);
+        head.appendChild(tog);
+        head.appendChild(del);
+        head.addEventListener('click', () => card.classList.toggle('open'));
+        card.appendChild(head);
+
+        const body = document.createElement('div');
+        body.className = 'curso-body';
+        curso.grupos.forEach(gr => body.appendChild(buildGrupo(gr)));
+
+        const gf = document.createElement('form');
+        gf.className = 'mini-form';
+        const gi = document.createElement('input');
+        gi.type = 'text';
+        gi.placeholder = 'Nombre del grupo (Ej: Grupo 1)';
+        gi.required = true;
+        const gb = document.createElement('button');
+        gb.className = 'mini-btn';
+        gb.type = 'submit';
+        gb.textContent = '+ Grupo';
+        gf.appendChild(gi);
+        gf.appendChild(gb);
+        gf.addEventListener('submit', async ev => {
+          ev.preventDefault();
+          const v = gi.value.trim();
+          if (!v) return;
+          try {
+            const { error } = await db.from('grupos').insert([{ curso_id: curso.id, nombre: v }]);
+            if (error) throw error;
+            showApiError(false);
+          } catch (e) { showApiError(true); }
+          refreshCursos();
+        });
+        body.appendChild(gf);
+        card.appendChild(body);
+        list.appendChild(card);
+      });
+    }
+
+    function buildGrupo(gr) {
+      const box = document.createElement('div');
+      box.className = 'grupo-block';
+      const head = document.createElement('div');
+      head.className = 'grupo-head';
+      const nm = document.createElement('span');
+      nm.className = 'grupo-nombre';
+      nm.textContent = gr.nombre;
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'task-del mini';
+      del.textContent = '✕';
+      del.title = 'Eliminar grupo';
+      del.addEventListener('click', async () => {
+        if (!confirm('¿Eliminar el grupo "' + gr.nombre + '" con sus alumnos?')) return;
+        try {
+          const { error } = await db.from('grupos').delete().eq('id', gr.id);
+          if (error) throw error;
+          showApiError(false);
+        } catch (e) { showApiError(true); }
+        refreshCursos();
+      });
+      head.appendChild(nm);
+      head.appendChild(del);
+      box.appendChild(head);
+
+      if (gr.alumnos.length) {
+        const ul = document.createElement('ul');
+        ul.className = 'alumno-list';
+        gr.alumnos.forEach(al => {
+          const li = document.createElement('li');
+          const sp = document.createElement('span');
+          sp.textContent = al.nombre;
+          const x = document.createElement('button');
+          x.type = 'button';
+          x.className = 'task-del mini';
+          x.textContent = '✕';
+          x.title = 'Quitar alumno';
+          x.addEventListener('click', async () => {
+            try {
+              const { error } = await db.from('alumnos').delete().eq('id', al.id);
+              if (error) throw error;
+              showApiError(false);
+            } catch (e) { showApiError(true); }
+            refreshCursos();
+          });
+          li.appendChild(sp);
+          li.appendChild(x);
+          ul.appendChild(li);
+        });
+        box.appendChild(ul);
+      } else {
+        const v = document.createElement('div');
+        v.className = 'alumno-vacio';
+        v.textContent = '// Sin alumnos todavía.';
+        box.appendChild(v);
+      }
+
+      const af = document.createElement('form');
+      af.className = 'mini-form';
+      const ai = document.createElement('input');
+      ai.type = 'text';
+      ai.placeholder = 'Nombre del alumno';
+      ai.required = true;
+      const ab = document.createElement('button');
+      ab.className = 'mini-btn';
+      ab.type = 'submit';
+      ab.textContent = '+ Alumno';
+      af.appendChild(ai);
+      af.appendChild(ab);
+      af.addEventListener('submit', async ev => {
+        ev.preventDefault();
+        const v = ai.value.trim();
+        if (!v) return;
+        try {
+          const { error } = await db.from('alumnos').insert([{ grupo_id: gr.id, nombre: v }]);
+          if (error) throw error;
+          showApiError(false);
+        } catch (e) { showApiError(true); }
+        refreshCursos();
+      });
+      box.appendChild(af);
+      return box;
+    }
+
+    document.getElementById('curso-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const nombre = document.getElementById('curso-nombre').value.trim();
+      const docente = document.getElementById('curso-docente').value.trim();
+      const nota = document.getElementById('curso-nota').value.trim();
+      if (!nombre) return;
+      try {
+        const { error } = await db.from('cursos')
+          .insert([{ nombre, docente: docente || null, nota: nota || null }]);
+        if (error) throw error;
+        showApiError(false);
+      } catch (e2) {
+        showApiError(true);
+      }
+      this.reset();
+      refreshCursos();
+    });
+
     // ===================== NOTIFICACIONES =====================
     function requestNotify() {
       if ('Notification' in window && Notification.permission === 'default') {
@@ -1309,6 +1738,7 @@
     buildColorBar();
     renderSchedule();
     refreshTasks();
+    refreshCursos();
     requestNotify();
     try {
       const saved = localStorage.getItem(PANEL_KEY);
