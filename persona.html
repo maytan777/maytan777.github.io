@@ -507,7 +507,7 @@
 <body class="persona-page">
   <nav>
     <a class="nav-logo" href="index.html">MM<span>.</span>Ingeniería</a>
-    <ul id="navMenu">
+    <ul>
       <li><a href="index.html">Blog</a></li>
       <li><a href="perfil.html">Perfil</a></li>
       <li><a href="persona.html" class="active">Persona</a></li>
@@ -515,7 +515,6 @@
       <li><a href="programas.html">Programas</a></li>
       <li><a href="contacto.html">Contacto</a></li>
     </ul>
-    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
   </nav>
 
   <!-- ===== BARRA LATERAL FIJA ===== -->
@@ -1338,29 +1337,6 @@
     })();
     setInterval(checkReminders, 15000);
     setInterval(refreshTasks, 60000);
-  </script>
-  <script>
-    (function () {
-      var btn = document.getElementById('navToggle');
-      var menu = document.getElementById('navMenu');
-      if (!btn || !menu) return;
-      btn.addEventListener('click', function () {
-        var open = menu.classList.toggle('open');
-        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      });
-      menu.addEventListener('click', function (e) {
-        if (e.target.closest('a')) {
-          menu.classList.remove('open');
-          btn.setAttribute('aria-expanded', 'false');
-        }
-      });
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') {
-          menu.classList.remove('open');
-          btn.setAttribute('aria-expanded', 'false');
-        }
-      });
-    })();
   </script>
 </body>
 </html>
