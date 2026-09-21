@@ -15,7 +15,7 @@
       gap: 3rem;
       align-items: center;
     }
-    .hero-video { position: relative; margin-left: -1.5rem; }
+    .hero-video { position: relative; }
     .hero-video::before {
       content: '';
       position: absolute;
@@ -28,22 +28,18 @@
     .hero-video video {
       width: 100%;
       display: block;
-      transform: scale(1.1);
+      transform: scale(1.08);
       -webkit-mask-image:
-        radial-gradient(ellipse 110% 92% at 0% 50%, black 58%, transparent 84%),
-        linear-gradient(to bottom, transparent, black 6%, black 94%, transparent),
-        linear-gradient(to right, transparent, black 5%, black 96%, transparent);
+        linear-gradient(to bottom, transparent, black 10%, black 90%, transparent),
+        linear-gradient(to right, transparent, black 10%, black 90%, transparent);
       -webkit-mask-composite: source-in;
       mask-image:
-        radial-gradient(ellipse 110% 92% at 0% 50%, black 58%, transparent 84%),
-        linear-gradient(to bottom, transparent, black 6%, black 94%, transparent),
-        linear-gradient(to right, transparent, black 5%, black 96%, transparent);
+        linear-gradient(to bottom, transparent, black 10%, black 90%, transparent),
+        linear-gradient(to right, transparent, black 10%, black 90%, transparent);
       mask-composite: intersect;
     }
     @media (max-width: 900px) {
       .hero-split { grid-template-columns: 1fr; gap: 2rem; }
-      .hero-video { margin-left: 0; }
-      .hero-text { order: -1; }
     }
   </style>
 </head>
@@ -62,12 +58,7 @@
 
   
   <section class="hero hero-split">
-    <div class="hero-video">
-      <video autoplay muted loop playsinline preload="auto">
-        <source src="VIDEO.mp4" type="video/mp4">
-      </video>
-    </div>
-    <div class="hero-text">
+    <div>
       <span class="hero-pill"><span class="dot"></span> Blog activo · Perú</span>
       <p class="hero-label">// Blog técnico · BIM & Construcción</p>
       <h1>INGENIERÍA<br><em>DIGITAL</em></h1>
@@ -77,6 +68,11 @@
         <a class="btn-primary" href="#postsGrid">Ver artículos ↓</a>
         <a class="btn-ghost" href="perfil.html">Sobre mí</a>
       </div>
+    </div>
+    <div class="hero-video">
+      <video autoplay muted loop playsinline preload="auto">
+        <source src="VIDEO.mp4" type="video/mp4">
+      </video>
     </div>
   </section>
 
