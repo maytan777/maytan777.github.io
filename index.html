@@ -59,10 +59,15 @@
   
   <section class="hero hero-split">
     <div>
+      <span class="hero-pill"><span class="dot"></span> Blog activo · Perú</span>
       <p class="hero-label">// Blog técnico · BIM & Construcción</p>
       <h1>INGENIERÍA<br><em>DIGITAL</em></h1>
       <div class="hero-line"></div>
       <p class="hero-sub">Artículos sobre modelado BIM, normativa peruana de construcción, instalaciones sanitarias y flujos de trabajo colaborativos.</p>
+      <div class="hero-cta">
+        <a class="btn-primary" href="#postsGrid">Ver artículos ↓</a>
+        <a class="btn-ghost" href="perfil.html">Sobre mí</a>
+      </div>
     </div>
     <div class="hero-video">
       <video autoplay muted loop playsinline preload="auto">
@@ -141,6 +146,29 @@
         card.style.display = (tag === 'todos' || card.dataset.tag === tag) ? '' : 'none';
       });
     }
+
+    (function () {
+      function scan() {
+        var els = document.querySelectorAll('.post-card, .tags-bar');
+        if (!('IntersectionObserver' in window)) {
+          els.forEach(function (el) { el.classList.add('visible'); });
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (en.isIntersecting) { en.target.classList.add('visible'); io.unobserve(en.target); }
+          });
+        }, { threshold: 0.12 });
+        els.forEach(function (el) {
+          if (el.classList.contains('visible')) return;
+          el.classList.add('reveal');
+          io.observe(el);
+        });
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', scan);
+      } else { scan(); }
+    })();
   </script>
 </body>
 </html>

@@ -73,5 +73,30 @@
 
   <footer><p>© 2026 <span>MM INGENIERIA</span> · Blog BIM & Construcción · Perú</p></footer>
   <a class="wa-float" href="https://wa.me/51957860293" target="_blank" title="Escríbeme por WhatsApp">💬</a>
+
+  <script>
+    (function () {
+      function scan() {
+        var els = document.querySelectorAll('.card, .perfil-grid');
+        if (!('IntersectionObserver' in window)) {
+          els.forEach(function (el) { el.classList.add('visible'); });
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (en.isIntersecting) { en.target.classList.add('visible'); io.unobserve(en.target); }
+          });
+        }, { threshold: 0.12 });
+        els.forEach(function (el) {
+          if (el.classList.contains('visible')) return;
+          el.classList.add('reveal');
+          io.observe(el);
+        });
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', scan);
+      } else { scan(); }
+    })();
+  </script>
 </body>
 </html>

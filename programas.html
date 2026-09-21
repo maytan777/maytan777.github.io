@@ -13,7 +13,7 @@
       border: 1px solid var(--border);
       padding: 2rem;
       position: relative;
-      transition: border-color 0.25s, background 0.25s;
+      transition: border-color 0.25s, background 0.25s, transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
       overflow: hidden;
     }
     .prog-card::before {
@@ -28,7 +28,8 @@
     .prog-card:hover {
       border-color: rgba(79,195,247,0.35);
       background: #0a0c0b;
-      box-shadow: 8px 8px 30px rgba(20,220,255,0.35);
+      box-shadow: var(--glow);
+      transform: translateY(-4px);
     }
     .prog-header {
       display: flex;
@@ -151,5 +152,30 @@
 
   <footer><p>© 2026 <span>MM INGENIERIA</span> · Blog BIM & Construcción · Perú</p></footer>
   <a class="wa-float" href="https://wa.me/51957860293" target="_blank" title="Escríbeme por WhatsApp">💬</a>
+
+  <script>
+    (function () {
+      function scan() {
+        var els = document.querySelectorAll('.prog-card');
+        if (!('IntersectionObserver' in window)) {
+          els.forEach(function (el) { el.classList.add('visible'); });
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (en.isIntersecting) { en.target.classList.add('visible'); io.unobserve(en.target); }
+          });
+        }, { threshold: 0.12 });
+        els.forEach(function (el) {
+          if (el.classList.contains('visible')) return;
+          el.classList.add('reveal');
+          io.observe(el);
+        });
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', scan);
+      } else { scan(); }
+    })();
+  </script>
 </body>
 </html>

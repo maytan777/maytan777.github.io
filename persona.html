@@ -196,11 +196,12 @@
       gap: 0.8rem;
       align-items: center;
       position: relative;
-      transition: border-color 0.25s;
+      transition: border-color 0.25s, transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
     }
     .task-item:hover {
       border-color: rgba(79,195,247,0.35);
-      box-shadow: 8px 8px 30px rgba(20,220,255,0.35);
+      box-shadow: var(--glow);
+      transform: translateY(-2px);
     }
     .task-item.done { opacity: 0.5; }
     .task-item.done .task-title { text-decoration: line-through; }
@@ -1314,6 +1315,26 @@
       if (saved && document.getElementById(saved)) showPanel(saved);
       else showPanel('panel-inicio');
     } catch (e) { showPanel('panel-inicio'); }
+    (function () {
+      function scan() {
+        var els = document.querySelectorAll('.side-menu, .schedule-wrap, .color-bar, .task-form, .upcoming');
+        if (!('IntersectionObserver' in window)) {
+          els.forEach(function (el) { el.classList.add('visible'); });
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (en.isIntersecting) { en.target.classList.add('visible'); io.unobserve(en.target); }
+          });
+        }, { threshold: 0.1 });
+        els.forEach(function (el) {
+          if (el.classList.contains('visible')) return;
+          el.classList.add('reveal');
+          io.observe(el);
+        });
+      }
+      scan();
+    })();
     setInterval(checkReminders, 15000);
     setInterval(refreshTasks, 60000);
   </script>
