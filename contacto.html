@@ -39,8 +39,21 @@
     }
 
     .contact-item-icon {
-      font-size: 1.8rem;
-      line-height: 1;
+      width: 46px;
+      height: 46px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.03);
+      color: var(--celeste);
+    }
+    .contact-item-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
     }
 
     .contact-item-label {
@@ -77,9 +90,21 @@
     .wa-card:hover { box-shadow: 8px 8px 30px rgba(20,220,255,0.35); }
 
     .wa-icon {
-      font-size: 4rem;
-      margin-bottom: 1rem;
-      display: block;
+      width: 76px;
+      height: 76px;
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      background: rgba(255,255,255,0.03);
+      color: #25d366;
+    }
+    .wa-icon svg {
+      width: 34px;
+      height: 34px;
+      stroke: currentColor;
     }
 
     .wa-title {
@@ -141,14 +166,6 @@
       background: rgba(37,211,102,0.1);
     }
 
-    .wa-note {
-      margin-top: 1.5rem;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.6rem;
-      color: var(--muted);
-      letter-spacing: 0.08em;
-    }
-
     @media (max-width: 700px) {
       .contact-grid { grid-template-columns: 1fr; }
     }
@@ -179,28 +196,52 @@
       <!-- Info de contacto -->
       <div class="contact-info">
         <div class="contact-item">
-          <div class="contact-item-icon">📱</div>
+          <div class="contact-item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+          </div>
           <div>
             <div class="contact-item-label">WhatsApp / Teléfono</div>
             <div class="contact-item-value">+51 957 860 293</div>
           </div>
         </div>
         <div class="contact-item">
-          <div class="contact-item-icon">📍</div>
+          <div class="contact-item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
           <div>
             <div class="contact-item-label">Ubicación</div>
             <div class="contact-item-value">Perú</div>
           </div>
         </div>
         <div class="contact-item">
-          <div class="contact-item-icon">🏗️</div>
+          <div class="contact-item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
+              <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/>
+              <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/>
+              <path d="M10 6h4"/>
+              <path d="M10 10h4"/>
+              <path d="M10 14h4"/>
+              <path d="M10 18h4"/>
+            </svg>
+          </div>
           <div>
             <div class="contact-item-label">Especialidad</div>
             <div class="contact-item-value">BIM · Instalaciones · Construcción</div>
           </div>
         </div>
         <div class="contact-item">
-          <div class="contact-item-icon">⏰</div>
+          <div class="contact-item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M12 7v5l3 2"/>
+            </svg>
+          </div>
           <div>
             <div class="contact-item-label">Disponibilidad</div>
             <div class="contact-item-value">Lun – Vie · 8:00 am – 6:00 pm</div>
@@ -210,14 +251,18 @@
 
       <!-- WhatsApp card -->
       <div class="wa-card">
-        <span class="wa-icon">💬</span>
+        <span class="wa-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
+          </svg>
+        </span>
         <div class="wa-title">Escríbeme por WhatsApp</div>
         <p class="wa-desc">La forma más rápida de contactarme. Respondo consultas sobre proyectos BIM, instalaciones sanitarias y modelado Revit.</p>
 
         <a class="btn-wa"
            href="https://wa.me/51957860293?text=Hola%20Marco%2C%20vi%20tu%20página%20y%20quiero%20consultarte%20algo."
            target="_blank">
-          💬 Abrir WhatsApp
+          Abrir WhatsApp
         </a>
 
         <br/>
@@ -225,10 +270,8 @@
         <a class="btn-wa-outline"
            href="https://wa.me/51957860293"
            target="_blank">
-          📞 Solo número
+          Solo número
         </a>
-
-        <p class="wa-note">// Se abrirá WhatsApp Web o la app en tu dispositivo</p>
       </div>
 
     </div>
