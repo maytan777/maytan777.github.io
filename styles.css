@@ -109,15 +109,6 @@ nav ul a.active {
   margin: 0 auto;
 }
 
-.hero-label {
-  font-family: 'Space Mono', monospace;
-  font-size: 0.7rem;
-  color: var(--accent);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-}
-
 .hero h1 {
   font-family: 'Bebas Neue', sans-serif;
   font-size: clamp(3.5rem, 8vw, 7rem);
@@ -154,15 +145,6 @@ nav ul a.active {
   max-width: 1100px;
   margin: 0 auto;
   padding: 2rem 2rem 6rem;
-}
-
-.section-label {
-  font-family: 'Space Mono', monospace;
-  font-size: 0.65rem;
-  color: var(--accent);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  margin-bottom: 0.5rem;
 }
 
 .section-title {

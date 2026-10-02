@@ -79,14 +79,6 @@
       padding: 0.7rem 1rem;
       margin-bottom: 1rem;
     }
-    .color-bar-label {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.62rem;
-      color: var(--muted);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-right: 0.3rem;
-    }
     .swatch {
       width: 26px;
       height: 26px;
@@ -384,9 +376,8 @@
       grid-column: 1 / -1;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
     }
-    .form-head-row .side-menu-title { font-size: 0.62rem; }
     .edit-input {
       width: 100%;
       background: #0d0f0e;
@@ -530,14 +521,6 @@
       border-left: 3px solid var(--accent);
       border-radius: 10px;
       padding: 1.2rem 1.5rem;
-    }
-    .upcoming-title {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.9rem;
     }
     .upcoming-item {
       display: flex;
@@ -729,14 +712,6 @@
       transition: border-color 0.2s;
     }
     .menu-toggle:hover { border-color: var(--accent); }
-    .side-menu-title {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-      white-space: nowrap;
-    }
     .menu-item {
       display: flex;
       align-items: center;
@@ -769,7 +744,6 @@
       flex-shrink: 0;
       stroke: currentColor;
     }
-    .side-menu.collapsed .side-menu-title,
     .side-menu.collapsed .menu-label,
     .side-menu.collapsed .side-menu-brand span,
     .side-menu.collapsed .side-menu-brand { display: none; }
@@ -797,7 +771,6 @@
       }
       .side-menu-brand { display: none; }
       .side-menu-header { padding: 0; }
-      .side-menu-title { display: none; }
       .menu-toggle { display: none; }
       .menu-item { margin-bottom: 0; flex-shrink: 0; }
     }
@@ -849,7 +822,6 @@
     <a class="side-menu-brand" href="index.html">MM<span>.</span></a>
     <div class="side-menu-header">
       <button class="menu-toggle" id="menu-toggle" title="Plegar / desplegar">☰</button>
-      <span class="side-menu-title">// Mi menú</span>
     </div>
     <div class="menu-item active" data-panel="panel-inicio">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
@@ -909,7 +881,6 @@
         <!-- ===== INICIO ===== -->
         <div class="panel active" id="panel-inicio">
           <section class="hero hero-panel">
-            <p class="hero-label">// Mi espacio personal</p>
             <h1>ÁREA<br><em>PERSONAL</em></h1>
             <div class="hero-line"></div>
             <p class="hero-sub">Tu horario de estudio, tus tareas, tus cursos y recordatorios. Los datos se guardan en Supabase (nube) y se sincronizan en todos tus dispositivos.</p>
@@ -918,10 +889,8 @@
 
         <!-- ===== HORARIO ===== -->
         <div class="panel" id="panel-horario">
-    <p class="section-label">// Organización</p>
     <h2 class="section-title">Mi horario de estudio</h2>
     <div class="color-bar" id="color-bar">
-      <span class="color-bar-label">// Color de la casilla: haz clic en una casilla y luego elige el color</span>
       <span class="swatch-none" title="Quitar color">✕</span>
     </div>
     <div class="schedule-wrap">
@@ -938,7 +907,6 @@
 
     <!-- ===== TAREAS ===== -->
     <div class="panel" id="panel-tareas">
-      <p class="section-label">// Organización</p>
       <h2 class="section-title">Mis tareas y notas</h2>
 
       <div class="task-grid">
@@ -972,7 +940,6 @@
 
     <!-- ===== PRÓXIMAS ===== -->
     <div class="panel" id="panel-proximas">
-      <p class="section-label">// Organización</p>
       <h2 class="section-title">Próximas actividades</h2>
 
       <div class="upcoming" id="upcoming">
@@ -982,14 +949,12 @@
 
     <!-- ===== CURSOS ===== -->
     <div class="panel" id="panel-cursos">
-      <p class="section-label">// Organización</p>
       <h2 class="section-title">Mis cursos y grupos</h2>
 
       <div class="curso-form-wrap">
         <button class="btn-add" id="btn-show-curso-form" type="button">+ Agregar curso</button>
         <form class="curso-form" id="curso-form">
         <div class="form-head-row">
-          <span class="side-menu-title">// Nuevo curso</span>
           <button class="icon-btn mini" id="btn-hide-curso-form" type="button" title="Minimizar">−</button>
         </div>
         <div>
