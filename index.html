@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MM Ingeniería — Blog y Proyectos</title>
+  <title>MM Ingeniería — Proyectos</title>
   <link rel="icon" type="image/jpeg" href="logo.jpeg">
-  <meta name="description" content="MM Ingeniería - Blog técnico de Maytan777 sobre BIM, modelado Revit, normativa peruana de construcción, instalaciones sanitarias y portafolio de proyectos.">
+  <meta name="description" content="MM Ingeniería - Portafolio de proyectos reales de infraestructura vial, movilidad urbana y edificaciones en Ayacucho, Perú.">
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="styles.css"/>
   <script src="script.js" defer></script>
   <style>
-    .card-img { margin: -1rem -1rem 0.85rem; }
+    .card-img { margin: -0.75rem -0.75rem 0.6rem; }
     .card-img img {
       display: block;
       width: 100%;
@@ -32,80 +32,21 @@
     </ul>
   </nav>
 
-  
   <section class="hero">
     <div>
-      <span class="hero-pill"><span class="dot"></span> Blog activo · Perú</span>
-      <h1>INGENIERÍA<br><em>DIGITAL</em></h1>
+      <span class="hero-pill"><span class="dot"></span> Portafolio · Perú</span>
+      <h1>MIS<br><em>PROYECTOS</em></h1>
       <div class="hero-line"></div>
-      <p class="hero-sub">Artículos sobre modelado BIM, normativa peruana de construcción, instalaciones sanitarias y flujos de trabajo colaborativos. Con experiencia en proyectos viales y urbanos en Ayacucho.</p>
+      <p class="hero-sub">Proyectos reales de infraestructura vial, movilidad urbana y edificaciones institucionales en Ayacucho, Perú.</p>
       <div class="hero-cta">
-        <a class="btn-primary" href="#postsGrid">Ver artículos ↓</a>
+        <a class="btn-primary" href="#proyectos">Ver proyectos ↓</a>
         <a class="btn-ghost" href="perfil.html">Sobre mí</a>
       </div>
     </div>
   </section>
 
-  <div class="tags-bar">
-    <button class="tag-btn active" onclick="filterTag(this,'todos')">Todos</button>
-    <button class="tag-btn" onclick="filterTag(this,'bim')">BIM</button>
-    <button class="tag-btn" onclick="filterTag(this,'sanitarias')">Sanitarias</button>
-    <button class="tag-btn" onclick="filterTag(this,'revit')">Revit</button>
-    <button class="tag-btn" onclick="filterTag(this,'normativa')">Normativa</button>
-    <button class="tag-btn" onclick="filterTag(this,'estructuras')">Estructuras</button>
-  </div>
-
-  
-  
-  <div class="posts" id="postsGrid">
-    <div class="post-card featured" data-tag="bim">
-      <div><div class="post-number">01</div></div>
-      <div>
-        <span class="post-tag">BIM · Destacado</span>
-        <h2 class="post-title">Clash Detection en proyectos de instalaciones: cómo evitar errores en obra antes de construir</h2>
-        <p class="post-excerpt">El proceso de detección de interferencias entre disciplinas es uno de los mayores aportes del BIM. Exploramos cómo aplicarlo con Revit y Navisworks.</p>
-        <div class="post-meta"><span>Mayo 2026 · 8 min</span><a class="read-more" href="#">Leer →</a></div>
-      </div>
-    </div>
-    <div class="post-card" data-tag="sanitarias">
-      <div class="post-number">02</div>
-      <span class="post-tag">Sanitarias</span>
-      <h2 class="post-title">IS.010: criterios de diseño para redes de desagüe colgadas bajo losa</h2>
-      <p class="post-excerpt">Análisis de la norma peruana IS.010 aplicada al modelado de tuberías de drenaje suspendidas, pendientes mínimas y materiales permitidos.</p>
-      <div class="post-meta"><span>Abr 2026 · 6 min</span><a class="read-more" href="#">Leer →</a></div>
-    </div>
-    <div class="post-card" data-tag="revit">
-      <div class="post-number">03</div>
-      <span class="post-tag">Revit</span>
-      <h2 class="post-title">Familias de tuberías en Revit: configuración de sistemas MEP desde cero</h2>
-      <p class="post-excerpt">Guía paso a paso para configurar sistemas de plomería en Revit MEP, tipos de tuberías, conectores y materiales según norma.</p>
-      <div class="post-meta"><span>Mar 2026 · 10 min</span><a class="read-more" href="#">Leer →</a></div>
-    </div>
-    <div class="post-card" data-tag="normativa">
-      <div class="post-number">04</div>
-      <span class="post-tag">Normativa</span>
-      <h2 class="post-title">RNE E.060 y BIM: cómo documentar el cumplimiento normativo en el modelo</h2>
-      <p class="post-excerpt">Estrategias para vincular parámetros del modelo Revit con los requisitos del Reglamento Nacional de Edificaciones.</p>
-      <div class="post-meta"><span>Feb 2026 · 7 min</span><a class="read-more" href="#">Leer →</a></div>
-    </div>
-    <div class="post-card" data-tag="bim">
-      <div class="post-number">05</div>
-      <span class="post-tag">BIM</span>
-      <h2 class="post-title">BIM Level 2: coordinación entre disciplinas en proyectos multidisciplinarios</h2>
-      <p class="post-excerpt">Qué significa trabajar en BIM nivel 2 y cómo se organiza la información entre arquitectura, estructura e instalaciones.</p>
-      <div class="post-meta"><span>Ene 2026 · 9 min</span><a class="read-more" href="#">Leer →</a></div>
-    </div>
-    <div class="post-card" data-tag="estructuras">
-      <div class="post-number">06</div>
-      <span class="post-tag">Estructuras</span>
-      <h2 class="post-title">Coordinación entre estructura e instalaciones: losas, vigas y pases de tuberías</h2>
-      <p class="post-excerpt">Cómo gestionar pases de tuberías a través de elementos estructurales sin comprometer el diseño, usando openings en Revit.</p>
-      <div class="post-meta"><span>Dic 2025 · 5 min</span><a class="read-more" href="#">Leer →</a></div>
-    </div>
-  </div>
-
-  <div class="section">
-    <h2 class="section-title">Mis proyectos</h2>
+  <div class="section" id="proyectos">
+    <h2 class="section-title">Proyectos</h2>
     <div class="cards-grid">
 
       <div class="card">
@@ -148,17 +89,9 @@
   <a class="wa-float" href="https://wa.me/51957860293" target="_blank" title="Escríbeme por WhatsApp">💬</a>
 
   <script>
-    function filterTag(btn, tag) {
-      document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      document.querySelectorAll('.post-card').forEach(card => {
-        card.style.display = (tag === 'todos' || card.dataset.tag === tag) ? '' : 'none';
-      });
-    }
-
     (function () {
       function scan() {
-        var els = document.querySelectorAll('.post-card, .tags-bar, .card');
+        var els = document.querySelectorAll('.card');
         if (!('IntersectionObserver' in window)) {
           els.forEach(function (el) { el.classList.add('visible'); });
           return;
