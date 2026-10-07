@@ -55,6 +55,45 @@
       height: 320px;
     }
     #bridge3d canvas { display: block; }
+    .viewcube {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 74px;
+      height: 74px;
+      z-index: 5;
+      perspective: 420px;
+    }
+    .cube {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: none;
+    }
+    .face {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.05em;
+      color: #d7e6f4;
+      background: rgba(18,42,62,0.9);
+      border: 1px solid rgba(79,195,247,0.7);
+      box-sizing: border-box;
+      cursor: pointer;
+      user-select: none;
+    }
+    .face:hover { background: rgba(28,72,102,0.95); color: #fff; }
+    .f-front  { transform: translateZ(37px); }
+    .f-back   { transform: rotateY(180deg) translateZ(37px); }
+    .f-right  { transform: rotateY(90deg) translateZ(37px); }
+    .f-left   { transform: rotateY(-90deg) translateZ(37px); }
+    .f-top    { transform: rotateX(90deg) translateZ(37px); }
+    .f-bottom { transform: rotateX(-90deg) translateZ(37px); }
     @media (max-width: 900px) {
       .hero-split { grid-template-columns: 1fr; }
     }
@@ -82,7 +121,18 @@
         <a class="btn-ghost" href="perfil.html">Sobre mí</a>
       </div>
     </div>
-    <div class="hero-bridge" id="bridge3d"></div>
+    <div class="hero-bridge" id="bridge3d">
+      <div class="viewcube" id="viewcube">
+        <div class="cube" id="cube">
+          <div class="face f-top" data-face="top">TOP</div>
+          <div class="face f-bottom" data-face="bottom">BOTTOM</div>
+          <div class="face f-front" data-face="front">FRONT</div>
+          <div class="face f-back" data-face="back">BACK</div>
+          <div class="face f-left" data-face="left">LEFT</div>
+          <div class="face f-right" data-face="right">RIGHT</div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <div class="section" id="proyectos">
@@ -160,7 +210,7 @@
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, host.clientWidth / host.clientHeight, 0.1, 100);
-    camera.position.set(0, 2.4, 7.5);
+    camera.position.set(0, 2.4, 8);
     camera.lookAt(0, 0, 0);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -168,11 +218,11 @@
     renderer.setSize(host.clientWidth, host.clientHeight);
     host.appendChild(renderer.domElement);
 
-    scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+    scene.add(new THREE.AmbientLight(0xffffff, 0.75));
     const key = new THREE.DirectionalLight(0xffffff, 1.4);
     key.position.set(4, 8, 6);
     scene.add(key);
-    const rim = new THREE.PointLight(0x4fc3f7, 40, 30);
+    const rim = new THREE.PointLight(0x4fc3f7, 50, 30);
     rim.position.set(-4, 3, 4);
     scene.add(rim);
 
@@ -180,58 +230,127 @@
     scene.add(group);
 
     const matStruct = new THREE.MeshStandardMaterial({ color: 0x4fc3f7, metalness: 0.6, roughness: 0.35 });
-    const matPier = new THREE.MeshStandardMaterial({ color: 0x2a3a47, metalness: 0.4, roughness: 0.6 });
-    const matWater = new THREE.MeshStandardMaterial({ color: 0x123a56, metalness: 0.2, roughness: 0.5 });
+    const matPier   = new THREE.MeshStandardMaterial({ color: 0x2a3a47, metalness: 0.4, roughness: 0.6 });
+    const matWater  = new THREE.MeshStandardMaterial({ color: 0x123a56, metalness: 0.2, roughness: 0.5 });
+    const matRoad   = new THREE.MeshStandardMaterial({ color: 0x202d38, metalness: 0.1, roughness: 0.85 });
+    const matLine   = new THREE.MeshStandardMaterial({ color: 0xe6edf3, roughness: 0.6 });
+    const matCar1   = new THREE.MeshStandardMaterial({ color: 0xc05050, metalness: 0.4, roughness: 0.4 });
+    const matCar2   = new THREE.MeshStandardMaterial({ color: 0xd8d8e0, metalness: 0.4, roughness: 0.4 });
+    const matGlass  = new THREE.MeshStandardMaterial({ color: 0x16222e, metalness: 0.3, roughness: 0.2 });
 
     const R = 2.4;
+    const D = 1.2; // ancho total del tablero
 
-    // arco (medio toro)
-    const arch = new THREE.Mesh(
-      new THREE.TorusGeometry(R, 0.08, 10, 96, Math.PI),
-      matStruct
-    );
-    group.add(arch);
+    // dos arcos paralelos
+    [-0.62, 0.62].forEach(z => {
+      const arch = new THREE.Mesh(new THREE.TorusGeometry(R, 0.08, 10, 96, Math.PI), matStruct);
+      arch.position.z = z;
+      group.add(arch);
+    });
 
-    // tablero
-    const deck = new THREE.Mesh(new THREE.BoxGeometry(R * 2, 0.14, 0.5), matStruct);
+    // tablero estructural
+    const deck = new THREE.Mesh(new THREE.BoxGeometry(R * 2, 0.16, D), matStruct);
     deck.position.y = 0;
     group.add(deck);
 
-    // péndolas
-    for (let k = 1; k <= 9; k++) {
-      const x = -R + k * ((2 * R) / 10);
-      const y = Math.sqrt(R * R - x * x);
-      const h = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, y, 8), matStruct);
-      h.position.set(x, y / 2, 0);
-      group.add(h);
+    // calzada
+    const road = new THREE.Mesh(new THREE.BoxGeometry(R * 2 - 0.2, 0.05, D - 0.18), matRoad);
+    road.position.y = 0.105;
+    group.add(road);
+
+    // línea central discontinua
+    for (let k = 0; k < 7; k++) {
+      const seg = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.012, 0.06), matLine);
+      seg.position.set(-2.1 + k * 0.7, 0.135, 0);
+      group.add(seg);
     }
+
+    // péndolas (dos filas)
+    [-0.55, 0.55].forEach(z => {
+      for (let k = 1; k <= 9; k++) {
+        const x = -R + k * ((2 * R) / 10);
+        const y = Math.sqrt(R * R - x * x);
+        const h = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.018, y, 8), matStruct);
+        h.position.set(x, y / 2, z);
+        group.add(h);
+      }
+    });
 
     // pilares y cimientos
     [-R, R].forEach(x => {
-      const pier = new THREE.Mesh(new THREE.BoxGeometry(0.36, 1.5, 0.55), matPier);
+      const pier = new THREE.Mesh(new THREE.BoxGeometry(0.36, 1.5, D), matPier);
       pier.position.set(x, -0.75, 0);
       group.add(pier);
-      const base = new THREE.Mesh(new THREE.BoxGeometry(0.72, 0.26, 0.72), matPier);
-      base.position.set(x, -1.6, 0);
+      const base = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.28, D + 0.2), matPier);
+      base.position.set(x, -1.62, 0);
       group.add(base);
     });
 
     // río
-    const water = new THREE.Mesh(new THREE.BoxGeometry(R * 2 - 0.7, 0.04, 0.6), matWater);
-    water.position.set(0, -1.45, 0);
+    const water = new THREE.Mesh(new THREE.BoxGeometry(R * 2 - 0.7, 0.05, D + 0.3), matWater);
+    water.position.set(0, -1.48, 0);
     group.add(water);
 
-    group.rotation.y = -0.5;
+    // autos
+    function addCar(x, mat) {
+      const body = new THREE.Mesh(new THREE.BoxGeometry(0.52, 0.16, 0.34), mat);
+      body.position.set(x, 0.22, 0);
+      const cabin = new THREE.Mesh(new THREE.BoxGeometry(0.24, 0.14, 0.3), matGlass);
+      cabin.position.set(x + 0.03, 0.36, 0);
+      group.add(body);
+      group.add(cabin);
+    }
+    addCar(0.9, matCar1);
+    addCar(-1.3, matCar2);
 
-    let dragging = false, lastX = 0;
-    renderer.domElement.addEventListener('pointerdown', e => { dragging = true; lastX = e.clientX; });
+    // orientación
+    let yaw = -0.5, pitch = 0.15;
+    const apply = () => { group.rotation.x = pitch; group.rotation.y = yaw; };
+    apply();
+
+    // view cube
+    const cube = document.getElementById('cube');
+    const faceTargets = {
+      front:  { y: 0, p: 0 },
+      back:   { y: Math.PI, p: 0 },
+      right:  { y: Math.PI / 2, p: 0 },
+      left:   { y: -Math.PI / 2, p: 0 },
+      top:    { y: 0, p: Math.PI / 2 },
+      bottom: { y: 0, p: -Math.PI / 2 }
+    };
+    const shortest = (a, b) => {
+      let d = (b - a) % (Math.PI * 2);
+      if (d > Math.PI) d -= Math.PI * 2;
+      if (d < -Math.PI) d += Math.PI * 2;
+      return a + d;
+    };
+    const ease = t => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+
+    let settling = false, settleT = 0, startYaw = 0, startPitch = 0, targetYaw = 0, targetPitch = 0;
+    document.querySelectorAll('.face').forEach(f => {
+      f.addEventListener('click', () => {
+        const t = faceTargets[f.dataset.face];
+        if (!t) return;
+        startYaw = yaw; startPitch = pitch;
+        targetYaw = shortest(yaw, t.y);
+        targetPitch = shortest(pitch, t.p);
+        settleT = 0; settling = true;
+      });
+    });
+
+    // drag
+    let dragging = false, lastX = 0, lastY = 0;
+    renderer.domElement.addEventListener('pointerdown', e => { dragging = true; lastX = e.clientX; lastY = e.clientY; });
     window.addEventListener('pointermove', e => {
       if (!dragging) return;
-      group.rotation.y += (e.clientX - lastX) * 0.008;
-      lastX = e.clientX;
+      yaw += (e.clientX - lastX) * 0.008;
+      pitch += (e.clientY - lastY) * 0.008;
+      pitch = Math.max(-1.35, Math.min(1.35, pitch));
+      lastX = e.clientX; lastY = e.clientY;
     });
     window.addEventListener('pointerup', () => { dragging = false; });
 
+    const clock = new THREE.Clock();
     new ResizeObserver(() => {
       camera.aspect = host.clientWidth / host.clientHeight;
       camera.updateProjectionMatrix();
@@ -240,7 +359,24 @@
 
     function animate() {
       requestAnimationFrame(animate);
-      if (!dragging) group.rotation.y += 0.005;
+      const dt = Math.min(clock.getDelta(), 0.05);
+
+      if (settling) {
+        settleT += dt;
+        const p = Math.min(1, settleT / 0.55);
+        const e = ease(p);
+        yaw = startYaw + (targetYaw - startYaw) * e;
+        pitch = startPitch + (targetPitch - startPitch) * e;
+        if (p >= 1) settling = false;
+      } else if (!dragging) {
+        yaw += 0.005;
+      }
+
+      apply();
+      if (cube) {
+        cube.style.transform =
+          'rotateX(' + (-pitch * 180 / Math.PI) + 'deg) rotateY(' + (-yaw * 180 / Math.PI) + 'deg)';
+      }
       renderer.render(scene, camera);
     }
     animate();
