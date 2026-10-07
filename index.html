@@ -239,7 +239,7 @@
     const HALF = 6;     // mitad de la longitud total
     const D = 1.2;      // ancho del tablero
     const H = 3.4;      // altura de las torres
-    const TOWERS = [-2, 2]; // posición de las dos torres (3 tramos)
+    const TOWERS = [-3, 0, 3]; // tres torres => cuatro tramos
 
     // tablero estructural
     const deck = new THREE.Mesh(new THREE.BoxGeometry(HALF * 2, 0.16, D), matStruct);
@@ -281,7 +281,7 @@
     TOWERS.forEach(tx => {
       [-0.5, 0.5].forEach(z => {
         const top = new THREE.Vector3(tx, H, z);
-        [0.6, 1.2, 1.8, 2.4].forEach(d => {
+        [0.5, 1.0, 1.4].forEach(d => {
           cableBetween(top, new THREE.Vector3(tx + d, 0, z));
           cableBetween(top, new THREE.Vector3(tx - d, 0, z));
         });
