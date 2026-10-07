@@ -74,20 +74,73 @@
       </div>
     </div>
     <div class="hero-bridge">
-      <svg viewBox="0 0 200 140" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="10" y1="100" x2="190" y2="100"/>
-        <line x1="55" y1="100" x2="55" y2="38"/>
-        <line x1="145" y1="100" x2="145" y2="38"/>
-        <path d="M10 62 Q55 14 100 56 Q145 14 190 62"/>
-        <line x1="32" y1="74" x2="32" y2="100"/>
-        <line x1="46" y1="62" x2="46" y2="100"/>
-        <line x1="70" y1="50" x2="70" y2="100"/>
-        <line x1="85" y1="56" x2="85" y2="100"/>
-        <line x1="115" y1="56" x2="115" y2="100"/>
-        <line x1="130" y1="50" x2="130" y2="100"/>
-        <line x1="154" y1="62" x2="154" y2="100"/>
-        <line x1="168" y1="74" x2="168" y2="100"/>
-        <path d="M10 122 q10 -6 20 0 q10 6 20 0 q10 -6 20 0 q10 6 20 0 q10 -6 20 0 q10 6 20 0 q10 -6 20 0 q10 6 20 0"/>
+      <svg viewBox="0 0 360 220" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" fill="currentColor"/>
+          </marker>
+          <pattern id="hatch" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="0" x2="0" y2="6" stroke="currentColor" stroke-width="0.4" opacity="0.28"/>
+          </pattern>
+        </defs>
+
+        <!-- rótulo -->
+        <text x="40" y="30" font-family="Space Mono, monospace" font-size="5.5" letter-spacing="1.5" fill="currentColor" opacity="0.7">ELEVACIÓN LATERAL</text>
+        <text x="320" y="30" text-anchor="end" font-family="Space Mono, monospace" font-size="5" letter-spacing="1" fill="currentColor" opacity="0.7">ESC. 1/100</text>
+
+        <!-- eje central -->
+        <line x1="180" y1="38" x2="180" y2="178" stroke-width="0.5" stroke-dasharray="6 3 1.5 3" opacity="0.5"/>
+
+        <!-- tablero (losa) -->
+        <rect x="40" y="92" width="280" height="12" stroke-width="1"/>
+        <line x1="40" y1="98" x2="320" y2="98" stroke-width="0.4" opacity="0.5"/>
+        <!-- baranda -->
+        <rect x="40" y="84" width="280" height="8" stroke-width="0.7"/>
+        <line x1="48" y1="88" x2="312" y2="88" stroke-width="0.4" opacity="0.5"/>
+
+        <!-- estribos -->
+        <rect x="40" y="104" width="24" height="66" stroke-width="1" fill="url(#hatch)"/>
+        <rect x="296" y="104" width="24" height="66" stroke-width="1" fill="url(#hatch)"/>
+
+        <!-- pilares -->
+        <rect x="122" y="104" width="32" height="8" stroke-width="1" fill="url(#hatch)"/>
+        <rect x="128" y="112" width="20" height="58" stroke-width="1" fill="url(#hatch)"/>
+        <rect x="206" y="104" width="32" height="8" stroke-width="1" fill="url(#hatch)"/>
+        <rect x="212" y="112" width="20" height="58" stroke-width="1" fill="url(#hatch)"/>
+
+        <!-- apoyos -->
+        <path d="M46 104 l6 5 h12 l6 -5 z" stroke-width="0.7" fill="url(#hatch)"/>
+        <path d="M132 104 l6 5 h12 l6 -5 z" stroke-width="0.7" fill="url(#hatch)"/>
+        <path d="M216 104 l6 5 h12 l6 -5 z" stroke-width="0.7" fill="url(#hatch)"/>
+        <path d="M302 104 l6 5 h12 l6 -5 z" stroke-width="0.7" fill="url(#hatch)"/>
+
+        <!-- nivel de agua -->
+        <line x1="68" y1="150" x2="292" y2="150" stroke-width="0.5" stroke-dasharray="5 3" opacity="0.6"/>
+        <path d="M78 154 q8 -5 16 0 q8 5 16 0 q8 -5 16 0 q8 5 16 0 q8 -5 16 0 q8 5 16 0 q8 -5 16 0" stroke-width="0.5" opacity="0.5"/>
+        <path d="M90 160 q8 -4 16 0 q8 4 16 0 q8 -4 16 0 q8 4 16 0 q8 -4 16 0 q8 4 16 0" stroke-width="0.4" opacity="0.35"/>
+
+        <!-- terreno / nivel de fondo -->
+        <line x1="30" y1="170" x2="330" y2="170" stroke-width="0.6"/>
+        <line x1="40" y1="170" x2="40" y2="175" stroke-width="0.5"/>
+        <line x1="320" y1="170" x2="320" y2="175" stroke-width="0.5"/>
+        <text x="326" y="182" text-anchor="end" font-family="Space Mono, monospace" font-size="4.5" fill="currentColor" opacity="0.7">N.F. ±0.00</text>
+
+        <!-- cota: longitud total -->
+        <line x1="40" y1="84" x2="40" y2="46" stroke-width="0.5" opacity="0.7"/>
+        <line x1="320" y1="84" x2="320" y2="46" stroke-width="0.5" opacity="0.7"/>
+        <line x1="40" y1="46" x2="320" y2="46" stroke-width="0.5" opacity="0.7" marker-start="url(#arr)" marker-end="url(#arr)"/>
+        <text x="180" y="41" text-anchor="middle" font-family="Space Mono, monospace" font-size="5" fill="currentColor" opacity="0.85">L = 28.00 m</text>
+
+        <!-- cota: espesor de losa -->
+        <line x1="30" y1="84" x2="30" y2="104" stroke-width="0.5" opacity="0.7" marker-start="url(#arr)" marker-end="url(#arr)"/>
+        <text x="26" y="96" text-anchor="end" font-family="Space Mono, monospace" font-size="4.5" fill="currentColor" opacity="0.85">0.30</text>
+
+        <!-- cota: altura de pilares -->
+        <line x1="334" y1="104" x2="334" y2="170" stroke-width="0.5" opacity="0.7"/>
+        <line x1="330" y1="104" x2="338" y2="104" stroke-width="0.5" opacity="0.7"/>
+        <line x1="330" y1="170" x2="338" y2="170" stroke-width="0.5" opacity="0.7"/>
+        <line x1="346" y1="104" x2="346" y2="170" stroke-width="0.5" opacity="0.7" marker-start="url(#arr)" marker-end="url(#arr)"/>
+        <text x="350" y="139" text-anchor="start" font-family="Space Mono, monospace" font-size="4.5" fill="currentColor" opacity="0.85">H = 7.00</text>
       </svg>
     </div>
   </section>
