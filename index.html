@@ -79,68 +79,78 @@
           <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
             <path d="M0 0 L10 5 L0 10 z" fill="currentColor"/>
           </marker>
-          <pattern id="hatch" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-            <line x1="0" y1="0" x2="0" y2="6" stroke="currentColor" stroke-width="0.4" opacity="0.28"/>
+          <pattern id="hAsf" width="3" height="3" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="0" x2="0" y2="3" stroke="currentColor" stroke-width="0.4" opacity="0.5"/>
+          </pattern>
+          <pattern id="hBase" width="7" height="7" patternUnits="userSpaceOnUse">
+            <circle cx="3.5" cy="3.5" r="0.7" fill="currentColor" opacity="0.4"/>
+          </pattern>
+          <pattern id="hSub" width="7" height="7" patternTransform="rotate(-45)" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="0" x2="0" y2="7" stroke="currentColor" stroke-width="0.4" opacity="0.3"/>
           </pattern>
         </defs>
 
         <!-- rótulo -->
-        <text x="40" y="30" font-family="Space Mono, monospace" font-size="5.5" letter-spacing="1.5" fill="currentColor" opacity="0.7">ELEVACIÓN LATERAL</text>
-        <text x="320" y="30" text-anchor="end" font-family="Space Mono, monospace" font-size="5" letter-spacing="1" fill="currentColor" opacity="0.7">ESC. 1/100</text>
+        <text x="40" y="30" font-family="Space Mono, monospace" font-size="5.5" letter-spacing="1.5" fill="currentColor" opacity="0.7">SECCIÓN TRANSVERSAL</text>
+        <text x="320" y="30" text-anchor="end" font-family="Space Mono, monospace" font-size="5" letter-spacing="1" fill="currentColor" opacity="0.7">ESC. 1/50</text>
 
-        <!-- eje central -->
-        <line x1="180" y1="38" x2="180" y2="178" stroke-width="0.5" stroke-dasharray="6 3 1.5 3" opacity="0.5"/>
+        <!-- eje -->
+        <line x1="180" y1="40" x2="180" y2="158" stroke-width="0.5" stroke-dasharray="6 3 1.5 3" opacity="0.5"/>
 
-        <!-- tablero (losa) -->
-        <rect x="40" y="92" width="280" height="12" stroke-width="1"/>
-        <line x1="40" y1="98" x2="320" y2="98" stroke-width="0.4" opacity="0.5"/>
-        <!-- baranda -->
-        <rect x="40" y="84" width="280" height="8" stroke-width="0.7"/>
-        <line x1="48" y1="88" x2="312" y2="88" stroke-width="0.4" opacity="0.5"/>
+        <!-- taludes -->
+        <line x1="110" y1="73" x2="88" y2="150" stroke-width="0.7"/>
+        <line x1="250" y1="73" x2="272" y2="150" stroke-width="0.7"/>
+        <!-- cunetas -->
+        <path d="M88 150 l7 0 l-3.5 6 z" stroke-width="0.6"/>
+        <path d="M272 150 l-7 0 l3.5 6 z" stroke-width="0.6"/>
 
-        <!-- estribos -->
-        <rect x="40" y="104" width="24" height="66" stroke-width="1" fill="url(#hatch)"/>
-        <rect x="296" y="104" width="24" height="66" stroke-width="1" fill="url(#hatch)"/>
+        <!-- terreno natural -->
+        <line x1="40" y1="150" x2="88" y2="150" stroke-width="0.6"/>
+        <line x1="272" y1="150" x2="320" y2="150" stroke-width="0.6"/>
+        <path d="M46 156 q8 -4 16 0 q8 4 16 0" stroke-width="0.4" opacity="0.4"/>
 
-        <!-- pilares -->
-        <rect x="122" y="104" width="32" height="8" stroke-width="1" fill="url(#hatch)"/>
-        <rect x="128" y="112" width="20" height="58" stroke-width="1" fill="url(#hatch)"/>
-        <rect x="206" y="104" width="32" height="8" stroke-width="1" fill="url(#hatch)"/>
-        <rect x="212" y="112" width="20" height="58" stroke-width="1" fill="url(#hatch)"/>
+        <!-- subrasante -->
+        <polygon points="88,150 110,79 120,118 180,112 240,118 250,79 272,150" stroke-width="0.5" opacity="0.6"/>
+        <line x1="88" y1="150" x2="110" y2="79" stroke-width="0.4" opacity="0.5"/>
 
-        <!-- apoyos -->
-        <path d="M46 104 l6 5 h12 l6 -5 z" stroke-width="0.7" fill="url(#hatch)"/>
-        <path d="M132 104 l6 5 h12 l6 -5 z" stroke-width="0.7" fill="url(#hatch)"/>
-        <path d="M216 104 l6 5 h12 l6 -5 z" stroke-width="0.7" fill="url(#hatch)"/>
-        <path d="M302 104 l6 5 h12 l6 -5 z" stroke-width="0.7" fill="url(#hatch)"/>
+        <!-- sub-base -->
+        <polygon points="120,118 180,112 240,118 240,98 180,92 120,98" stroke-width="0.7" fill="url(#hSub)"/>
+        <!-- base -->
+        <polygon points="120,98 180,92 240,98 240,78 180,72 120,78" stroke-width="0.7" fill="url(#hBase)"/>
+        <!-- carpeta asfáltica -->
+        <polygon points="120,78 180,72 240,78 240,72 180,66 120,72" stroke-width="0.9" fill="url(#hAsf)"/>
 
-        <!-- nivel de agua -->
-        <line x1="68" y1="150" x2="292" y2="150" stroke-width="0.5" stroke-dasharray="5 3" opacity="0.6"/>
-        <path d="M78 154 q8 -5 16 0 q8 5 16 0 q8 -5 16 0 q8 5 16 0 q8 -5 16 0 q8 5 16 0 q8 -5 16 0" stroke-width="0.5" opacity="0.5"/>
-        <path d="M90 160 q8 -4 16 0 q8 4 16 0 q8 -4 16 0 q8 4 16 0 q8 -4 16 0 q8 4 16 0" stroke-width="0.4" opacity="0.35"/>
+        <!-- bermas -->
+        <polygon points="110,74 120,72 120,78 110,80" stroke-width="0.7"/>
+        <polygon points="250,74 240,72 240,78 250,80" stroke-width="0.7"/>
 
-        <!-- terreno / nivel de fondo -->
-        <line x1="30" y1="170" x2="330" y2="170" stroke-width="0.6"/>
-        <line x1="40" y1="170" x2="40" y2="175" stroke-width="0.5"/>
-        <line x1="320" y1="170" x2="320" y2="175" stroke-width="0.5"/>
-        <text x="326" y="182" text-anchor="end" font-family="Space Mono, monospace" font-size="4.5" fill="currentColor" opacity="0.7">N.F. ±0.00</text>
+        <!-- bombeo 2% -->
+        <path d="M180 66 l-22 8" stroke-width="0.4" opacity="0.7"/>
+        <path d="M180 66 l22 8" stroke-width="0.4" opacity="0.7"/>
+        <text x="150" y="80" font-family="Space Mono, monospace" font-size="4" fill="currentColor" opacity="0.7">2%</text>
+        <text x="200" y="80" font-family="Space Mono, monospace" font-size="4" fill="currentColor" opacity="0.7">2%</text>
 
-        <!-- cota: longitud total -->
-        <line x1="40" y1="84" x2="40" y2="46" stroke-width="0.5" opacity="0.7"/>
-        <line x1="320" y1="84" x2="320" y2="46" stroke-width="0.5" opacity="0.7"/>
-        <line x1="40" y1="46" x2="320" y2="46" stroke-width="0.5" opacity="0.7" marker-start="url(#arr)" marker-end="url(#arr)"/>
-        <text x="180" y="41" text-anchor="middle" font-family="Space Mono, monospace" font-size="5" fill="currentColor" opacity="0.85">L = 28.00 m</text>
+        <!-- cota: calzada -->
+        <line x1="120" y1="66" x2="120" y2="44" stroke-width="0.5" opacity="0.7"/>
+        <line x1="240" y1="66" x2="240" y2="44" stroke-width="0.5" opacity="0.7"/>
+        <line x1="120" y1="44" x2="240" y2="44" stroke-width="0.5" opacity="0.7" marker-start="url(#arr)" marker-end="url(#arr)"/>
+        <text x="180" y="39" text-anchor="middle" font-family="Space Mono, monospace" font-size="4.8" fill="currentColor" opacity="0.85">CALZADA 6.00 m</text>
 
-        <!-- cota: espesor de losa -->
-        <line x1="30" y1="84" x2="30" y2="104" stroke-width="0.5" opacity="0.7" marker-start="url(#arr)" marker-end="url(#arr)"/>
-        <text x="26" y="96" text-anchor="end" font-family="Space Mono, monospace" font-size="4.5" fill="currentColor" opacity="0.85">0.30</text>
+        <!-- cota: berma izquierda -->
+        <line x1="110" y1="74" x2="110" y2="32" stroke-width="0.5" opacity="0.7"/>
+        <line x1="120" y1="72" x2="120" y2="32" stroke-width="0.5" opacity="0.7"/>
+        <line x1="110" y1="32" x2="120" y2="32" stroke-width="0.5" opacity="0.7" marker-start="url(#arr)" marker-end="url(#arr)"/>
+        <text x="115" y="27" text-anchor="middle" font-family="Space Mono, monospace" font-size="4.2" fill="currentColor" opacity="0.8">0.50</text>
 
-        <!-- cota: altura de pilares -->
-        <line x1="334" y1="104" x2="334" y2="170" stroke-width="0.5" opacity="0.7"/>
-        <line x1="330" y1="104" x2="338" y2="104" stroke-width="0.5" opacity="0.7"/>
-        <line x1="330" y1="170" x2="338" y2="170" stroke-width="0.5" opacity="0.7"/>
-        <line x1="346" y1="104" x2="346" y2="170" stroke-width="0.5" opacity="0.7" marker-start="url(#arr)" marker-end="url(#arr)"/>
-        <text x="350" y="139" text-anchor="start" font-family="Space Mono, monospace" font-size="4.5" fill="currentColor" opacity="0.85">H = 7.00</text>
+        <!-- líderes de capas -->
+        <line x1="240" y1="75" x2="270" y2="75" stroke-width="0.4" opacity="0.7"/>
+        <text x="272" y="77" font-family="Space Mono, monospace" font-size="4.2" fill="currentColor" opacity="0.85">CARPETA e=0.05</text>
+        <line x1="240" y1="88" x2="270" y2="88" stroke-width="0.4" opacity="0.7"/>
+        <text x="272" y="90" font-family="Space Mono, monospace" font-size="4.2" fill="currentColor" opacity="0.85">BASE e=0.20</text>
+        <line x1="240" y1="105" x2="270" y2="105" stroke-width="0.4" opacity="0.7"/>
+        <text x="272" y="107" font-family="Space Mono, monospace" font-size="4.2" fill="currentColor" opacity="0.85">SUB-BASE e=0.20</text>
+        <line x1="160" y1="135" x2="190" y2="135" stroke-width="0.4" opacity="0.7"/>
+        <text x="160" y="131" text-anchor="end" font-family="Space Mono, monospace" font-size="4.2" fill="currentColor" opacity="0.8">SUBRASANTE</text>
       </svg>
     </div>
   </section>
