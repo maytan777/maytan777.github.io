@@ -258,14 +258,16 @@
       group.add(seg);
     }
 
-    // torres (pilones)
+    // torres (pórticos: dos patas a los lados de la calzada)
     TOWERS.forEach(tx => {
-      const pylon = new THREE.Mesh(new THREE.BoxGeometry(0.34, H, 0.6), matStruct);
-      pylon.position.set(tx, H / 2, 0);
-      group.add(pylon);
-      const cap = new THREE.Mesh(new THREE.BoxGeometry(0.52, 0.22, 0.7), matStruct);
-      cap.position.set(tx, H + 0.1, 0);
-      group.add(cap);
+      [-0.58, 0.58].forEach(z => {
+        const leg = new THREE.Mesh(new THREE.BoxGeometry(0.34, H, 0.26), matStruct);
+        leg.position.set(tx, H / 2, z);
+        group.add(leg);
+      });
+      const beam = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.28, 1.24), matStruct);
+      beam.position.set(tx, H + 0.1, 0);
+      group.add(beam);
     });
 
     // tirantes (dos planos de cables)
