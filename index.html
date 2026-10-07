@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8"/>
@@ -9,6 +9,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="styles.css"/>
   <script src="script.js" defer></script>
+  <script type="importmap">
+    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+  </script>
   <style>
     .card-img { margin: -0.75rem -0.75rem 0.6rem; }
     .card-img img {
@@ -46,6 +49,12 @@
       height: auto;
       color: var(--celeste);
     }
+    #bridge3d {
+      display: block;
+      width: 100%;
+      height: 320px;
+    }
+    #bridge3d canvas { display: block; }
     @media (max-width: 900px) {
       .hero-split { grid-template-columns: 1fr; }
     }
@@ -73,99 +82,7 @@
         <a class="btn-ghost" href="perfil.html">Sobre mí</a>
       </div>
     </div>
-    <div class="hero-bridge">
-      <svg viewBox="0 0 820 480" fill="none" stroke-linecap="round" stroke-linejoin="round">
-        <defs>
-          <marker id="arrB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M0 0 L10 5 L0 10 z" fill="#b8dff5"/>
-          </marker>
-          <pattern id="gMin" width="12" height="12" patternUnits="userSpaceOnUse">
-            <path d="M12 0 H0 V12" fill="none" stroke="#162028" stroke-width="0.6"/>
-          </pattern>
-          <pattern id="gMaj" width="60" height="60" patternUnits="userSpaceOnUse">
-            <path d="M60 0 H0 V60" fill="none" stroke="#1e2b35" stroke-width="1"/>
-          </pattern>
-          <pattern id="chx" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-            <line x1="0" y1="0" x2="0" y2="8" stroke="#6f9fc4" stroke-width="1"/>
-          </pattern>
-          <pattern id="cim" width="10" height="10" patternUnits="userSpaceOnUse">
-            <circle cx="5" cy="5" r="1.3" fill="#6f9fc4"/>
-          </pattern>
-          <clipPath id="paper"><rect x="0" y="0" width="820" height="480" rx="14"/></clipPath>
-        </defs>
-
-        <g clip-path="url(#paper)">
-          <!-- fondo oscuro milimetrado -->
-          <rect x="0" y="0" width="820" height="480" fill="#0c1014"/>
-          <rect x="0" y="0" width="820" height="480" fill="url(#gMin)"/>
-          <rect x="0" y="0" width="820" height="480" fill="url(#gMaj)"/>
-
-          <!-- anotaciones -->
-          <text x="34" y="52" font-family="IBM Plex Sans, Arial, sans-serif" font-size="30" font-weight="700" letter-spacing="6" fill="#d9ecf9">ALZADO</text>
-          <text x="786" y="52" text-anchor="end" font-family="IBM Plex Sans, Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="2" fill="#d9ecf9">E.060</text>
-
-          <!-- río -->
-          <rect x="172" y="312" width="476" height="78" fill="#123a56" stroke="#2c6f9c" stroke-width="1.5"/>
-          <path d="M190 340 q14 -8 28 0 q14 8 28 0 q14 -8 28 0 q14 8 28 0 q14 -8 28 0 q14 8 28 0 q14 -8 28 0 q14 8 28 0 q14 -8 28 0 q14 8 28 0 q14 -8 28 0 q14 8 28 0" fill="none" stroke="#3d7fa8" stroke-width="1.4"/>
-          <path d="M210 362 q14 -7 28 0 q14 7 28 0 q14 -7 28 0 q14 7 28 0 q14 -7 28 0 q14 7 28 0 q14 -7 28 0" fill="none" stroke="#2c6f9c" stroke-width="1.1"/>
-
-          <!-- tablero -->
-          <rect x="120" y="300" width="580" height="12" fill="#0f2230" stroke="#b8dff5" stroke-width="2"/>
-
-          <!-- péndolas -->
-          <g stroke="#b8dff5" stroke-width="2">
-            <line x1="178" y1="235" x2="178" y2="300"/>
-            <line x1="236" y1="185" x2="236" y2="300"/>
-            <line x1="294" y1="149" x2="294" y2="300"/>
-            <line x1="352" y1="127" x2="352" y2="300"/>
-            <line x1="410" y1="120" x2="410" y2="300"/>
-            <line x1="468" y1="127" x2="468" y2="300"/>
-            <line x1="526" y1="149" x2="526" y2="300"/>
-            <line x1="584" y1="185" x2="584" y2="300"/>
-            <line x1="642" y1="235" x2="642" y2="300"/>
-          </g>
-          <g fill="#b8dff5">
-            <circle cx="178" cy="235" r="3"/><circle cx="178" cy="300" r="3"/>
-            <circle cx="236" cy="185" r="3"/><circle cx="236" cy="300" r="3"/>
-            <circle cx="294" cy="149" r="3"/><circle cx="294" cy="300" r="3"/>
-            <circle cx="352" cy="127" r="3"/><circle cx="352" cy="300" r="3"/>
-            <circle cx="410" cy="120" r="3"/><circle cx="410" cy="300" r="3"/>
-            <circle cx="468" cy="127" r="3"/><circle cx="468" cy="300" r="3"/>
-            <circle cx="526" cy="149" r="3"/><circle cx="526" cy="300" r="3"/>
-            <circle cx="584" cy="185" r="3"/><circle cx="584" cy="300" r="3"/>
-            <circle cx="642" cy="235" r="3"/><circle cx="642" cy="300" r="3"/>
-          </g>
-
-          <!-- arco parabólico -->
-          <path d="M120 300 Q410 -60 700 300" fill="none" stroke="#b8dff5" stroke-width="3"/>
-
-          <!-- pilares -->
-          <rect x="120" y="300" width="52" height="90" fill="#101b24" stroke="#b8dff5" stroke-width="2"/>
-          <rect x="120" y="300" width="52" height="90" fill="url(#chx)" stroke="none"/>
-          <rect x="120" y="300" width="52" height="90" fill="none" stroke="#b8dff5" stroke-width="2"/>
-          <rect x="648" y="300" width="52" height="90" fill="#101b24" stroke="#b8dff5" stroke-width="2"/>
-          <rect x="648" y="300" width="52" height="90" fill="url(#chx)" stroke="none"/>
-          <rect x="648" y="300" width="52" height="90" fill="none" stroke="#b8dff5" stroke-width="2"/>
-
-          <!-- cimientos -->
-          <rect x="92" y="390" width="108" height="20" fill="#101b24" stroke="#b8dff5" stroke-width="2"/>
-          <rect x="92" y="390" width="108" height="20" fill="url(#cim)" stroke="none"/>
-          <rect x="92" y="390" width="108" height="20" fill="none" stroke="#b8dff5" stroke-width="2"/>
-          <rect x="620" y="390" width="108" height="20" fill="#101b24" stroke="#b8dff5" stroke-width="2"/>
-          <rect x="620" y="390" width="108" height="20" fill="url(#cim)" stroke="none"/>
-          <rect x="620" y="390" width="108" height="20" fill="none" stroke="#b8dff5" stroke-width="2"/>
-
-          <!-- línea de suelo -->
-          <line x1="92" y1="410" x2="728" y2="410" stroke="#b8dff5" stroke-width="2"/>
-
-          <!-- cota inferior: Luz 32 m -->
-          <line x1="120" y1="410" x2="120" y2="440" stroke="#b8dff5" stroke-width="1.2"/>
-          <line x1="700" y1="410" x2="700" y2="440" stroke="#b8dff5" stroke-width="1.2"/>
-          <line x1="120" y1="440" x2="700" y2="440" stroke="#b8dff5" stroke-width="1.2" marker-start="url(#arrB)" marker-end="url(#arrB)"/>
-          <text x="410" y="470" text-anchor="middle" font-family="IBM Plex Sans, Arial, sans-serif" font-size="20" font-weight="600" fill="#d9ecf9">Luz 32 m</text>
-        </g>
-      </svg>
-    </div>
+    <div class="hero-bridge" id="bridge3d"></div>
   </section>
 
   <div class="section" id="proyectos">
@@ -234,6 +151,99 @@
         document.addEventListener('DOMContentLoaded', scan);
       } else { scan(); }
     })();
+  </script>
+  <script type="module">
+    import * as THREE from 'three';
+
+    const host = document.getElementById('bridge3d');
+    if (!host) throw new Error('bridge3d no encontrado');
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, host.clientWidth / host.clientHeight, 0.1, 100);
+    camera.position.set(0, 2.4, 7.5);
+    camera.lookAt(0, 0, 0);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(host.clientWidth, host.clientHeight);
+    host.appendChild(renderer.domElement);
+
+    scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+    const key = new THREE.DirectionalLight(0xffffff, 1.4);
+    key.position.set(4, 8, 6);
+    scene.add(key);
+    const rim = new THREE.PointLight(0x4fc3f7, 40, 30);
+    rim.position.set(-4, 3, 4);
+    scene.add(rim);
+
+    const group = new THREE.Group();
+    scene.add(group);
+
+    const matStruct = new THREE.MeshStandardMaterial({ color: 0x4fc3f7, metalness: 0.6, roughness: 0.35 });
+    const matPier = new THREE.MeshStandardMaterial({ color: 0x2a3a47, metalness: 0.4, roughness: 0.6 });
+    const matWater = new THREE.MeshStandardMaterial({ color: 0x123a56, metalness: 0.2, roughness: 0.5 });
+
+    const R = 2.4;
+
+    // arco (medio toro)
+    const arch = new THREE.Mesh(
+      new THREE.TorusGeometry(R, 0.08, 10, 96, Math.PI),
+      matStruct
+    );
+    group.add(arch);
+
+    // tablero
+    const deck = new THREE.Mesh(new THREE.BoxGeometry(R * 2, 0.14, 0.5), matStruct);
+    deck.position.y = 0;
+    group.add(deck);
+
+    // péndolas
+    for (let k = 1; k <= 9; k++) {
+      const x = -R + k * ((2 * R) / 10);
+      const y = Math.sqrt(R * R - x * x);
+      const h = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, y, 8), matStruct);
+      h.position.set(x, y / 2, 0);
+      group.add(h);
+    }
+
+    // pilares y cimientos
+    [-R, R].forEach(x => {
+      const pier = new THREE.Mesh(new THREE.BoxGeometry(0.36, 1.5, 0.55), matPier);
+      pier.position.set(x, -0.75, 0);
+      group.add(pier);
+      const base = new THREE.Mesh(new THREE.BoxGeometry(0.72, 0.26, 0.72), matPier);
+      base.position.set(x, -1.6, 0);
+      group.add(base);
+    });
+
+    // río
+    const water = new THREE.Mesh(new THREE.BoxGeometry(R * 2 - 0.7, 0.04, 0.6), matWater);
+    water.position.set(0, -1.45, 0);
+    group.add(water);
+
+    group.rotation.y = -0.5;
+
+    let dragging = false, lastX = 0;
+    renderer.domElement.addEventListener('pointerdown', e => { dragging = true; lastX = e.clientX; });
+    window.addEventListener('pointermove', e => {
+      if (!dragging) return;
+      group.rotation.y += (e.clientX - lastX) * 0.008;
+      lastX = e.clientX;
+    });
+    window.addEventListener('pointerup', () => { dragging = false; });
+
+    new ResizeObserver(() => {
+      camera.aspect = host.clientWidth / host.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(host.clientWidth, host.clientHeight);
+    }).observe(host);
+
+    function animate() {
+      requestAnimationFrame(animate);
+      if (!dragging) group.rotation.y += 0.005;
+      renderer.render(scene, camera);
+    }
+    animate();
   </script>
 </body>
 </html>
