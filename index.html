@@ -210,7 +210,7 @@
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, host.clientWidth / host.clientHeight, 0.1, 100);
-    camera.position.set(0, 3, 14);
+    camera.position.set(0, 3, 17);
     camera.lookAt(0, 0.5, 0);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -236,10 +236,10 @@
     const matLine   = new THREE.MeshStandardMaterial({ color: 0xe6edf3, roughness: 0.6 });
     const matCable  = new THREE.MeshStandardMaterial({ color: 0xbcd6ee, metalness: 0.5, roughness: 0.4 });
 
-    const HALF = 6;     // mitad de la longitud total
+    const HALF = 8;     // mitad de la longitud total
     const D = 1.2;      // ancho del tablero
     const H = 3.4;      // altura de las torres
-    const TOWERS = [-3, 0, 3]; // tres torres => cuatro tramos
+    const TOWERS = [-4, 0, 4]; // tres torres => cuatro tramos
 
     // tablero estructural
     const deck = new THREE.Mesh(new THREE.BoxGeometry(HALF * 2, 0.16, D), matStruct);
@@ -252,9 +252,9 @@
     group.add(road);
 
     // línea central discontinua
-    for (let k = 0; k < 15; k++) {
+    for (let k = 0; k < 18; k++) {
       const seg = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.012, 0.06), matLine);
-      seg.position.set(-5.6 + k * 0.8, 0.135, 0);
+      seg.position.set(-7.5 + k * 0.88, 0.135, 0);
       group.add(seg);
     }
 
@@ -283,7 +283,7 @@
     TOWERS.forEach(tx => {
       [-0.5, 0.5].forEach(z => {
         const top = new THREE.Vector3(tx, H, z);
-        [0.5, 1.0, 1.4].forEach(d => {
+        [0.6, 1.2, 1.8].forEach(d => {
           cableBetween(top, new THREE.Vector3(tx + d, 0, z));
           cableBetween(top, new THREE.Vector3(tx - d, 0, z));
         });
