@@ -210,8 +210,8 @@
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, host.clientWidth / host.clientHeight, 0.1, 100);
-    camera.position.set(0, 2.6, 11);
-    camera.lookAt(0, 0, 0);
+    camera.position.set(0, 3, 14);
+    camera.lookAt(0, 0.5, 0);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -234,57 +234,72 @@
     const matWater  = new THREE.MeshStandardMaterial({ color: 0x123a56, metalness: 0.2, roughness: 0.5 });
     const matRoad   = new THREE.MeshStandardMaterial({ color: 0x202d38, metalness: 0.1, roughness: 0.85 });
     const matLine   = new THREE.MeshStandardMaterial({ color: 0xe6edf3, roughness: 0.6 });
+    const matCable  = new THREE.MeshStandardMaterial({ color: 0xbcd6ee, metalness: 0.5, roughness: 0.4 });
 
-    const R = 3.6;
-    const D = 1.2; // ancho total del tablero
-
-    // dos arcos paralelos
-    [-0.62, 0.62].forEach(z => {
-      const arch = new THREE.Mesh(new THREE.TorusGeometry(R, 0.08, 10, 96, Math.PI), matStruct);
-      arch.position.z = z;
-      group.add(arch);
-    });
+    const HALF = 6;     // mitad de la longitud total
+    const D = 1.2;      // ancho del tablero
+    const H = 3.4;      // altura de las torres
+    const TOWERS = [-2, 2]; // posición de las dos torres (3 tramos)
 
     // tablero estructural
-    const deck = new THREE.Mesh(new THREE.BoxGeometry(R * 2, 0.16, D), matStruct);
+    const deck = new THREE.Mesh(new THREE.BoxGeometry(HALF * 2, 0.16, D), matStruct);
     deck.position.y = 0;
     group.add(deck);
 
     // calzada
-    const road = new THREE.Mesh(new THREE.BoxGeometry(R * 2 - 0.2, 0.05, D - 0.18), matRoad);
+    const road = new THREE.Mesh(new THREE.BoxGeometry(HALF * 2 - 0.2, 0.05, D - 0.18), matRoad);
     road.position.y = 0.105;
     group.add(road);
 
     // línea central discontinua
-    for (let k = 0; k < 10; k++) {
+    for (let k = 0; k < 15; k++) {
       const seg = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.012, 0.06), matLine);
-      seg.position.set(-3.15 + k * 0.7, 0.135, 0);
+      seg.position.set(-5.6 + k * 0.8, 0.135, 0);
       group.add(seg);
     }
 
-    // péndolas (dos filas)
-    [-0.55, 0.55].forEach(z => {
-      for (let k = 1; k <= 9; k++) {
-        const x = -R + k * ((2 * R) / 10);
-        const y = Math.sqrt(R * R - x * x);
-        const h = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.018, y, 8), matStruct);
-        h.position.set(x, y / 2, z);
-        group.add(h);
-      }
+    // torres (pilones)
+    TOWERS.forEach(tx => {
+      const pylon = new THREE.Mesh(new THREE.BoxGeometry(0.34, H, 0.6), matStruct);
+      pylon.position.set(tx, H / 2, 0);
+      group.add(pylon);
+      const cap = new THREE.Mesh(new THREE.BoxGeometry(0.52, 0.22, 0.7), matStruct);
+      cap.position.set(tx, H + 0.1, 0);
+      group.add(cap);
     });
 
-    // pilares y cimientos
-    [-R, R].forEach(x => {
-      const pier = new THREE.Mesh(new THREE.BoxGeometry(0.36, 1.5, D), matPier);
-      pier.position.set(x, -0.75, 0);
+    // tirantes (dos planos de cables)
+    function cableBetween(a, b) {
+      const dir = new THREE.Vector3().subVectors(b, a);
+      const len = dir.length();
+      const mid = new THREE.Vector3().addVectors(a, b).multiplyScalar(0.5);
+      const cyl = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, len, 6), matCable);
+      cyl.position.copy(mid);
+      cyl.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.normalize());
+      group.add(cyl);
+    }
+    TOWERS.forEach(tx => {
+      [-0.5, 0.5].forEach(z => {
+        const top = new THREE.Vector3(tx, H, z);
+        [0.6, 1.2, 1.8, 2.4].forEach(d => {
+          cableBetween(top, new THREE.Vector3(tx + d, 0, z));
+          cableBetween(top, new THREE.Vector3(tx - d, 0, z));
+        });
+      });
+    });
+
+    // pilas extremas y cimientos
+    [-HALF, HALF].forEach(x => {
+      const pier = new THREE.Mesh(new THREE.BoxGeometry(0.4, 1.6, D), matPier);
+      pier.position.set(x, -0.8, 0);
       group.add(pier);
-      const base = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.28, D + 0.2), matPier);
-      base.position.set(x, -1.62, 0);
+      const base = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.3, D + 0.2), matPier);
+      base.position.set(x, -1.65, 0);
       group.add(base);
     });
 
     // río
-    const water = new THREE.Mesh(new THREE.BoxGeometry(R * 2 - 0.7, 0.05, D + 0.3), matWater);
+    const water = new THREE.Mesh(new THREE.BoxGeometry(HALF * 2 - 0.7, 0.05, D + 0.3), matWater);
     water.position.set(0, -1.48, 0);
     group.add(water);
 
