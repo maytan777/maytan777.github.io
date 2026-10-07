@@ -238,8 +238,8 @@
 
     const HALF = 6;     // mitad de la longitud total
     const D = 1.2;      // ancho del tablero
-    const H = 3.6;      // altura de las torres
-    const TOWERS = [-3, 0, 3]; // tres torres => cuatro tramos
+    const H = 3.4;      // altura de las torres
+    const TOWERS = [-2, 2]; // posición de las dos torres (3 tramos)
 
     // tablero estructural
     const deck = new THREE.Mesh(new THREE.BoxGeometry(HALF * 2, 0.16, D), matStruct);
@@ -260,48 +260,39 @@
 
     // torres (pilones)
     TOWERS.forEach(tx => {
-      const pylon = new THREE.Mesh(new THREE.BoxGeometry(0.38, H, 0.62), matStruct);
+      const pylon = new THREE.Mesh(new THREE.BoxGeometry(0.34, H, 0.6), matStruct);
       pylon.position.set(tx, H / 2, 0);
       group.add(pylon);
-      const cap = new THREE.Mesh(new THREE.BoxGeometry(0.56, 0.22, 0.74), matStruct);
+      const cap = new THREE.Mesh(new THREE.BoxGeometry(0.52, 0.22, 0.7), matStruct);
       cap.position.set(tx, H + 0.1, 0);
       group.add(cap);
     });
 
-    // cable principal (dos planos) + péndolas
-    const cableControl = [
-      [-6, 1.0], [-4.5, 0.5], [-3, H], [-1.5, 0.5], [0, H], [1.5, 0.5], [3, H], [4.5, 0.5], [6, 1.0]
-    ];
-    function buildCable(z) {
-      const pts = cableControl.map(([x, y]) => new THREE.Vector3(x, y, z));
-      const curve = new THREE.CatmullRomCurve3(pts);
-      const tube = new THREE.Mesh(new THREE.TubeGeometry(curve, 240, 0.045, 8), matCable);
-      group.add(tube);
-      return curve;
+    // tirantes (dos planos de cables)
+    function cableBetween(a, b) {
+      const dir = new THREE.Vector3().subVectors(b, a);
+      const len = dir.length();
+      const mid = new THREE.Vector3().addVectors(a, b).multiplyScalar(0.5);
+      const cyl = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, len, 6), matCable);
+      cyl.position.copy(mid);
+      cyl.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.normalize());
+      group.add(cyl);
     }
-    function buildHangers(z, curve) {
-      for (let x = -5.5; x <= 5.5; x += 0.5) {
-        if (TOWERS.includes(Math.round(x * 10) / 10)) continue;
-        const u = (x + HALF) / (HALF * 2);
-        const y = curve.getPointAt(Math.min(1, Math.max(0, u))).y;
-        const h = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.015, y, 6), matCable);
-        h.position.set(x, y / 2, z);
-        group.add(h);
-      }
-    }
-    [-0.55, 0.55].forEach(z => {
-      const curve = buildCable(z);
-      buildHangers(z, curve);
+    TOWERS.forEach(tx => {
+      [-0.5, 0.5].forEach(z => {
+        const top = new THREE.Vector3(tx, H, z);
+        [0.6, 1.2, 1.8, 2.4].forEach(d => {
+          cableBetween(top, new THREE.Vector3(tx + d, 0, z));
+          cableBetween(top, new THREE.Vector3(tx - d, 0, z));
+        });
+      });
     });
 
-    // pilas extremas, anclajes y cimientos
+    // pilas extremas y cimientos
     [-HALF, HALF].forEach(x => {
       const pier = new THREE.Mesh(new THREE.BoxGeometry(0.4, 1.6, D), matPier);
       pier.position.set(x, -0.8, 0);
       group.add(pier);
-      const anchor = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.7, D + 0.3), matPier);
-      anchor.position.set(x, 0.35, 0);
-      group.add(anchor);
       const base = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.3, D + 0.2), matPier);
       base.position.set(x, -1.65, 0);
       group.add(base);
