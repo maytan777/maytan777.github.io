@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MM Ingeniería — Proyectos</title>
+  <title>MM Ingeniería — Inicio</title>
   <link rel="icon" type="image/jpeg" href="logo.jpeg">
   <meta name="description" content="MM Ingeniería - Portafolio de proyectos reales de infraestructura vial, movilidad urbana y edificaciones en Ayacucho, Perú.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -185,9 +185,9 @@
     <a class="nav-logo" href="index.html">MM<span>.</span>Ingeniería</a>
     <ul>
       <li><a href="index.html" class="active">Blog</a></li>
-      <li><a href="perfil.html">Perfil</a></li>
       <li><a href="persona.html">Persona</a></li>
       <li><a href="programas.html">Programas</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
     </ul>
   </nav>
 
@@ -199,7 +199,7 @@
       <p class="hero-sub">Proyectos reales de infraestructura vial, movilidad urbana y edificaciones institucionales en Ayacucho, Perú.</p>
       <div class="hero-cta">
         <a class="btn-primary" href="#proyectos">Ver proyectos ↓</a>
-        <a class="btn-ghost" href="perfil.html">Sobre mí</a>
+        <a class="btn-ghost" href="#perfil">Sobre mí</a>
       </div>
     </div>
     <div class="hero-bridge" id="bridge3d" data-model="road">
@@ -275,6 +275,78 @@
     </div>
   </div>
 
+  <div class="section" id="perfil">
+    <h2 class="section-title">Perfil</h2>
+    <div class="perfil-grid">
+      <div>
+        <div class="perfil-avatar">
+          <img src="logo.jpeg" alt="Foto de perfil">
+        </div>
+      </div>
+      <div class="perfil-info">
+        <h2>MAYTAN H. Marco A.</h2>
+        <p class="cargo">Ingeniero Civil · Proyectos viales y urbanos · Perú</p>
+        <p>Ingeniero civil con experiencia en proyectos de infraestructura vial y urbana en Ayacucho: caminos vecinales, movilidad urbana, transitabilidad peatonal y vehicular, y edificaciones institucionales. Manejo de AutoCAD Civil 3D para diseño vial, secciones transversales, metrados y elaboración de planos.</p>
+        <p>Complemento mi perfil con modelado BIM (Revit, Navisworks) y la aplicación de normativa peruana (RNE) en entornos de trabajo colaborativo, buscando optimizar los procesos de diseño y reducir errores en obra.</p>
+
+        <div class="skills-grid">
+          <div class="skill-item skill-blue">Autodesk Revit</div>
+          <div class="skill-item skill-green">Navisworks</div>
+          <div class="skill-item skill-violet">BIM Level 2</div>
+          <div class="skill-item skill-cyan">RNE IS.010</div>
+          <div class="skill-item skill-amber">RNE E.060</div>
+          <div class="skill-item skill-rose">Clash Detection</div>
+          <div class="skill-item skill-teal">MEP Instalaciones</div>
+          <div class="skill-item skill-red">AutoCAD</div>
+          <div class="skill-item skill-indigo">AutoCAD Civil 3D</div>
+          <div class="skill-item skill-orange">Diseño vial y metrados</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Experiencia en proyectos</h2>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-title">Camino Vecinal Paccpachayucc – Chahuaycco</div>
+        <div class="card-desc">Transitabilidad vial interurbana · Secciones transversales KM 00+000–1+080 · Chilcas, La Mar</div>
+        <div class="card-meta">Diseño vial · Civil 3D</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Movilidad Urbana — La Nueva Esperanza</div>
+        <div class="card-desc">Servicio de movilidad urbana en vías locales de la asociación pro vivienda</div>
+        <div class="card-meta">Diseño urbano vial</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Palacio Municipal de Kimbiri Alto</div>
+        <div class="card-desc">Mejoramiento de servicios institucionales en el centro poblado de Kimbiri Alto</div>
+        <div class="card-meta">Edificación institucional</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Transitabilidad La Paz y Quicapata</div>
+        <div class="card-desc">Planteamiento general 1:1000 · Veredas y pavimento · Carmen Alto, Huamanga</div>
+        <div class="card-meta">Transitabilidad peatonal y vehicular</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Educación</h2>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-title">Ingeniería Civil</div>
+        <div class="card-desc">Universidad Nacional de San Cristóbal de Huamanga</div>
+        <div class="card-meta">Ayacucho · Perú</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Especialización BIM</div>
+        <div class="card-desc">Modelado y coordinación BIM aplicado a proyectos multidisciplinarios</div>
+        <div class="card-meta">Actualiza con tu certificación</div>
+      </div>
+    </div>
+  </div>
+
   <footer><p>© 2026 <span>MM INGENIERIA</span> · Blog BIM & Construcción · Perú · Desarrollado por <strong>Maytan777</strong></p></footer>
 
   <a class="wa-float" href="https://wa.me/51957860293" target="_blank" title="Escríbeme por WhatsApp">💬</a>
@@ -282,7 +354,7 @@
   <script>
     (function () {
       function scan() {
-        var els = document.querySelectorAll('.card');
+        var els = document.querySelectorAll('.card, .perfil-grid');
         if (!('IntersectionObserver' in window)) {
           els.forEach(function (el) { el.classList.add('visible'); });
           return;
