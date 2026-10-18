@@ -1,7 +1,7 @@
 :root {
   --bg: #0d0f0e;
-  --surface: #0f1110;
-  --surface-2: #0a0c0b;
+  --surface: #000000;
+  --surface-2: #000000;
   --border: rgba(79,195,247,0.25);
   --accent: #12bd92;
   --accent2: #3583a7;
@@ -260,7 +260,7 @@ nav ul a.active {
 .post-card:hover::before { height: 100%; }
 .post-card:hover {
   border-color: rgba(79,195,247,0.35);
-  background: #0a0c0b;
+  background: #000000;
   box-shadow: var(--glow);
   transform: translateY(-4px);
 }
@@ -360,7 +360,7 @@ nav ul a.active {
 .card:hover::before { height: 100%; }
 .card:hover {
   border-color: rgba(79,195,247,0.35);
-  background: #0a0c0b;
+  background: #000000;
   box-shadow: var(--glow);
   transform: translateY(-4px);
 }
