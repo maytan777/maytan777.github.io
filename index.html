@@ -29,17 +29,20 @@
       object-position: top;
       border-bottom: 1px solid var(--border);
     }
-    .hero-split {
+    .perfil-hero {
       display: grid;
-      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.25fr);
-      gap: 1.25rem;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+      gap: 1.75rem;
       align-items: center;
     }
+    .perfil-hero .perfil-grid { gap: 1.25rem; }
+    .perfil-hero .perfil-avatar { width: 132px; height: 132px; }
+    .perfil-hero .perfil-info h2 { font-size: 1.5rem; }
     .hero-bridge {
       position: relative;
       border: 1px solid var(--border);
       border-radius: 12px;
-      background: #090c0f;
+      background: #000000;
       padding: 0;
       overflow: hidden;
     }
@@ -172,7 +175,7 @@
     .f-top    { transform: rotateX(90deg) translateZ(20px); }
     .f-bottom { transform: rotateX(-90deg) translateZ(20px); }
     @media (max-width: 900px) {
-      .hero-split { grid-template-columns: 1fr; }
+      .perfil-hero { grid-template-columns: 1fr; }
     }
     @media (max-width: 520px) {
       #bridge3d { height: 300px; }
@@ -191,53 +194,71 @@
     </ul>
   </nav>
 
-  <section class="hero hero-split">
-    <div>
-      <span class="hero-pill"><span class="dot"></span> Portafolio · Perú</span>
-      <h1>Mis<br><em>proyectos</em></h1>
-      <div class="hero-line"></div>
-      <p class="hero-sub">Proyectos reales de infraestructura vial, movilidad urbana y edificaciones institucionales en Ayacucho, Perú.</p>
-      <div class="hero-cta">
-        <a class="btn-primary" href="#proyectos">Ver proyectos ↓</a>
-        <a class="btn-ghost" href="#perfil">Sobre mí</a>
-      </div>
-    </div>
-    <div class="hero-bridge" id="bridge3d" data-model="road">
-      <div class="bridge-caption">
-        <strong id="model-title">Carretera de montaña · Obras viales</strong>
-        <span id="model-description">Curvas, drenaje y contención · Modelo conceptual 3D</span>
-      </div>
-      <div class="bridge-status" id="bridge-status" role="status">Cargando modelo 3D…</div>
-      <div class="viewcube" id="viewcube" aria-label="Vistas del modelo">
-        <div class="cube" id="cube">
-          <button class="face f-top" type="button" data-face="top" aria-label="Vista superior">TOP</button>
-          <button class="face f-bottom" type="button" data-face="bottom" aria-label="Vista inferior">BOTTOM</button>
-          <button class="face f-front" type="button" data-face="front" aria-label="Vista frontal">FRONT</button>
-          <button class="face f-back" type="button" data-face="back" aria-label="Vista posterior">BACK</button>
-          <button class="face f-left" type="button" data-face="left" aria-label="Vista izquierda">LEFT</button>
-          <button class="face f-right" type="button" data-face="right" aria-label="Vista derecha">RIGHT</button>
+  <section class="hero">
+    <div class="perfil-hero">
+      <div class="perfil-grid">
+        <div>
+          <div class="perfil-avatar">
+            <img src="logo.jpeg" alt="Foto de perfil">
+          </div>
+        </div>
+        <div class="perfil-info">
+          <h2>MAYTAN H. Marco A.</h2>
+          <p class="cargo">Ingeniero Civil · Proyectos viales y urbanos · Perú</p>
+          <p>Ingeniero civil con experiencia en proyectos de infraestructura vial y urbana en Ayacucho: caminos vecinales, movilidad urbana, transitabilidad peatonal y vehicular, y edificaciones institucionales. Manejo de AutoCAD Civil 3D para diseño vial, secciones transversales, metrados y elaboración de planos.</p>
+          <p>Complemento mi perfil con modelado BIM (Revit, Navisworks) y la aplicación de normativa peruana (RNE) en entornos de trabajo colaborativo, buscando optimizar los procesos de diseño y reducir errores en obra.</p>
+
+          <div class="skills-grid">
+            <div class="skill-item skill-blue">Autodesk Revit</div>
+            <div class="skill-item skill-green">Navisworks</div>
+            <div class="skill-item skill-violet">BIM Level 2</div>
+            <div class="skill-item skill-cyan">RNE IS.010</div>
+            <div class="skill-item skill-amber">RNE E.060</div>
+            <div class="skill-item skill-rose">Clash Detection</div>
+            <div class="skill-item skill-teal">MEP Instalaciones</div>
+            <div class="skill-item skill-red">AutoCAD</div>
+            <div class="skill-item skill-indigo">AutoCAD Civil 3D</div>
+            <div class="skill-item skill-orange">Diseño vial y metrados</div>
+          </div>
         </div>
       </div>
-      <div class="bridge-tools" aria-label="Controles del modelo">
-        <button id="bridge-rotate" type="button" title="Pausar giro" aria-label="Pausar giro" aria-pressed="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg>
-        </button>
-        <button id="bridge-home" type="button" title="Restablecer vista" aria-label="Restablecer vista">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7M5 9v12h14V9M9 21v-8h6v8"/></svg>
-        </button>
-        <button id="bridge-expand" type="button" title="Ampliar visor" aria-label="Ampliar visor">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M9 3H3v6M15 3h6v6M21 15v6h-6M9 21H3v-6"/></svg>
-        </button>
-      </div>
-      <div class="model-switch" role="group" aria-label="Elegir modelo 3D">
-        <button type="button" data-model-choice="bridge" aria-pressed="false">Puente</button>
-        <button type="button" data-model-choice="road" aria-pressed="true">Carretera</button>
+      <div class="hero-bridge" id="bridge3d" data-model="road">
+        <div class="bridge-caption">
+          <strong id="model-title">Carretera de montaña · Obras viales</strong>
+          <span id="model-description">Curvas, drenaje y contención · Modelo conceptual 3D</span>
+        </div>
+        <div class="bridge-status" id="bridge-status" role="status">Cargando modelo 3D…</div>
+        <div class="viewcube" id="viewcube" aria-label="Vistas del modelo">
+          <div class="cube" id="cube">
+            <button class="face f-top" type="button" data-face="top" aria-label="Vista superior">TOP</button>
+            <button class="face f-bottom" type="button" data-face="bottom" aria-label="Vista inferior">BOTTOM</button>
+            <button class="face f-front" type="button" data-face="front" aria-label="Vista frontal">FRONT</button>
+            <button class="face f-back" type="button" data-face="back" aria-label="Vista posterior">BACK</button>
+            <button class="face f-left" type="button" data-face="left" aria-label="Vista izquierda">LEFT</button>
+            <button class="face f-right" type="button" data-face="right" aria-label="Vista derecha">RIGHT</button>
+          </div>
+        </div>
+        <div class="bridge-tools" aria-label="Controles del modelo">
+          <button id="bridge-rotate" type="button" title="Pausar giro" aria-label="Pausar giro" aria-pressed="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg>
+          </button>
+          <button id="bridge-home" type="button" title="Restablecer vista" aria-label="Restablecer vista">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7M5 9v12h14V9M9 21v-8h6v8"/></svg>
+          </button>
+          <button id="bridge-expand" type="button" title="Ampliar visor" aria-label="Ampliar visor">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M9 3H3v6M15 3h6v6M21 15v6h-6M9 21H3v-6"/></svg>
+          </button>
+        </div>
+        <div class="model-switch" role="group" aria-label="Elegir modelo 3D">
+          <button type="button" data-model-choice="bridge" aria-pressed="false">Puente</button>
+          <button type="button" data-model-choice="road" aria-pressed="true">Carretera</button>
+        </div>
       </div>
     </div>
   </section>
 
   <div class="section" id="proyectos">
-    <h2 class="section-title">Proyectos</h2>
+    <h2 class="section-title">Mis proyectos</h2>
     <div class="cards-grid">
 
       <div class="card">
@@ -272,62 +293,6 @@
         <div class="card-meta">Planteamiento general 1:1000 · Carmen Alto · Ayacucho</div>
       </div>
 
-    </div>
-  </div>
-
-  <div class="section" id="perfil">
-    <h2 class="section-title">Perfil</h2>
-    <div class="perfil-grid">
-      <div>
-        <div class="perfil-avatar">
-          <img src="logo.jpeg" alt="Foto de perfil">
-        </div>
-      </div>
-      <div class="perfil-info">
-        <h2>MAYTAN H. Marco A.</h2>
-        <p class="cargo">Ingeniero Civil · Proyectos viales y urbanos · Perú</p>
-        <p>Ingeniero civil con experiencia en proyectos de infraestructura vial y urbana en Ayacucho: caminos vecinales, movilidad urbana, transitabilidad peatonal y vehicular, y edificaciones institucionales. Manejo de AutoCAD Civil 3D para diseño vial, secciones transversales, metrados y elaboración de planos.</p>
-        <p>Complemento mi perfil con modelado BIM (Revit, Navisworks) y la aplicación de normativa peruana (RNE) en entornos de trabajo colaborativo, buscando optimizar los procesos de diseño y reducir errores en obra.</p>
-
-        <div class="skills-grid">
-          <div class="skill-item skill-blue">Autodesk Revit</div>
-          <div class="skill-item skill-green">Navisworks</div>
-          <div class="skill-item skill-violet">BIM Level 2</div>
-          <div class="skill-item skill-cyan">RNE IS.010</div>
-          <div class="skill-item skill-amber">RNE E.060</div>
-          <div class="skill-item skill-rose">Clash Detection</div>
-          <div class="skill-item skill-teal">MEP Instalaciones</div>
-          <div class="skill-item skill-red">AutoCAD</div>
-          <div class="skill-item skill-indigo">AutoCAD Civil 3D</div>
-          <div class="skill-item skill-orange">Diseño vial y metrados</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <h2 class="section-title">Experiencia en proyectos</h2>
-    <div class="cards-grid">
-      <div class="card">
-        <div class="card-title">Camino Vecinal Paccpachayucc – Chahuaycco</div>
-        <div class="card-desc">Transitabilidad vial interurbana · Secciones transversales KM 00+000–1+080 · Chilcas, La Mar</div>
-        <div class="card-meta">Diseño vial · Civil 3D</div>
-      </div>
-      <div class="card">
-        <div class="card-title">Movilidad Urbana — La Nueva Esperanza</div>
-        <div class="card-desc">Servicio de movilidad urbana en vías locales de la asociación pro vivienda</div>
-        <div class="card-meta">Diseño urbano vial</div>
-      </div>
-      <div class="card">
-        <div class="card-title">Palacio Municipal de Kimbiri Alto</div>
-        <div class="card-desc">Mejoramiento de servicios institucionales en el centro poblado de Kimbiri Alto</div>
-        <div class="card-meta">Edificación institucional</div>
-      </div>
-      <div class="card">
-        <div class="card-title">Transitabilidad La Paz y Quicapata</div>
-        <div class="card-desc">Planteamiento general 1:1000 · Veredas y pavimento · Carmen Alto, Huamanga</div>
-        <div class="card-meta">Transitabilidad peatonal y vehicular</div>
-      </div>
     </div>
   </div>
 
