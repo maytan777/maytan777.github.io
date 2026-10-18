@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="styles.css"/>
   <script src="script.js" defer></script>
+  <script src="mascota.js" defer></script>
   <script type="importmap">
     {
       "imports": {
@@ -33,11 +34,26 @@
       display: grid;
       grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
       gap: 1.75rem;
-      align-items: center;
+      align-items: start;
     }
-    .perfil-hero .perfil-grid { gap: 1.25rem; }
-    .perfil-hero .perfil-avatar { width: 132px; height: 132px; }
+    .perfil-column { min-width: 0; }
+    .perfil-head {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    .perfil-head .perfil-info { min-width: 0; }
+    .perfil-head .cargo { margin-bottom: 0; }
+    .perfil-hero .perfil-avatar { width: 110px; height: 110px; flex-shrink: 0; }
     .perfil-hero .perfil-info h2 { font-size: 1.5rem; }
+    .perfil-skills {
+      width: 100%;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 125px), 1fr));
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    .perfil-skills .skill-item { justify-content: center; padding: 0.55rem 0.6rem; }
     .hero-bridge {
       position: relative;
       border: 1px solid var(--border);
@@ -196,30 +212,20 @@
 
   <section class="hero">
     <div class="perfil-hero">
-      <div class="perfil-grid">
-        <div>
+      <div class="perfil-column">
+        <div class="perfil-head">
           <div class="perfil-avatar">
             <img src="logo.jpeg" alt="Foto de perfil">
           </div>
+          <div class="perfil-info">
+            <h2>MAYTAN H. Marco A.</h2>
+            <p class="cargo">Ingeniero Civil · Proyectos viales y urbanos · Perú</p>
+          </div>
         </div>
         <div class="perfil-info">
-          <h2>MAYTAN H. Marco A.</h2>
-          <p class="cargo">Ingeniero Civil · Proyectos viales y urbanos · Perú</p>
-          <p>Ingeniero civil con experiencia en proyectos de infraestructura vial y urbana en Ayacucho: caminos vecinales, movilidad urbana, transitabilidad peatonal y vehicular, y edificaciones institucionales. Manejo de AutoCAD Civil 3D para diseño vial, secciones transversales, metrados y elaboración de planos.</p>
-          <p>Complemento mi perfil con modelado BIM (Revit, Navisworks) y la aplicación de normativa peruana (RNE) en entornos de trabajo colaborativo, buscando optimizar los procesos de diseño y reducir errores en obra.</p>
+          <p>Ingeniero civil con experiencia en infraestructura vial y urbana en Ayacucho (caminos vecinales, movilidad urbana y edificaciones institucionales).</p>
+          <p>Soy experto en AutoCAD Civil 3D para diseño vial, secciones, metrados y planos, y complemento mi perfil con BIM (Revit, Navisworks) y aplicación del RNE en trabajo colaborativo, con foco en optimizar el diseño y reducir errores en obra.</p>
 
-          <div class="skills-grid">
-            <div class="skill-item skill-blue">Autodesk Revit</div>
-            <div class="skill-item skill-green">Navisworks</div>
-            <div class="skill-item skill-violet">BIM Level 2</div>
-            <div class="skill-item skill-cyan">RNE IS.010</div>
-            <div class="skill-item skill-amber">RNE E.060</div>
-            <div class="skill-item skill-rose">Clash Detection</div>
-            <div class="skill-item skill-teal">MEP Instalaciones</div>
-            <div class="skill-item skill-red">AutoCAD</div>
-            <div class="skill-item skill-indigo">AutoCAD Civil 3D</div>
-            <div class="skill-item skill-orange">Diseño vial y metrados</div>
-          </div>
         </div>
       </div>
       <div class="hero-bridge" id="bridge3d" data-model="road">
@@ -254,6 +260,15 @@
           <button type="button" data-model-choice="road" aria-pressed="true">Carretera</button>
         </div>
       </div>
+    </div>
+    <div class="skills-grid perfil-skills" aria-label="Herramientas y habilidades">
+      <div class="skill-item skill-blue">Revit</div>
+      <div class="skill-item skill-green">Navisworks</div>
+      <div class="skill-item skill-rose">Clash Detection</div>
+      <div class="skill-item skill-teal">MEP</div>
+      <div class="skill-item skill-red">AutoCAD</div>
+      <div class="skill-item skill-indigo">AutoCAD Civil 3D</div>
+      <div class="skill-item skill-orange">Diseño vial</div>
     </div>
   </section>
 
@@ -319,7 +334,7 @@
   <script>
     (function () {
       function scan() {
-        var els = document.querySelectorAll('.card, .perfil-grid');
+        var els = document.querySelectorAll('.card, .perfil-column');
         if (!('IntersectionObserver' in window)) {
           els.forEach(function (el) { el.classList.add('visible'); });
           return;

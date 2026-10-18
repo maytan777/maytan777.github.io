@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="styles.css"/>
   <script src="script.js" defer></script>
+  <script src="mascota.js" defer></script>
   <script src="programas-catalog.js" defer></script>
   <style>
     .prog-card {
@@ -79,6 +80,18 @@
       letter-spacing: 0;
       margin: 0.25rem 0 0.8rem;
     }
+    .prog-mono {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      width: 26px;
+      height: 26px;
+      object-fit: contain;
+      opacity: 0.55;
+      pointer-events: none;
+      transition: opacity 0.25s;
+    }
+    .prog-card:hover .prog-mono { opacity: 0.9; }
     .btn-download svg { width: 15px; height: 15px; }
     .catalog-tools {
       display: flex;
@@ -100,8 +113,35 @@
       font-size: 0.85rem;
     }
     #catalog-status { color: var(--muted); font-size: 0.75rem; }
-    .prog-card[hidden], .catalog-empty[hidden] { display: none; }
+    .prog-card[hidden], .catalog-empty[hidden], .catalog-block[hidden] { display: none; }
     .catalog-empty { padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+    .catalog-block { margin-bottom: 2.5rem; }
+    .catalog-block:last-of-type { margin-bottom: 0; }
+    .catalog-block .section-title { margin-bottom: 0.5rem; }
+    .catalog-note {
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin: 0 0 1.1rem;
+    }
+    .top-tag {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.28em 0.6em;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      vertical-align: middle;
+      transform: translateY(-0.2em);
+      margin-left: 0.35rem;
+    }
+    .prog-card-top { border-color: rgba(18,189,146,0.35); }
+    .prog-card-top::before { background: var(--accent); height: 100%; }
+    .prog-card-top .prog-icon { color: var(--accent); border-color: rgba(18,189,146,0.4); }
+    .prog-card-top:hover { border-color: var(--accent); }
   </style>
 </head>
 <body>
@@ -124,11 +164,22 @@
     <div class="catalog-tools">
       <div class="catalog-search">
         <label for="program-search">Buscar programa</label>
-        <input id="program-search" type="search" placeholder="Nombre del programa…" aria-controls="program-catalog" autocomplete="off">
+        <input id="program-search" type="search" placeholder="Nombre del programa…" aria-controls="program-catalog-top program-catalog" autocomplete="off">
       </div>
       <p id="catalog-status" role="status">Cargando catálogo…</p>
     </div>
-    <div class="cards-grid" id="program-catalog"></div>
+
+    <section class="catalog-block" id="catalog-top" aria-labelledby="top-title">
+      <h2 class="section-title" id="top-title">Programas <span class="top-tag">Top</span></h2>
+      <p class="catalog-note">Los más completos y usados, listos para descargar.</p>
+      <div class="cards-grid" id="program-catalog-top"></div>
+    </section>
+
+    <section class="catalog-block" id="catalog-rest" aria-labelledby="rest-title">
+      <h2 class="section-title" id="rest-title">Todos los programas</h2>
+      <div class="cards-grid" id="program-catalog"></div>
+    </section>
+
     <p class="catalog-empty" id="catalog-empty" hidden>No hay programas que coincidan con tu búsqueda.</p>
     <noscript><p class="catalog-empty">Activa JavaScript para ver los programas y sus enlaces de descarga.</p></noscript>
   </div>
