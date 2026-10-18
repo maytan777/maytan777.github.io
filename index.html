@@ -6,11 +6,18 @@
   <title>MM Ingeniería — Proyectos</title>
   <link rel="icon" type="image/jpeg" href="logo.jpeg">
   <meta name="description" content="MM Ingeniería - Portafolio de proyectos reales de infraestructura vial, movilidad urbana y edificaciones en Ayacucho, Perú.">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="styles.css"/>
   <script src="script.js" defer></script>
   <script type="importmap">
-    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
   </script>
   <style>
     .card-img { margin: -0.75rem -0.75rem 0.6rem; }
@@ -24,45 +31,114 @@
     }
     .hero-split {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.25fr);
+      gap: 1.25rem;
       align-items: center;
     }
     .hero-bridge {
       position: relative;
       border: 1px solid var(--border);
-      border-radius: 10px;
-      background: var(--surface);
-      padding: 1rem;
+      border-radius: 12px;
+      background: #090c0f;
+      padding: 0;
       overflow: hidden;
-    }
-    .hero-bridge::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at center, rgba(79,195,247,0.12), transparent 70%);
-      pointer-events: none;
-    }
-    .hero-bridge svg {
-      display: block;
-      width: 100%;
-      height: auto;
-      color: var(--celeste);
     }
     #bridge3d {
       display: block;
       width: 100%;
-      height: 320px;
+      height: clamp(320px, 28vw, 380px);
+      min-width: 0;
     }
-    #bridge3d canvas { display: block; }
+    #bridge3d canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      touch-action: pan-y;
+      cursor: grab;
+    }
+    #bridge3d canvas:active { cursor: grabbing; }
+    .bridge-caption, .bridge-tools {
+      position: absolute;
+      z-index: 2;
+      font-family: var(--font-body);
+      font-size: 0.6rem;
+      color: #adbeca;
+    }
+    .bridge-caption {
+      top: 14px;
+      left: 14px;
+      max-width: calc(100% - 105px);
+      pointer-events: none;
+      letter-spacing: 0;
+    }
+    .bridge-caption strong { display: block; color: #e0e8ed; font-weight: 400; margin-bottom: 4px; }
+    .bridge-caption span { color: #78909f; font-size: 0.55rem; }
+    .bridge-tools { bottom: 12px; left: 12px; display: flex; gap: 6px; }
+    .bridge-tools button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      color: #b5c7d4;
+      background: rgba(10, 16, 21, 0.92);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      cursor: pointer;
+    }
+    .bridge-tools svg { width: 15px; height: 15px; }
+    .bridge-tools button[hidden] { display: none; }
+    .bridge-tools button:hover { color: var(--celeste); border-color: var(--celeste); }
+    .model-switch {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      z-index: 3;
+      display: flex;
+      gap: 3px;
+      padding: 3px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: rgba(10, 16, 21, 0.94);
+    }
+    .model-switch button {
+      border: 0;
+      border-radius: 5px;
+      padding: 6px 9px;
+      color: #9db0bf;
+      background: transparent;
+      font-family: var(--font-body);
+      font-size: 0.6rem;
+      cursor: pointer;
+    }
+    .model-switch button[aria-pressed="true"] { background: #233b47; color: #d8f2ff; }
+    .model-switch button:hover { color: #fff; }
+    #bridge3d:fullscreen {
+      width: 100vw;
+      height: 100vh;
+      border: 0;
+      border-radius: 0;
+    }
+    .bridge-status {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 2rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+      pointer-events: none;
+    }
+    .bridge-status[hidden] { display: none; }
     .viewcube {
       position: absolute;
-      top: 10px;
-      right: 10px;
-      width: 54px;
-      height: 54px;
+      top: 24px;
+      right: 24px;
+      width: 40px;
+      height: 40px;
       z-index: 5;
-      perspective: 340px;
+      perspective: 300px;
     }
     .cube {
       position: relative;
@@ -77,25 +153,30 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Space Mono', monospace;
-      font-size: 7px;
-      letter-spacing: 0.05em;
+      font-family: var(--font-body);
+      font-size: 6px;
+      letter-spacing: 0;
       color: #d7e6f4;
-      background: rgba(18,42,62,0.9);
-      border: 1px solid rgba(79,195,247,0.7);
+      background: #18232d;
+      border: 1px solid rgba(137,179,205,0.65);
       box-sizing: border-box;
       cursor: pointer;
       user-select: none;
+      backface-visibility: hidden;
     }
     .face:hover { background: rgba(28,72,102,0.95); color: #fff; }
-    .f-front  { transform: translateZ(27px); }
-    .f-back   { transform: rotateY(180deg) translateZ(27px); }
-    .f-right  { transform: rotateY(90deg) translateZ(27px); }
-    .f-left   { transform: rotateY(-90deg) translateZ(27px); }
-    .f-top    { transform: rotateX(90deg) translateZ(27px); }
-    .f-bottom { transform: rotateX(-90deg) translateZ(27px); }
+    .f-front  { transform: translateZ(20px); }
+    .f-back   { transform: rotateY(180deg) translateZ(20px); }
+    .f-right  { transform: rotateY(90deg) translateZ(20px); }
+    .f-left   { transform: rotateY(-90deg) translateZ(20px); }
+    .f-top    { transform: rotateX(90deg) translateZ(20px); }
+    .f-bottom { transform: rotateX(-90deg) translateZ(20px); }
     @media (max-width: 900px) {
       .hero-split { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 520px) {
+      #bridge3d { height: 300px; }
+      .bridge-caption { font-size: 0.55rem; }
     }
   </style>
 </head>
@@ -113,7 +194,7 @@
   <section class="hero hero-split">
     <div>
       <span class="hero-pill"><span class="dot"></span> Portafolio · Perú</span>
-      <h1>MIS<br><em>PROYECTOS</em></h1>
+      <h1>Mis<br><em>proyectos</em></h1>
       <div class="hero-line"></div>
       <p class="hero-sub">Proyectos reales de infraestructura vial, movilidad urbana y edificaciones institucionales en Ayacucho, Perú.</p>
       <div class="hero-cta">
@@ -121,16 +202,36 @@
         <a class="btn-ghost" href="perfil.html">Sobre mí</a>
       </div>
     </div>
-    <div class="hero-bridge" id="bridge3d">
-      <div class="viewcube" id="viewcube">
+    <div class="hero-bridge" id="bridge3d" data-model="road">
+      <div class="bridge-caption">
+        <strong id="model-title">Carretera de montaña · Obras viales</strong>
+        <span id="model-description">Curvas, drenaje y contención · Modelo conceptual 3D</span>
+      </div>
+      <div class="bridge-status" id="bridge-status" role="status">Cargando modelo 3D…</div>
+      <div class="viewcube" id="viewcube" aria-label="Vistas del modelo">
         <div class="cube" id="cube">
-          <div class="face f-top" data-face="top">TOP</div>
-          <div class="face f-bottom" data-face="bottom">BOTTOM</div>
-          <div class="face f-front" data-face="front">FRONT</div>
-          <div class="face f-back" data-face="back">BACK</div>
-          <div class="face f-left" data-face="left">LEFT</div>
-          <div class="face f-right" data-face="right">RIGHT</div>
+          <button class="face f-top" type="button" data-face="top" aria-label="Vista superior">TOP</button>
+          <button class="face f-bottom" type="button" data-face="bottom" aria-label="Vista inferior">BOTTOM</button>
+          <button class="face f-front" type="button" data-face="front" aria-label="Vista frontal">FRONT</button>
+          <button class="face f-back" type="button" data-face="back" aria-label="Vista posterior">BACK</button>
+          <button class="face f-left" type="button" data-face="left" aria-label="Vista izquierda">LEFT</button>
+          <button class="face f-right" type="button" data-face="right" aria-label="Vista derecha">RIGHT</button>
         </div>
+      </div>
+      <div class="bridge-tools" aria-label="Controles del modelo">
+        <button id="bridge-rotate" type="button" title="Pausar giro" aria-label="Pausar giro" aria-pressed="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg>
+        </button>
+        <button id="bridge-home" type="button" title="Restablecer vista" aria-label="Restablecer vista">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7M5 9v12h14V9M9 21v-8h6v8"/></svg>
+        </button>
+        <button id="bridge-expand" type="button" title="Ampliar visor" aria-label="Ampliar visor">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M9 3H3v6M15 3h6v6M21 15v6h-6M9 21H3v-6"/></svg>
+        </button>
+      </div>
+      <div class="model-switch" role="group" aria-label="Elegir modelo 3D">
+        <button type="button" data-model-choice="bridge" aria-pressed="false">Puente</button>
+        <button type="button" data-model-choice="road" aria-pressed="true">Carretera</button>
       </div>
     </div>
   </section>
@@ -203,185 +304,11 @@
     })();
   </script>
   <script type="module">
-    import * as THREE from 'three';
-
-    const host = document.getElementById('bridge3d');
-    if (!host) throw new Error('bridge3d no encontrado');
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, host.clientWidth / host.clientHeight, 0.1, 100);
-    camera.position.set(0, 3, 17);
-    camera.lookAt(0, 0.5, 0);
-
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(host.clientWidth, host.clientHeight);
-    host.appendChild(renderer.domElement);
-
-    scene.add(new THREE.AmbientLight(0xffffff, 0.75));
-    const key = new THREE.DirectionalLight(0xffffff, 1.4);
-    key.position.set(4, 8, 6);
-    scene.add(key);
-    const rim = new THREE.PointLight(0x4fc3f7, 50, 30);
-    rim.position.set(-4, 3, 4);
-    scene.add(rim);
-
-    const group = new THREE.Group();
-    scene.add(group);
-
-    const matStruct = new THREE.MeshStandardMaterial({ color: 0x4fc3f7, metalness: 0.6, roughness: 0.35 });
-    const matPier   = new THREE.MeshStandardMaterial({ color: 0x2a3a47, metalness: 0.4, roughness: 0.6 });
-    const matWater  = new THREE.MeshStandardMaterial({ color: 0x123a56, metalness: 0.2, roughness: 0.5 });
-    const matRoad   = new THREE.MeshStandardMaterial({ color: 0x202d38, metalness: 0.1, roughness: 0.85 });
-    const matLine   = new THREE.MeshStandardMaterial({ color: 0xe6edf3, roughness: 0.6 });
-    const matCable  = new THREE.MeshStandardMaterial({ color: 0xbcd6ee, metalness: 0.5, roughness: 0.4 });
-
-    const HALF = 8;     // mitad de la longitud total
-    const D = 1.2;      // ancho del tablero
-    const H = 3.4;      // altura de las torres
-    const TOWERS = [-4, 0, 4]; // tres torres => cuatro tramos
-
-    // tablero estructural
-    const deck = new THREE.Mesh(new THREE.BoxGeometry(HALF * 2, 0.16, D), matStruct);
-    deck.position.y = 0;
-    group.add(deck);
-
-    // calzada
-    const road = new THREE.Mesh(new THREE.BoxGeometry(HALF * 2 - 0.2, 0.05, D - 0.18), matRoad);
-    road.position.y = 0.105;
-    group.add(road);
-
-    // línea central discontinua
-    for (let k = 0; k < 18; k++) {
-      const seg = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.012, 0.06), matLine);
-      seg.position.set(-7.5 + k * 0.88, 0.135, 0);
-      group.add(seg);
-    }
-
-    // torres (pórticos: dos patas a los lados de la calzada)
-    TOWERS.forEach(tx => {
-      [-0.58, 0.58].forEach(z => {
-        const leg = new THREE.Mesh(new THREE.BoxGeometry(0.34, H, 0.26), matStruct);
-        leg.position.set(tx, H / 2, z);
-        group.add(leg);
-      });
-      const beam = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.28, 1.24), matStruct);
-      beam.position.set(tx, H + 0.1, 0);
-      group.add(beam);
+    import('./bridge-viewer.js').catch(error => {
+      document.getElementById('bridge-status').textContent =
+        'No se pudo abrir el visor 3D. Recarga la página o prueba con WebGL habilitado.';
+      console.error('Visor del puente:', error);
     });
-
-    // tirantes (dos planos de cables)
-    function cableBetween(a, b) {
-      const dir = new THREE.Vector3().subVectors(b, a);
-      const len = dir.length();
-      const mid = new THREE.Vector3().addVectors(a, b).multiplyScalar(0.5);
-      const cyl = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, len, 6), matCable);
-      cyl.position.copy(mid);
-      cyl.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.normalize());
-      group.add(cyl);
-    }
-    TOWERS.forEach(tx => {
-      [-0.5, 0.5].forEach(z => {
-        const top = new THREE.Vector3(tx, H, z);
-        [0.6, 1.2, 1.8].forEach(d => {
-          cableBetween(top, new THREE.Vector3(tx + d, 0, z));
-          cableBetween(top, new THREE.Vector3(tx - d, 0, z));
-        });
-      });
-    });
-
-    // pilas extremas y cimientos
-    [-HALF, HALF].forEach(x => {
-      const pier = new THREE.Mesh(new THREE.BoxGeometry(0.4, 1.6, D), matPier);
-      pier.position.set(x, -0.8, 0);
-      group.add(pier);
-      const base = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.3, D + 0.2), matPier);
-      base.position.set(x, -1.65, 0);
-      group.add(base);
-    });
-
-    // río
-    const water = new THREE.Mesh(new THREE.BoxGeometry(HALF * 2 - 0.7, 0.05, D + 0.3), matWater);
-    water.position.set(0, -1.48, 0);
-    group.add(water);
-
-    // orientación
-    let yaw = -0.5, pitch = 0.15;
-    const apply = () => { group.rotation.x = pitch; group.rotation.y = yaw; };
-    apply();
-
-    // view cube
-    const cube = document.getElementById('cube');
-    const faceTargets = {
-      front:  { y: 0, p: 0 },
-      back:   { y: Math.PI, p: 0 },
-      right:  { y: Math.PI / 2, p: 0 },
-      left:   { y: -Math.PI / 2, p: 0 },
-      top:    { y: 0, p: Math.PI / 2 },
-      bottom: { y: 0, p: -Math.PI / 2 }
-    };
-    const shortest = (a, b) => {
-      let d = (b - a) % (Math.PI * 2);
-      if (d > Math.PI) d -= Math.PI * 2;
-      if (d < -Math.PI) d += Math.PI * 2;
-      return a + d;
-    };
-    const ease = t => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-
-    let settling = false, settleT = 0, startYaw = 0, startPitch = 0, targetYaw = 0, targetPitch = 0;
-    document.querySelectorAll('.face').forEach(f => {
-      f.addEventListener('click', () => {
-        const t = faceTargets[f.dataset.face];
-        if (!t) return;
-        startYaw = yaw; startPitch = pitch;
-        targetYaw = shortest(yaw, t.y);
-        targetPitch = shortest(pitch, t.p);
-        settleT = 0; settling = true;
-      });
-    });
-
-    // drag
-    let dragging = false, lastX = 0, lastY = 0;
-    renderer.domElement.addEventListener('pointerdown', e => { dragging = true; lastX = e.clientX; lastY = e.clientY; });
-    window.addEventListener('pointermove', e => {
-      if (!dragging) return;
-      yaw += (e.clientX - lastX) * 0.008;
-      pitch += (e.clientY - lastY) * 0.008;
-      pitch = Math.max(-1.35, Math.min(1.35, pitch));
-      lastX = e.clientX; lastY = e.clientY;
-    });
-    window.addEventListener('pointerup', () => { dragging = false; });
-
-    const clock = new THREE.Clock();
-    new ResizeObserver(() => {
-      camera.aspect = host.clientWidth / host.clientHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(host.clientWidth, host.clientHeight);
-    }).observe(host);
-
-    function animate() {
-      requestAnimationFrame(animate);
-      const dt = Math.min(clock.getDelta(), 0.05);
-
-      if (settling) {
-        settleT += dt;
-        const p = Math.min(1, settleT / 0.55);
-        const e = ease(p);
-        yaw = startYaw + (targetYaw - startYaw) * e;
-        pitch = startPitch + (targetPitch - startPitch) * e;
-        if (p >= 1) settling = false;
-      } else if (!dragging) {
-        yaw += 0.005;
-      }
-
-      apply();
-      if (cube) {
-        cube.style.transform =
-          'rotateX(' + (-pitch * 180 / Math.PI) + 'deg) rotateY(' + (-yaw * 180 / Math.PI) + 'deg)';
-      }
-      renderer.render(scene, camera);
-    }
-    animate();
   </script>
 </body>
 </html>

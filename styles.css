@@ -13,6 +13,8 @@
   --glow: 8px 8px 30px rgba(20,220,255,0.35);
   --glow-sm: 4px 4px 18px rgba(20,220,255,0.25);
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --font-heading: 'Manrope', 'Segoe UI', sans-serif;
+  --font-body: 'Inter', 'Segoe UI', sans-serif;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -31,11 +33,23 @@ html { scroll-behavior: smooth; }
 body {
   background: url('fondo.jpg') center/cover fixed;
   color: var(--text);
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.6;
   min-height: 100vh;
   overflow-x: hidden;
 }
 
+button, input, select, textarea { font: inherit; }
+button, input, select { line-height: 1.4; }
+h1, h2, h3, .post-title, .card-title, .prog-title,
+.task-title, .curso-nombre, .grupo-nombre {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+time, .col-time, .task-fecha, .task-plabel { font-variant-numeric: tabular-nums; }
 
 body::before {
   content: '';
@@ -65,9 +79,14 @@ nav {
 }
 
 .nav-logo {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.6rem;
-  letter-spacing: 0.12em;
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+  min-width: 11rem;
+  flex-shrink: 0;
+  white-space: nowrap;
   color: var(--accent);
   text-decoration: none;
 }
@@ -92,11 +111,13 @@ nav ul {
   gap: 0.6rem;
 }
 nav ul a {
-  font-family: 'Space Mono', monospace;
-  font-size: 0.72rem;
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
   color: var(--muted);
   text-decoration: none;
-  letter-spacing: 0.1em;
+  letter-spacing: 0;
   transition: all 0.2s;
   padding: 0.45rem 1rem;
   border-radius: 8px;
@@ -109,7 +130,7 @@ nav ul a:hover {
 nav ul a.active {
   color: var(--bg);
   background: var(--accent);
-  font-weight: 700;
+  font-weight: 600;
   box-shadow: 8px 8px 30px rgba(20,220,255,0.45);
 }
 
@@ -123,10 +144,11 @@ nav ul a.active {
 }
 
 .hero h1 {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(2.4rem, 5.5vw, 4.5rem);
-  line-height: 0.95;
-  letter-spacing: 0.04em;
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
   color: var(--text);
   text-wrap: balance;
 }
@@ -141,7 +163,7 @@ nav ul a.active {
   color: var(--muted);
   max-width: 520px;
   line-height: 1.5;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .hero-line {
@@ -161,11 +183,13 @@ nav ul a.active {
 }
 
 .section-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.8rem;
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.25;
   color: var(--text);
   margin-bottom: 1.25rem;
-  letter-spacing: 0.05em;
+  letter-spacing: -0.025em;
   text-wrap: balance;
 }
 
@@ -182,9 +206,10 @@ nav ul a.active {
 }
 
 .tag-btn {
-  font-family: 'Space Mono', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.12em;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0;
   padding: 0.4rem 0.9rem;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
@@ -192,7 +217,7 @@ nav ul a.active {
   color: var(--muted);
   cursor: pointer;
   transition: all 0.2s;
-  text-transform: uppercase;
+  text-transform: none;
 }
 .tag-btn:hover, .tag-btn.active {
   border-color: var(--accent);
@@ -250,7 +275,8 @@ nav ul a.active {
 .post-card.featured .post-number { font-size: 2.5rem; }
 
 .post-number {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: var(--font-heading);
+  font-weight: 600;
   font-size: 1.75rem;
   color: rgba(79,195,247,0.14);
   line-height: 1;
@@ -261,16 +287,17 @@ nav ul a.active {
 
 .post-tag {
   display: inline-block;
-  font-family: 'Space Mono', monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.15em;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.015em;
   color: var(--accent2);
-  text-transform: uppercase;
+  text-transform: none;
   margin-bottom: 0.5rem;
 }
 
 .post-title {
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: var(--font-heading);
   font-size: 1rem;
   font-weight: 600;
   line-height: 1.3;
@@ -282,7 +309,7 @@ nav ul a.active {
   font-size: 0.85rem;
   color: var(--muted);
   line-height: 1.5;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .post-meta {
@@ -290,10 +317,10 @@ nav ul a.active {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-family: 'Space Mono', monospace;
-  font-size: 0.62rem;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
   color: var(--muted);
-  letter-spacing: 0.08em;
+  letter-spacing: 0;
 }
 
 .post-meta .read-more {
@@ -362,7 +389,7 @@ nav ul a.active {
 }
 
 .card-title {
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: var(--font-heading);
   font-size: 0.95rem;
   font-weight: 600;
   color: var(--text);
@@ -377,10 +404,10 @@ nav ul a.active {
 
 .card-meta {
   margin-top: 0.7rem;
-  font-family: 'Space Mono', monospace;
-  font-size: 0.6rem;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
   color: var(--muted);
-  letter-spacing: 0.08em;
+  letter-spacing: 0;
 }
 
 /* PERFIL */
@@ -399,7 +426,8 @@ nav ul a.active {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: var(--font-heading);
+  font-weight: 600;
   font-size: 5rem;
   color: var(--accent);
   position: relative;
@@ -421,19 +449,22 @@ nav ul a.active {
 }
 
 .perfil-info h2 {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 3rem;
+  font-family: var(--font-heading);
+  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+  font-weight: 600;
+  line-height: 1.25;
   color: var(--text);
-  letter-spacing: 0.05em;
+  letter-spacing: -0.025em;
   margin-bottom: 0.3rem;
 }
 
 .perfil-info .cargo {
-  font-family: 'Space Mono', monospace;
+  font-family: var(--font-body);
   font-size: 0.75rem;
+  font-weight: 500;
   color: var(--accent);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
   margin-bottom: 1.5rem;
 }
 
@@ -452,20 +483,35 @@ nav ul a.active {
 }
 
 .skill-item {
-  background: var(--surface);
-  border: 1px solid var(--border);
+  --skill-rgb: 125, 211, 252;
+  background: rgba(var(--skill-rgb), 0.1);
+  border: 1px solid rgba(var(--skill-rgb), 0.35);
+  border-radius: 8px;
   padding: 0.8rem 1rem;
-  font-family: 'Space Mono', monospace;
-  font-size: 0.65rem;
-  color: var(--muted);
-  letter-spacing: 0.1em;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: rgb(var(--skill-rgb));
+  letter-spacing: 0;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  transition: background 0.2s, border-color 0.2s;
 }
+.skill-item:hover { background: rgba(var(--skill-rgb), 0.17); border-color: rgba(var(--skill-rgb), 0.65); }
+.skill-blue { --skill-rgb: 132, 188, 255; }
+.skill-green { --skill-rgb: 143, 213, 161; }
+.skill-violet { --skill-rgb: 193, 166, 244; }
+.skill-cyan { --skill-rgb: 125, 211, 252; }
+.skill-amber { --skill-rgb: 234, 201, 125; }
+.skill-rose { --skill-rgb: 237, 165, 197; }
+.skill-teal { --skill-rgb: 118, 217, 203; }
+.skill-red { --skill-rgb: 240, 151, 151; }
+.skill-indigo { --skill-rgb: 160, 176, 247; }
+.skill-orange { --skill-rgb: 237, 179, 132; }
 .skill-item::before {
   content: '▸';
-  color: var(--accent);
+  color: currentColor;
 }
 
 /* DOWNLOAD BTN */
@@ -492,11 +538,12 @@ nav ul a.active {
   background: transparent;
   border: 1px solid var(--accent);
   color: var(--accent);
-  font-family: 'Space Mono', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.1em;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0;
   text-decoration: none;
-  text-transform: uppercase;
+  text-transform: none;
   transition: all 0.2s;
   cursor: pointer;
   border-radius: 10px;
@@ -513,10 +560,10 @@ footer {
   border-top: 1px solid var(--border);
   padding: 2rem;
   text-align: center;
-  font-family: 'Space Mono', monospace;
-  font-size: 0.65rem;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
   color: var(--muted);
-  letter-spacing: 0.1em;
+  letter-spacing: 0;
 }
 footer span { color: var(--accent); }
 
@@ -558,10 +605,11 @@ footer span { color: var(--accent); }
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-family: 'Space Mono', monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.015em;
+  text-transform: none;
   color: var(--text);
   border: 1px solid var(--border);
   border-radius: 999px;
@@ -594,11 +642,11 @@ footer span { color: var(--accent); }
   padding: 0.8rem 1.6rem;
   background: var(--accent);
   color: var(--bg);
-  font-family: 'Space Mono', monospace;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
   text-decoration: none;
   border-radius: var(--radius-sm);
   transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
@@ -614,10 +662,11 @@ footer span { color: var(--accent); }
   padding: 0.8rem 1.6rem;
   background: transparent;
   color: var(--text);
-  font-family: 'Space Mono', monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
   text-decoration: none;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
@@ -649,9 +698,10 @@ footer {
 /* ELEGANCIA: ajustes móvil */
 @media (max-width: 760px) {
   nav { padding: 0 1rem; gap: 0.75rem; }
+  .nav-logo { font-size: 1.05rem; min-width: 9.5rem; }
   nav ul { gap: 0.3rem; overflow-x: auto; scrollbar-width: none; }
   nav ul::-webkit-scrollbar { display: none; }
-  nav ul a { padding: 0.4rem 0.7rem; font-size: 0.65rem; white-space: nowrap; }
+  nav ul a { padding: 0.4rem 0.7rem; font-size: 0.78rem; white-space: nowrap; }
   .hero { padding: 4rem 1.25rem 3rem; }
   .section, .posts, .tags-bar { padding-left: 1.25rem; padding-right: 1.25rem; }
   .post-card.featured { grid-template-columns: 1fr; }
