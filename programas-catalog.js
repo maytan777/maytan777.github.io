@@ -108,7 +108,7 @@ const programArchives = [
       link.href = 'programas/' + group.folder + encodeURIComponent(name + '.rar');
       link.download = name + '.rar';
       link.setAttribute('aria-label', `Descargar ${name}`);
-      link.innerHTML = downloadIcon + '<span>Descargar</span>';
+      link.innerHTML = downloadIcon;
       const mono = document.createElement('img');
       mono.className = 'prog-mono';
       mono.src = 'mono.ico';
@@ -140,36 +140,4 @@ const programArchives = [
   }
   search.addEventListener('input', filter);
   filter();
-
-  // Descargar todo: dispara cada enlace en secuencia (el navegador pedirá
-  // permiso para múltiples descargas una sola vez).
-  const dlAll = document.getElementById('download-all');
-  if (dlAll) {
-    const allBytes = topPrograms.concat(programArchives).reduce((sum, p) => sum + p[1], 0);
-    const allCount = topPrograms.length + programArchives.length;
-    const baseTip = `${allCount} archivos · ${sizeLabel(allBytes)}`;
-    dlAll.dataset.tooltip = baseTip;
-    dlAll.addEventListener('click', () => {
-      if (dlAll.disabled) return;
-      const links = Array.from(document.querySelectorAll('.btn-download'));
-      if (!links.length) return;
-      dlAll.disabled = true;
-      const label = dlAll.querySelector('.dl-all-text');
-      label.textContent = 'Descargando…';
-      let i = 0;
-      const step = () => {
-        if (i >= links.length) {
-          label.textContent = 'Descargar todo';
-          dlAll.dataset.tooltip = baseTip;
-          dlAll.disabled = false;
-          return;
-        }
-        links[i].click();
-        i++;
-        dlAll.dataset.tooltip = `${i} de ${links.length} descargando…`;
-        setTimeout(step, 350);
-      };
-      step();
-    });
-  }
 })();

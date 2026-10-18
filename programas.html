@@ -99,6 +99,8 @@
       background: var(--accent);
       border-color: var(--accent);
       color: var(--bg);
+      padding: 0.6rem 0.9rem;
+      justify-content: center;
     }
     .btn-download:hover {
       background: var(--accent);
@@ -150,13 +152,15 @@
       height: var(--dl-h);
       background: var(--accent);
       position: relative;
+      display: block;
       border: none;
       padding: 0;
       text-align: center;
+      text-decoration: none;
       border-radius: 10px;
       font-family: var(--font-body);
       cursor: pointer;
-      transition: background 0.3s;
+      transition: background 0.3s, box-shadow 0.3s;
       z-index: 30;
     }
     .dl-all::before {
@@ -225,10 +229,6 @@
     .dl-all:hover::before, .dl-all:hover::after { opacity: 1; visibility: visible; }
     .dl-all:hover::after { bottom: calc(var(--dl-h) + var(--dl-gap) - 16px); }
     .dl-all:hover::before { bottom: calc(var(--dl-h) + var(--dl-gap)); }
-    .dl-all:disabled { opacity: 0.65; cursor: wait; }
-    .dl-all:disabled:hover .dl-all-text { top: 0; }
-    .dl-all:disabled:hover .dl-all-icon { top: 100%; }
-    .dl-all:disabled:hover { background: var(--accent); }
     .prog-card[hidden], .catalog-empty[hidden], .catalog-block[hidden] { display: none; }
     .catalog-empty { padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
     .catalog-block { margin-bottom: 2.5rem; }
@@ -284,12 +284,12 @@
       </div>
       <div class="catalog-side">
         <p id="catalog-status" role="status">Cargando catálogo…</p>
-        <button class="dl-all" type="button" id="download-all" data-tooltip="Descarga los programas">
+        <a class="dl-all" href="programas-todo.rar" download="programas-todo.rar" id="download-all" data-tooltip="56 archivos · 90 MB">
           <span class="dl-all-wrapper">
             <span class="dl-all-text">Descargar todo</span>
             <span class="dl-all-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg></span>
           </span>
-        </button>
+        </a>
       </div>
     </div>
 
