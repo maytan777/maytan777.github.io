@@ -40,3 +40,24 @@
 
   type();
 })();
+
+// Acceso oculto a Persona: triple clic en el logo (ventana de 400 ms entre clics).
+(function () {
+  var logo = document.querySelector('.nav-logo');
+  if (!logo) return;
+  var clicks = 0;
+  var timer = null;
+  logo.addEventListener('click', function (e) {
+    e.preventDefault();
+    clicks++;
+    clearTimeout(timer);
+    if (clicks >= 3) {
+      window.location.href = 'persona.html';
+      return;
+    }
+    timer = setTimeout(function () {
+      clicks = 0;
+      window.location.href = logo.getAttribute('href') || 'index.html';
+    }, 400);
+  });
+})();
