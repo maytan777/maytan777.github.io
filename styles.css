@@ -484,34 +484,35 @@ nav ul a.active {
 
 .skill-item {
   --skill-rgb: 125, 211, 252;
-  background: rgba(var(--skill-rgb), 0.1);
-  border: 1px solid rgba(var(--skill-rgb), 0.35);
+  background: rgb(var(--skill-rgb));
+  border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 8px;
-  padding: 0.8rem 1rem;
+  padding: 0.55rem 0.95rem;
   font-family: var(--font-body);
   font-size: 0.78rem;
-  font-weight: 500;
-  color: rgb(var(--skill-rgb));
+  font-weight: 600;
+  color: #0a0c0b;
   letter-spacing: 0;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  transition: background 0.2s, border-color 0.2s;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  transition: filter 0.15s, box-shadow 0.15s, transform 0.15s;
 }
-.skill-item:hover { background: rgba(var(--skill-rgb), 0.17); border-color: rgba(var(--skill-rgb), 0.65); }
-.skill-blue { --skill-rgb: 132, 188, 255; }
-.skill-green { --skill-rgb: 143, 213, 161; }
-.skill-violet { --skill-rgb: 193, 166, 244; }
-.skill-cyan { --skill-rgb: 125, 211, 252; }
-.skill-amber { --skill-rgb: 234, 201, 125; }
-.skill-rose { --skill-rgb: 237, 165, 197; }
-.skill-teal { --skill-rgb: 118, 217, 203; }
-.skill-red { --skill-rgb: 240, 151, 151; }
-.skill-indigo { --skill-rgb: 160, 176, 247; }
-.skill-orange { --skill-rgb: 237, 179, 132; }
+.skill-item:hover { filter: brightness(1.07); box-shadow: 0 2px 7px rgba(0, 0, 0, 0.5); transform: translateY(-1px); }
+.skill-blue { --skill-rgb: 130, 184, 255; }
+.skill-green { --skill-rgb: 141, 213, 159; }
+.skill-violet { --skill-rgb: 191, 162, 247; }
+.skill-cyan { --skill-rgb: 120, 211, 252; }
+.skill-amber { --skill-rgb: 240, 202, 118; }
+.skill-rose { --skill-rgb: 240, 160, 196; }
+.skill-teal { --skill-rgb: 112, 216, 200; }
+.skill-red { --skill-rgb: 242, 146, 146; }
+.skill-indigo { --skill-rgb: 158, 174, 250; }
+.skill-orange { --skill-rgb: 242, 180, 128; }
 .skill-item::before {
   content: '▸';
-  color: currentColor;
+  color: rgba(0, 0, 0, 0.45);
 }
 
 /* DOWNLOAD BTN */
