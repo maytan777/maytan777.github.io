@@ -13,6 +13,7 @@
   <script src="mascota.js" defer></script>
   <script src="programas-catalog.js" defer></script>
   <style>
+    :root { --top-blue: #0277bd; --top-blue-lite: #2e9bd8; }
     .prog-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -93,6 +94,29 @@
     }
     .prog-card:hover .prog-mono { opacity: 0.9; }
     .btn-download svg { width: 15px; height: 15px; }
+    /* botones de descarga rellenos: TOP en azul, resto en verde + glow al hover */
+    .btn-download {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--bg);
+    }
+    .btn-download:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--bg);
+      box-shadow: var(--glow);
+    }
+    .prog-card-top .btn-download {
+      background: var(--top-blue);
+      border-color: var(--top-blue);
+      color: #fff;
+    }
+    .prog-card-top .btn-download:hover {
+      background: var(--top-blue);
+      border-color: var(--top-blue);
+      color: #fff;
+      box-shadow: var(--glow);
+    }
     .catalog-tools {
       display: flex;
       align-items: center;
@@ -113,6 +137,98 @@
       font-size: 0.85rem;
     }
     #catalog-status { color: var(--muted); font-size: 0.75rem; }
+    .catalog-side { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+
+    /* BOTÓN: descargar todo (tooltip + icono al pasar) */
+    .dl-all {
+      --dl-w: 155px;
+      --dl-h: 36px;
+      --dl-gap: 16px;
+      --dl-tip-w: 175px;
+      --dl-tip-h: 34px;
+      width: var(--dl-w);
+      height: var(--dl-h);
+      background: var(--accent);
+      position: relative;
+      border: none;
+      padding: 0;
+      text-align: center;
+      border-radius: 10px;
+      font-family: var(--font-body);
+      cursor: pointer;
+      transition: background 0.3s;
+      z-index: 30;
+    }
+    .dl-all::before {
+      position: absolute;
+      content: attr(data-tooltip);
+      width: var(--dl-tip-w);
+      height: var(--dl-tip-h);
+      background-color: var(--surface);
+      border: 1px solid var(--accent);
+      font-size: 0.7rem;
+      color: var(--accent);
+      border-radius: 8px;
+      line-height: calc(var(--dl-tip-h) - 2px);
+      bottom: calc(var(--dl-h) + var(--dl-gap) + 10px);
+      left: calc(50% - var(--dl-tip-w) / 2);
+      letter-spacing: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .dl-all::after {
+      position: absolute;
+      content: '';
+      width: 0;
+      height: 0;
+      border: 8px solid transparent;
+      border-top-color: var(--accent);
+      left: calc(50% - 8px);
+      bottom: calc(100% + var(--dl-gap) - 8px);
+    }
+    .dl-all::after, .dl-all::before {
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.5s;
+      pointer-events: none;
+    }
+    .dl-all-wrapper, .dl-all-text, .dl-all-icon {
+      overflow: hidden;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      color: #fff;
+    }
+    .dl-all-wrapper { top: 0; }
+    .dl-all-text {
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    .dl-all-icon {
+      top: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .dl-all-icon svg { width: 20px; height: 20px; }
+    .dl-all .dl-all-text, .dl-all .dl-all-icon { transition: top 0.5s; }
+    .dl-all:hover { background: var(--celeste); box-shadow: var(--glow); }
+    .dl-all:hover .dl-all-text { top: -100%; }
+    .dl-all:hover .dl-all-icon { top: 0; }
+    .dl-all:hover::before, .dl-all:hover::after { opacity: 1; visibility: visible; }
+    .dl-all:hover::after { bottom: calc(var(--dl-h) + var(--dl-gap) - 16px); }
+    .dl-all:hover::before { bottom: calc(var(--dl-h) + var(--dl-gap)); }
+    .dl-all:disabled { opacity: 0.65; cursor: wait; }
+    .dl-all:disabled:hover .dl-all-text { top: 0; }
+    .dl-all:disabled:hover .dl-all-icon { top: 100%; }
+    .dl-all:disabled:hover { background: var(--accent); }
     .prog-card[hidden], .catalog-empty[hidden], .catalog-block[hidden] { display: none; }
     .catalog-empty { padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
     .catalog-block { margin-bottom: 2.5rem; }
@@ -132,16 +248,17 @@
       letter-spacing: 0.14em;
       text-transform: uppercase;
       padding: 0.28em 0.6em;
-      border: 1px solid var(--accent);
-      color: var(--accent);
+      border: 1px solid var(--top-blue-lite);
+      color: var(--top-blue-lite);
       vertical-align: middle;
       transform: translateY(-0.2em);
       margin-left: 0.35rem;
     }
-    .prog-card-top { border-color: rgba(18,189,146,0.35); }
-    .prog-card-top::before { background: var(--accent); height: 100%; }
-    .prog-card-top .prog-icon { color: var(--accent); border-color: rgba(18,189,146,0.4); }
-    .prog-card-top:hover { border-color: var(--accent); }
+    .prog-card-top { border-color: rgba(2,119,189,0.4); }
+    .prog-card-top::before { background: var(--top-blue); height: 100%; }
+    .prog-card-top .prog-icon { color: var(--top-blue-lite); border-color: rgba(2,119,189,0.5); }
+    .prog-card-top:hover { border-color: var(--top-blue); }
+    .prog-card-top .prog-badge { border-color: rgba(2,119,189,0.6); color: var(--top-blue-lite); }
   </style>
 </head>
 <body>
@@ -165,7 +282,15 @@
         <label for="program-search">Buscar programa</label>
         <input id="program-search" type="search" placeholder="Nombre del programa…" aria-controls="program-catalog-top program-catalog" autocomplete="off">
       </div>
-      <p id="catalog-status" role="status">Cargando catálogo…</p>
+      <div class="catalog-side">
+        <p id="catalog-status" role="status">Cargando catálogo…</p>
+        <button class="dl-all" type="button" id="download-all" data-tooltip="Descarga los programas">
+          <span class="dl-all-wrapper">
+            <span class="dl-all-text">Descargar todo</span>
+            <span class="dl-all-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg></span>
+          </span>
+        </button>
+      </div>
     </div>
 
     <section class="catalog-block" id="catalog-top" aria-labelledby="top-title">
