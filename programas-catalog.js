@@ -109,12 +109,16 @@ const programArchives = [
       link.download = name + '.rar';
       link.setAttribute('aria-label', `Descargar ${name}`);
       link.innerHTML = downloadIcon;
+      link.setAttribute('data-stat', 'descarga:' + name);
       const mono = document.createElement('img');
       mono.className = 'prog-mono';
       mono.src = 'mono.ico';
       mono.alt = '';
       mono.setAttribute('aria-hidden', 'true');
-      card.append(header, title, info, link, mono);
+      const count = document.createElement('span');
+      count.className = 'prog-dl-count';
+      count.setAttribute('data-count-for', name);
+      card.append(header, title, info, link, count, mono);
       fragment.appendChild(card);
       const entry = { card, name: normalize(name), group };
       group.entries.push(entry);
@@ -140,4 +144,5 @@ const programArchives = [
   }
   search.addEventListener('input', filter);
   filter();
+  if (window.mStats) window.mStats.renderAll();
 })();

@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="styles.css"/>
   <script src="script.js" defer></script>
+  <script src="stats.js" defer></script>
   <script src="mascota.js" defer></script>
   <script src="programas-catalog.js" defer></script>
   <style>
@@ -259,6 +260,10 @@
     .prog-card-top .prog-icon { color: var(--top-blue-lite); border-color: rgba(2,119,189,0.5); }
     .prog-card-top:hover { border-color: var(--top-blue); }
     .prog-card-top .prog-badge { border-color: rgba(2,119,189,0.6); color: var(--top-blue-lite); }
+    /* estadísticas */
+    .stats-totals { color: var(--muted); font-size: 0.75rem; margin: 0; }
+    .stats-totals[hidden] { display: none; }
+    .prog-dl-count { display: block; font-family: var(--font-body); font-size: 0.66rem; color: var(--muted); margin-top: 0.4rem; min-height: 1em; }
   </style>
 </head>
 <body>
@@ -284,7 +289,8 @@
       </div>
       <div class="catalog-side">
         <p id="catalog-status" role="status">Cargando catálogo…</p>
-        <a class="dl-all" href="programas-todo.rar" download="programas-todo.rar" id="download-all" data-tooltip="56 archivos · 90 MB">
+        <p class="stats-totals" hidden><span data-total-descargas>0</span> descargas · <span data-total-visitas>0</span> visitas</p>
+        <a class="dl-all" href="programas-todo.rar" download="programas-todo.rar" id="download-all" data-stat="descarga:todo" data-tooltip="56 archivos · 90 MB">
           <span class="dl-all-wrapper">
             <span class="dl-all-text">Descargar todo</span>
             <span class="dl-all-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg></span>
