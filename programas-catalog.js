@@ -1,8 +1,8 @@
 // Programas destacados (carpeta programas/TOP). Se muestran arriba del catálogo.
 // [nombre del archivo, tamaño del RAR en bytes, cantidad de archivos]
 const topPrograms = [
-  ['CLASIFICACIÓN DE SUELOS', 31326, 7],
-  ['DISEÑO DE VIGAS', 50590, 1],
+  ['CLASIFICACION DE SUELOS', 31326, 7],
+  ['DISENO DE VIGAS', 50590, 1],
   ['DYSAB_FULL', 84846, 1],
   ['MAYTAN', 135934, 39],
   ['MUROS', 145022, 3],
@@ -14,9 +14,9 @@ const programArchives = [
   ['1D KINAMATICAS', 785662, 9],
   ['ANESH PRO', 206974, 7],
   ['ANESH PRO 2', 297006, 9],
-  ['AREA DE UN POLIGONO PEQUEÑO', 7502, 4],
+  ['AREA DE UN POLIGONO PEQUENO', 7502, 4],
   ['ARMADURAS', 69102, 5],
-  ['ARMADURAS ISOSTÁTICAS 1.0', 2918654, 7],
+  ['ARMADURAS ISOSTATICAS 1.0', 2918654, 7],
   ['ATMADURAS V2', 64014, 4],
   ['ATMOSFERIC AIR PROPERTIES 1.0', 168510, 5],
   ['AZIMUT Y DISTANCIAS', 1006, 1],
@@ -66,6 +66,56 @@ const programArchives = [
   const topCatalog = document.getElementById('program-catalog-top');
   const catalog = document.getElementById('program-catalog');
   if (!catalog || !topCatalog) return;
+  // Modo libre (usuario autorizado): descarga desde Supabase Storage sin contraseña
+  let LIBRE = document.body.dataset.mode === 'libre';
+  const BUCKET = 'programas-sin-contra';
+  // Archivos divididos en volúmenes (límite 50 MB de Supabase free)
+  const MULTI_PART = { 'VIGA HPRO V5': true };
+  const sb = () => window.__sb;
+
+  async function downloadFree(path, statName) {
+    const client = sb();
+    if (!client) return;
+    if (MULTI_PART[statName] || /\.part\d+\.rar$/.test(path)) {
+      await downloadFreeMulti(path, statName);
+      return;
+    }
+    try {
+      const { data, error } = await client.storage.from(BUCKET).createSignedUrl(path, 3600);
+      if (error || !data || !data.signedUrl) throw error || new Error('sin url');
+      if (window.mStats && statName) window.mStats.bump('descarga:' + statName);
+      window.location.href = data.signedUrl;
+    } catch (e) {
+      alert('No se pudo generar la descarga. Verifica tu autorización.');
+    }
+  }
+
+  async function downloadFreeMulti(path, statName) {
+    const client = sb();
+    if (!client) return;
+    const base = path.replace(/\.part\d+\.rar$/, '').replace(/\.rar$/, '');
+    let got = 0;
+    try {
+      for (let i = 1; i <= 20; i++) {
+        const partPath = `${base}.part${i}.rar`;
+        const { data, error } = await client.storage.from(BUCKET).createSignedUrl(partPath, 3600);
+        if (error || !data || !data.signedUrl) break;
+        const a = document.createElement('a');
+        a.href = data.signedUrl;
+        a.download = partPath.split('/').pop();
+        a.rel = 'noopener';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        got++;
+        await new Promise(r => setTimeout(r, 2000));
+      }
+      if (got === 0) throw new Error('sin partes');
+      if (window.mStats && statName) window.mStats.bump('descarga:' + statName);
+    } catch (e) {
+      alert('No se pudo generar la descarga. Verifica tu autorización.');
+    }
+  }
   const search = document.getElementById('program-search');
   const count = document.getElementById('catalog-status');
   const empty = document.getElementById('catalog-empty');
@@ -80,50 +130,67 @@ const programArchives = [
     { list: topPrograms.slice().sort(byName), container: topCatalog, block: document.getElementById('catalog-top'), folder: 'TOP/', entries: [] },
     { list: programArchives.slice().sort(byName), container: catalog, block: document.getElementById('catalog-rest'), folder: '', entries: [] }
   ];
-  const entries = [];
+  let entries = [];
 
-  for (const group of groups) {
-    const fragment = document.createDocumentFragment();
-    for (const [name, bytes, files] of group.list) {
-      const card = document.createElement('article');
-      card.className = 'prog-card' + (group.folder ? ' prog-card-top' : '');
-      const header = document.createElement('div');
-      header.className = 'prog-header';
-      const icon = document.createElement('span');
-      icon.className = 'prog-icon';
-      icon.innerHTML = archiveIcon;
-      const badge = document.createElement('span');
-      badge.className = 'prog-badge';
-      badge.textContent = '.rar';
-      header.append(icon, badge);
-      const title = document.createElement('h2');
-      title.className = 'prog-title';
-      title.textContent = name;
-      const info = document.createElement('p');
-      info.className = 'prog-info';
-      info.textContent = `${sizeLabel(bytes)} · ${files} ${files === 1 ? 'archivo' : 'archivos'}`;
-      const link = document.createElement('a');
-      link.className = 'btn-download';
-      link.href = 'programas/' + group.folder + encodeURIComponent(name + '.rar');
-      link.download = name + '.rar';
-      link.setAttribute('aria-label', `Descargar ${name}`);
-      link.innerHTML = downloadIcon;
-      link.setAttribute('data-stat', 'descarga:' + name);
-      const mono = document.createElement('img');
-      mono.className = 'prog-mono';
-      mono.src = 'mono.ico';
-      mono.alt = '';
-      mono.setAttribute('aria-hidden', 'true');
-      const count = document.createElement('span');
-      count.className = 'prog-dl-count';
-      count.setAttribute('data-count-for', name);
-      card.append(header, title, info, link, count, mono);
-      fragment.appendChild(card);
-      const entry = { card, name: normalize(name), group };
-      group.entries.push(entry);
-      entries.push(entry);
+  function render() {
+    entries = [];
+    for (const group of groups) {
+      group.entries = [];
+      const fragment = document.createDocumentFragment();
+      for (const [name, bytes, files] of group.list) {
+        const card = document.createElement('article');
+        card.className = 'prog-card' + (group.folder ? ' prog-card-top' : '');
+        const header = document.createElement('div');
+        header.className = 'prog-header';
+        const icon = document.createElement('span');
+        icon.className = 'prog-icon';
+        icon.innerHTML = archiveIcon;
+        const badge = document.createElement('span');
+        badge.className = 'prog-badge';
+        badge.textContent = '.rar';
+        header.append(icon, badge);
+        const title = document.createElement('h2');
+        title.className = 'prog-title';
+        title.textContent = name;
+        const info = document.createElement('p');
+        info.className = 'prog-info';
+        info.textContent = `${sizeLabel(bytes)} · ${files} ${files === 1 ? 'archivo' : 'archivos'}`;
+        const link = document.createElement('a');
+        link.className = 'btn-download';
+        if (LIBRE) {
+          link.href = '#';
+          link.setAttribute('role', 'button');
+          const storagePath = group.folder + name + '.rar';
+          link.addEventListener('click', ev => { ev.preventDefault(); downloadFree(storagePath, name); });
+        } else {
+          link.href = 'programas/' + group.folder + encodeURIComponent(name + '.rar');
+          link.download = name + '.rar';
+        }
+        link.setAttribute('aria-label', `Descargar ${name}`);
+        link.innerHTML = downloadIcon;
+        link.setAttribute('data-stat', 'descarga:' + name);
+        const mono = document.createElement('img');
+        mono.className = 'prog-mono';
+        mono.src = 'mono.ico';
+        mono.alt = '';
+        mono.setAttribute('aria-hidden', 'true');
+        const dlCount = document.createElement('span');
+        dlCount.className = 'prog-dl-count';
+        dlCount.setAttribute('data-count-for', name);
+        card.append(header, title, info, link, dlCount, mono);
+        if (LIBRE) {
+          const hab = document.createElement('span');
+          hab.className = 'prog-habilitado';
+          hab.textContent = 'Habilitado';
+          card.append(hab);
+        }
+        fragment.appendChild(card);
+        const entry = { card, name: normalize(name), group };
+        group.entries.push(entry);
+        entries.push(entry);
+      }
+      group.container.replaceChildren(fragment);
     }
-    group.container.replaceChildren(fragment);
   }
 
   function filter() {
@@ -141,7 +208,22 @@ const programArchives = [
     count.textContent = query ? `${shown} de ${entries.length} programas` : `${entries.length} programas`;
     empty.hidden = shown !== 0;
   }
+
   search.addEventListener('input', filter);
+
+  window.MCatalog = {
+    setLibre(v) {
+      LIBRE = !!v;
+      document.body.dataset.mode = LIBRE ? 'libre' : 'publico';
+      render();
+      filter();
+      if (window.mStats) window.mStats.renderAll();
+    },
+    isLibre: () => LIBRE,
+    downloadFree
+  };
+
+  render();
   filter();
   if (window.mStats) window.mStats.renderAll();
 })();

@@ -872,6 +872,15 @@
           </svg>
           <span class="menu-label">Cursos</span>
         </div>
+        <div class="menu-item" data-panel="panel-compradores" id="menu-compradores" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          <span class="menu-label">Compradores</span>
+        </div>
         <div class="menu-item logout" id="menu-salir">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
@@ -990,6 +999,14 @@
       <div class="curso-list" id="curso-list"></div>
     </div><!-- /panel-cursos -->
 
+    <!-- ===== COMPRADORES (solo admin) ===== -->
+    <div class="panel" id="panel-compradores">
+      <h2 class="section-title">Compradores</h2>
+      <p class="catalog-note" style="margin-bottom:1rem;">Autoriza o rechaza cuentas para habilitar sus descargas en la zona privada.</p>
+      <div id="compradores-list" style="display:flex;flex-direction:column;gap:0.75rem;"></div>
+      <p id="compradores-empty" class="catalog-empty" hidden>No hay compradores registrados aún.</p>
+    </div><!-- /panel-compradores -->
+
     </div><!-- /persona-content -->
     </div><!-- /section -->
   </div><!-- /persona-main -->
@@ -1005,6 +1022,7 @@
     // 3. Copia aquí la URL y la anon key (Settings → API)
     const SUPABASE_URL = 'https://bidintbjpgpeyscirxwl.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_SRTEcmIyxh0rnHYBZfBpJQ_s9hl5cZq';
+    const ADMIN_EMAIL = 'marcoalexsandiomaytanhuaraca@gmail.com';
     // ==================================================================
 
     const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -1978,7 +1996,9 @@
       try {
         const { data } = await db.auth.getSession();
         authed = !!(data && data.session);
-      } catch (e) { authed = false; }
+        if (authed && data.session.user) toggleAdminUI(data.session.user.email);
+        else toggleAdminUI(null);
+      } catch (e) { authed = false; toggleAdminUI(null); }
       setLocked(!authed);
       if (authed) {
         renderSchedule();
@@ -2013,6 +2033,8 @@
     db.auth.onAuthStateChange((event, session) => {
       authed = !!session;
       setLocked(!authed);
+      if (session && session.user) toggleAdminUI(session.user.email);
+      else toggleAdminUI(null);
       if (authed) {
         renderSchedule();
         refreshTasks();
@@ -2051,6 +2073,67 @@
       document.getElementById('side-menu').classList.toggle('collapsed');
       document.body.classList.toggle('menu-collapsed');
     });
+
+    // ===================== COMPRADORES (admin) =====================
+    let esAdmin = false;
+
+    async function refreshCompradores() {
+      if (!esAdmin) return;
+      const list = document.getElementById('compradores-list');
+      const empty = document.getElementById('compradores-empty');
+      try {
+        const { data, error } = await db.from('compradores')
+          .select('user_id, email, estado, telefono, creado_en, autorizado_en')
+          .order('creado_en', { ascending: false });
+        if (error) throw error;
+        const rows = data || [];
+        empty.hidden = rows.length > 0;
+        list.innerHTML = rows.map(r => {
+          const fecha = new Date(r.creado_en).toLocaleDateString('es-PE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+          const color = r.estado === 'autorizado' ? 'var(--accent)' : r.estado === 'rechazado' ? '#e5484d' : '#f0b429';
+          const acciones = r.estado === 'autorizado'
+            ? `<button class="btn-add" style="background:#e5484d;border-color:#e5484d;" data-acc="rechazar" data-id="${r.user_id}">Rechazar</button>`
+            : `<button class="btn-add" data-acc="autorizar" data-id="${r.user_id}">Autorizar</button>` +
+              (r.estado !== 'rechazado' ? ` <button class="btn-add" style="background:transparent;color:var(--muted);border-color:var(--border);" data-acc="rechazar" data-id="${r.user_id}">Rechazar</button>` : '');
+          return `<div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;background:var(--surface);border:1px solid var(--border);padding:0.85rem 1rem;border-radius:10px;">
+            <div style="min-width:0;">
+              <div style="font-family:var(--font-body);font-size:0.88rem;color:var(--text);font-weight:600;overflow-wrap:anywhere;">${r.email || '—'}</div>
+              <div style="font-family:var(--font-body);font-size:0.72rem;color:var(--muted);">Registrado: ${fecha}${r.telefono ? ' · Tel: ' + r.telefono : ''}</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.75rem;flex-shrink:0;">
+              <span style="font-size:0.68rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:${color};">${r.estado}</span>
+              ${acciones}
+            </div>
+          </div>`;
+        }).join('');
+
+        list.querySelectorAll('button[data-acc]').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            btn.disabled = true;
+            const estado = btn.dataset.acc === 'autorizar' ? 'autorizado' : 'rechazado';
+            try {
+              const patch = { estado };
+              if (estado === 'autorizado') patch.autorizado_en = new Date().toISOString();
+              const { error } = await db.from('compradores').update(patch).eq('user_id', btn.dataset.id);
+              if (error) throw error;
+              await refreshCompradores();
+            } catch (e) {
+              alert('No se pudo actualizar. Verifica permisos (RLS / email admin).');
+              btn.disabled = false;
+            }
+          });
+        });
+      } catch (e) {
+        list.innerHTML = '<p class="catalog-empty">No se pudo cargar la lista de compradores. Ejecuta supabase/compradores.sql y verifica tu email admin.</p>';
+      }
+    }
+
+    function toggleAdminUI(email) {
+      esAdmin = !!(email && email.toLowerCase() === String(ADMIN_EMAIL).toLowerCase());
+      const menu = document.getElementById('menu-compradores');
+      if (menu) menu.hidden = !esAdmin;
+      if (esAdmin) refreshCompradores();
+    }
 
     // ===================== INIT =====================
     buildColorBar();

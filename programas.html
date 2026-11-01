@@ -264,6 +264,169 @@
     .stats-totals { color: var(--muted); font-size: 0.75rem; margin: 0; }
     .stats-totals[hidden] { display: none; }
     .prog-dl-count { display: block; font-family: var(--font-body); font-size: 0.66rem; color: var(--muted); margin-top: 0.4rem; min-height: 1em; }
+
+    /* HERO: acceso con Google */
+    .hero { position: relative; }
+    .hero-auth {
+      position: absolute;
+      right: 0;
+      top: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      z-index: 10;
+    }
+    .btn-google {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.65rem 1.1rem;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      border-radius: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+    }
+    .btn-google:hover {
+      border-color: var(--accent);
+      box-shadow: var(--glow);
+      background: #000;
+    }
+    .btn-google svg { width: 18px; height: 18px; }
+    .btn-zona {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.65rem 1.1rem;
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: var(--bg);
+      border-radius: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: box-shadow 0.25s;
+    }
+    .btn-zona:hover { box-shadow: var(--glow); }
+    .btn-zona svg { width: 16px; height: 16px; }
+    .user-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      color: var(--muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 0.45rem 0.75rem;
+      border-radius: 999px;
+      max-width: 260px;
+    }
+    .user-chip span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .user-chip a {
+      color: var(--accent);
+      font-weight: 600;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .user-chip button {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font-body);
+      padding: 0;
+      flex-shrink: 0;
+    }
+    @media (max-width: 720px) {
+      .hero-auth { position: static; margin-top: 1rem; justify-content: flex-start; }
+    }
+
+    /* BADGE HABILITADO (usuarios autorizados) */
+    .prog-habilitado {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-body);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--accent);
+      padding: 0.25em 0.7em;
+      border-radius: 999px;
+      pointer-events: none;
+      z-index: 5;
+    }
+    .prog-card-top .prog-habilitado { background: var(--top-blue); color: #fff; }
+
+    /* BANNER DE ESTADO DE CUENTA */
+    .auth-banner {
+      display: none;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 0 0 1.2rem;
+      padding: 0.9rem 1.1rem;
+      border-radius: 10px;
+      border: 1px solid;
+      font-family: var(--font-body);
+    }
+    .auth-banner.visible { display: flex; }
+    .auth-banner.pendiente { border-color: #f0b429; background: rgba(240,180,41,0.08); }
+    .auth-banner.rechazado { border-color: #e5484d; background: rgba(229,72,77,0.08); }
+    .auth-banner.autorizado { border-color: var(--accent); background: rgba(18,189,146,0.08); }
+    .auth-banner-body { min-width: 0; }
+    .auth-banner strong {
+      display: block;
+      font-size: 0.88rem;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .auth-banner p {
+      margin: 0;
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .auth-banner a { color: var(--accent); font-weight: 600; }
+    .auth-banner .gate-estado {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.3em 0.8em;
+      border-radius: 999px;
+      border: 1px solid;
+      margin-bottom: 0.4rem;
+    }
+    .auth-banner.pendiente .gate-estado { color: #f0b429; border-color: #f0b429; }
+    .auth-banner.rechazado .gate-estado { color: #e5484d; border-color: #e5484d; }
+    .auth-banner.autorizado .gate-estado { color: var(--accent); border-color: var(--accent); }
+    .auth-banner-close {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 1.1rem;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0.15rem 0.4rem;
+      flex-shrink: 0;
+    }
+    .auth-banner-close:hover { color: var(--text); }
   </style>
 </head>
 <body>
@@ -279,9 +442,19 @@
   <section class="hero">
     <h1>Programas hp prime<br><em>y recursos</em></h1>
     <div class="hero-line"></div>
+    <div class="hero-auth" id="hero-auth"></div>
   </section>
 
   <div class="section">
+    <div class="auth-banner" id="auth-banner" role="status">
+      <div class="auth-banner-body">
+        <span class="gate-estado" id="auth-banner-tag"></span>
+        <strong id="auth-banner-title"></strong>
+        <p id="auth-banner-text"></p>
+      </div>
+      <button type="button" class="auth-banner-close" id="auth-banner-close" aria-label="Cerrar aviso">✕</button>
+    </div>
+
     <div class="catalog-tools">
       <div class="catalog-search">
         <label for="program-search">Buscar programa</label>
@@ -317,6 +490,147 @@
   <footer><p>© 2026 <span>MM INGENIERIA</span> · Blog BIM & Construcción · Perú</p></footer>
   <a class="wa-float" href="https://wa.me/51957860293" target="_blank" title="Escríbeme por WhatsApp">💬</a>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    (function () {
+      const SUPABASE_URL = 'https://bidintbjpgpeyscirxwl.supabase.co';
+      const SUPABASE_ANON_KEY = 'sb_publishable_SRTEcmIyxh0rnHYBZfBpJQ_s9hl5cZq';
+      const BUCKET = 'programas-sin-contra';
+      const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      window.__sb = db;
+
+      const heroAuth = document.getElementById('hero-auth');
+      const banner = document.getElementById('auth-banner');
+      const bannerTag = document.getElementById('auth-banner-tag');
+      const bannerTitle = document.getElementById('auth-banner-title');
+      const bannerText = document.getElementById('auth-banner-text');
+
+      document.getElementById('auth-banner-close').addEventListener('click', () => {
+        banner.classList.remove('visible');
+      });
+
+      const GOOGLE_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.16A6.6 6.6 0 0 1 5.5 12c0-.74.13-1.46.34-2.16V7H2.18A11 11 0 0 0 1 12c0 1.77.43 3.45 1.18 5l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7l3.66 2.84c.87-2.6 3.3-4.46 6.16-4.46z"/></svg>';
+
+      async function signInGoogle() {
+        try {
+          await db.auth.signInWithOAuth({
+            provider: 'google',
+            options: { redirectTo: window.location.origin + '/programas.html' }
+          });
+        } catch (e) {
+          alert('No se pudo iniciar con Google. Intenta de nuevo.');
+        }
+      }
+
+      function renderGuest() {
+        heroAuth.innerHTML = '<button type="button" class="btn-google" id="btn-google-hero">' +
+          GOOGLE_SVG + ' Entrar con Google</button>';
+        document.getElementById('btn-google-hero').addEventListener('click', signInGoogle);
+      }
+
+      function renderUser(email) {
+        heroAuth.innerHTML =
+          '<div class="user-chip"><span>' + (email || 'Sesión activa') + '</span>' +
+          '<button type="button" id="btn-logout">Salir</button></div>';
+        document.getElementById('btn-logout').addEventListener('click', async () => {
+          try { await db.auth.signOut(); } catch (e) {}
+          aplicarEstado(null, null);
+        });
+      }
+
+      function showBanner(tipo, tag, titulo, texto) {
+        banner.className = 'auth-banner visible ' + tipo;
+        bannerTag.textContent = tag;
+        bannerTitle.textContent = titulo;
+        bannerText.innerHTML = texto;
+      }
+
+      function hideBanner() {
+        banner.className = 'auth-banner';
+      }
+
+      function setLibre(on) {
+        if (window.MCatalog) window.MCatalog.setLibre(on);
+        else document.body.dataset.mode = on ? 'libre' : 'publico';
+      }
+
+      // Descargar todo: en modo libre usa Storage (volúmenes); en público el .rar de la raíz
+      const dlAll = document.getElementById('download-all');
+      dlAll.addEventListener('click', async ev => {
+        const libre = window.MCatalog && window.MCatalog.isLibre();
+        if (!libre) return; // comportamiento normal del enlace
+        ev.preventDefault();
+        try {
+          const client = db;
+          let got = 0;
+          for (let i = 1; i <= 20; i++) {
+            const partPath = `programas_sin_contra_todo.part${i}.rar`;
+            const { data, error } = await client.storage.from(BUCKET).createSignedUrl(partPath, 3600);
+            if (error || !data || !data.signedUrl) break;
+            const a = document.createElement('a');
+            a.href = data.signedUrl;
+            a.download = partPath;
+            a.rel = 'noopener';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            got++;
+            await new Promise(r => setTimeout(r, 2000));
+          }
+          if (got === 0) throw new Error('sin volumenes');
+          if (window.mStats) window.mStats.bump('descarga:todo');
+        } catch (e) {
+          alert('No se pudo generar la descarga del bundle.');
+        }
+      });
+
+      function aplicarEstado(user, fila) {
+        if (!user) {
+          renderGuest();
+          hideBanner();
+          setLibre(false);
+          return;
+        }
+        renderUser(user.email);
+        if (!fila) {
+          // aún no existe fila (trigger pendiente) → tratar como pendiente
+          showBanner('pendiente', 'En revisión', 'Cuenta pendiente',
+            'Tu registro fue recibido. Cuando tu pago sea verificado y autorices tu cuenta, los programas quedarán <strong>habilitados</strong> sin contraseña. ¿Dudas? <a href="https://wa.me/51957860293" target="_blank" rel="noopener">WhatsApp</a>.');
+          setLibre(false);
+          return;
+        }
+        if (fila.estado === 'autorizado') {
+          showBanner('autorizado', 'Habilitado', 'Zona de descarga activada',
+            'Todos los programas están habilitados — descarga directa <strong>sin contraseña</strong>.');
+          setLibre(true);
+        } else if (fila.estado === 'rechazado') {
+          showBanner('rechazado', 'No autorizado', 'Cuenta no autorizada',
+            'Tu cuenta no tiene autorización de descarga. Si crees que es un error, contáctame por <a href="https://wa.me/51957860293" target="_blank" rel="noopener">WhatsApp</a>.');
+          setLibre(false);
+        } else {
+          showBanner('pendiente', 'En revisión', 'Cuenta pendiente',
+            'Tu registro fue recibido. Cuando tu pago sea verificado y autorices tu cuenta, los programas quedarán <strong>habilitados</strong> sin contraseña. ¿Dudas? <a href="https://wa.me/51957860293" target="_blank" rel="noopener">WhatsApp</a>.');
+          setLibre(false);
+        }
+      }
+
+      async function evaluar(user) {
+        if (!user) { aplicarEstado(null, null); return; }
+        try {
+          const { data, error } = await db.from('compradores').select('estado').eq('user_id', user.id).single();
+          if (error || !data) aplicarEstado(user, null);
+          else aplicarEstado(user, data);
+        } catch (e) { aplicarEstado(user, null); }
+      }
+
+      db.auth.getSession().then(({ data }) => {
+        evaluar(data && data.session ? data.session.user : null);
+      });
+      db.auth.onAuthStateChange((event, session) => {
+        evaluar(session ? session.user : null);
+      });
+    })();
+  </script>
   <script>
     (function () {
       function scan() {
@@ -339,6 +653,10 @@
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', scan);
       } else { scan(); }
+      // re-escanear cuando el catálogo se re-renderiza (cambio a modo libre)
+      const obs = new MutationObserver(function () { setTimeout(scan, 50); });
+      obs.observe(document.getElementById('program-catalog'), { childList: true });
+      obs.observe(document.getElementById('program-catalog-top'), { childList: true });
     })();
   </script>
 </body>
