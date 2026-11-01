@@ -52,7 +52,6 @@ const programArchives = [
   ['PLANETARIA BASICA', 9086, 4],
   ['RAMADURAS V2_2', 66190, 4],
   ['SEC HP', 1233982, 35],
-  ['SISMOS', 349694, 3],
   ['TABLA PERIODICA', 527598, 8],
   ['TOPOAC', 1630622, 6],
   ['TOPOMINIG', 2681230, 5],
