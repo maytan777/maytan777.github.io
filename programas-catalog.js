@@ -1,8 +1,8 @@
 // Programas destacados (carpeta programas/TOP). Se muestran arriba del catálogo.
 // [nombre del archivo, tamaño del RAR en bytes, cantidad de archivos]
 const topPrograms = [
-  ['CLASIFICACION DE SUELOS', 31326, 7],
-  ['DISENO DE VIGAS', 50590, 1],
+  ['CLASIFICACIÓN DE SUELOS', 31326, 7],
+  ['DISEÑO DE VIGAS', 50590, 1],
   ['DYSAB_FULL', 84846, 1],
   ['MAYTAN', 135934, 39],
   ['MUROS', 145022, 3],
@@ -14,9 +14,9 @@ const programArchives = [
   ['1D KINAMATICAS', 785662, 9],
   ['ANESH PRO', 206974, 7],
   ['ANESH PRO 2', 297006, 9],
-  ['AREA DE UN POLIGONO PEQUENO', 7502, 4],
+  ['AREA DE UN POLIGONO PEQUEÑO', 7502, 4],
   ['ARMADURAS', 69102, 5],
-  ['ARMADURAS ISOSTATICAS 1.0', 2918654, 7],
+  ['ARMADURAS ISOSTÁTICAS 1.0', 2918654, 7],
   ['ATMADURAS V2', 64014, 4],
   ['ATMOSFERIC AIR PROPERTIES 1.0', 168510, 5],
   ['AZIMUT Y DISTANCIAS', 1006, 1],
@@ -71,6 +71,8 @@ const programArchives = [
   const BUCKET = 'programas-sin-contra';
   // Archivos divididos en volúmenes (límite 50 MB de Supabase free)
   const MULTI_PART = { 'VIGA HPRO V5': true };
+  // Storage usa nombres ASCII; los archivos públicos conservan sus tildes.
+  const storageName = name => name.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   const sb = () => window.__sb;
 
   async function downloadFree(path, statName) {
@@ -160,7 +162,7 @@ const programArchives = [
         if (LIBRE) {
           link.href = '#';
           link.setAttribute('role', 'button');
-          const storagePath = group.folder + name + '.rar';
+          const storagePath = group.folder + storageName(name) + '.rar';
           link.addEventListener('click', ev => { ev.preventDefault(); downloadFree(storagePath, name); });
         } else {
           link.href = 'programas/' + group.folder + encodeURIComponent(name + '.rar');
