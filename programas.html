@@ -427,6 +427,20 @@
       flex-shrink: 0;
     }
     .auth-banner-close:hover { color: var(--text); }
+    .comments { margin: 4rem 0 3rem; padding: clamp(1.2rem, 3vw, 2.2rem); border: 1px solid rgba(128,128,128,.25); border-radius: 18px; }
+    .comments-intro, .comments-status, .comment-time { opacity: .75; font-size: .9rem; }
+    .comments-form { display: grid; gap: .7rem; margin: 1.4rem 0; }
+    .comments textarea { width: 100%; min-height: 95px; resize: vertical; padding: .9rem; border: 1px solid rgba(128,128,128,.4); border-radius: 10px; background: transparent; color: inherit; font: inherit; }
+    .comments button { cursor: pointer; font: inherit; }
+    .comments-submit { justify-self: start; border: 0; border-radius: 9px; padding: .65rem 1.1rem; background: #12bd92; color: #071d19; font-weight: 700; }
+    .comments-submit:disabled { opacity: .6; cursor: wait; }
+    .comment { padding: 1rem 0; border-top: 1px solid rgba(128,128,128,.2); }
+    .comment-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
+    .comment-admin { color: #12bd92; font-size: .75rem; font-weight: 700; }
+    .comment-message { margin: .6rem 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .comment-replies { margin-left: clamp(.8rem, 3vw, 2rem); padding-left: 1rem; border-left: 2px solid rgba(18,189,146,.35); }
+    .comment-action { border: 0; background: none; padding: .25rem .6rem .25rem 0; color: #12bd92; }
+    .comments-status { min-height: 1.4em; }
   </style>
 </head>
 <body>
@@ -485,12 +499,25 @@
 
     <p class="catalog-empty" id="catalog-empty" hidden>No hay programas que coincidan con tu búsqueda.</p>
     <noscript><p class="catalog-empty">Activa JavaScript para ver los programas y sus enlaces de descarga.</p></noscript>
+
+    <section class="comments" id="sugerencias" aria-labelledby="comments-title">
+      <h2 class="section-title" id="comments-title">Sugerencias y comentarios</h2>
+      <p class="comments-intro">Comparte tus ideas o preguntas. Todos pueden leerlas y responder con su cuenta de Google.</p>
+      <form class="comments-form" id="comments-form">
+        <label for="comments-message" id="comments-label">Escribe una sugerencia</label>
+        <textarea id="comments-message" maxlength="1000" required placeholder="¿Qué te gustaría compartir?"></textarea>
+        <div><button class="comments-submit" type="submit">Publicar comentario</button> <button class="comment-action" id="comments-cancel" type="button" hidden>Cancelar respuesta</button></div>
+      </form>
+      <p class="comments-status" id="comments-status" role="status" aria-live="polite"></p>
+      <div id="comments-list"></div>
+    </section>
   </div>
 
   <footer><p>© 2026 <span>MM INGENIERIA</span> · Blog BIM & Construcción · Perú</p></footer>
   <a class="wa-float" href="https://wa.me/51957860293" target="_blank" title="Escríbeme por WhatsApp">💬</a>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="comentarios.js" defer></script>
   <script>
     (function () {
       const SUPABASE_URL = 'https://bidintbjpgpeyscirxwl.supabase.co';
